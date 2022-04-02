@@ -484,24 +484,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be11ee386e248b77b0292b9fe7fea76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroidPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc,
-    type: 3}
-  starPrefab: {fileID: 7971276072409180905, guid: 99ac06d12e4f29945b1be7a894c99c8d,
-    type: 3}
+  asteroidPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc, type: 3}
+  starPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc, type: 3}
   thruster: {fileID: 1276495455}
   pos: {x: 0, y: 0}
   angle: 90
   velo: {x: 0, y: 0}
   camera: {fileID: 519420031}
   numSlots: 6
-  slotPrefab: {fileID: 1990767909471923902, guid: e4dbc4b2102d2d21aae308705ec51788,
-    type: 3}
-  emptySlotPrefab: {fileID: 1990767909471923902, guid: 299777bdae56c80d28c27e5252c84d6f,
-    type: 3}
-  collectorPrefab: {fileID: 1990767909471923902, guid: bc3e2e342a802ecd8ad6c5fe380ddea0,
-    type: 3}
+  slotPrefab: {fileID: 1990767909471923902, guid: e4dbc4b2102d2d21aae308705ec51788, type: 3}
+  emptySlotPrefab: {fileID: 1990767909471923902, guid: 299777bdae56c80d28c27e5252c84d6f, type: 3}
+  collectorPrefab: {fileID: 1990767909471923902, guid: bc3e2e342a802ecd8ad6c5fe380ddea0, type: 3}
   slots: []
-  foodPrefab: {fileID: 0}
+  foodPrefab: {fileID: 7823006277032278249, guid: ea697a6b345efa97f954b0613d248ea8, type: 3}
   foodList: []
   collectorSuckDistance: 5
 --- !u!1 &1276495455

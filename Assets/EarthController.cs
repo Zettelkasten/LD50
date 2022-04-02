@@ -106,7 +106,7 @@ public class EarthController : MonoBehaviour
         Debug.Log(numY);
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
-        asteroid.GetComponent<AsteroidController>().earth = this;
+        ast_contr.earth = this;
     }
 
     void ScatterStars()
