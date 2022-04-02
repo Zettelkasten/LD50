@@ -23,6 +23,7 @@ public class EarthController : MonoBehaviour
     public Random rnd = new Random();
     public int numSlots = 6;
     public bool accelerating = false;
+    public float flamesize = 0;
 
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
@@ -137,6 +138,7 @@ public class EarthController : MonoBehaviour
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
+        this.flame.transform.localScale = new Vector3(0.7f * flamesize, -0.7f * flamesize, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
     }
 
@@ -172,5 +174,22 @@ public class EarthController : MonoBehaviour
             accelerating = false;
         }
         this.pos += velo;
+
+        if (accelerating)
+        {
+            if (flamesize < 0.8)
+                flamesize += 0.2f;
+            else
+            {
+                flamesize += 0.1f * (1 - flamesize) * Random2.value;
+                flamesize += 0.2f * (Random2.value-0.5f);
+            }
+        }
+        else
+        {
+            if (flamesize > 0.0)
+                flamesize -= 0.12f;
+
+        }
     }
 }
