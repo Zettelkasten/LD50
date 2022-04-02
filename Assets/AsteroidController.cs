@@ -10,11 +10,6 @@ public class AsteroidController : MonoBehaviour
     public Vector2 pos;
     public float angle;  // in deg
     public Vector2 velo;
-    
-    void Start()
-    {
-        this.velo = 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * 360 * Random.value);
-    }
 
     void Update()
     {

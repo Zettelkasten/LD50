@@ -53,7 +53,7 @@ public class EarthController : MonoBehaviour
         var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
         var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
         var ast_contr = asteroid.GetComponent<AsteroidController>();
-        var ast_pos = new Vector3(0, 0,0);
+        var ast_pos = new Vector2(0, 0);
         int numX = rnd.Next(0, 2);
         int numY = rnd.Next(0, 2);
         var multiplier = rnd.NextDouble();
@@ -91,6 +91,7 @@ public class EarthController : MonoBehaviour
         }
         Debug.Log(numY);
         ast_contr.pos = ast_pos;
+        ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
     }
 
     void Update()
