@@ -30,8 +30,6 @@ public class CollectorController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ok!!!");
-        Debug.Log(other);
         if (other.gameObject.TryGetComponent<FoodController>(out var ctrl))
         {
             this.earth.DestroyFood(ctrl);

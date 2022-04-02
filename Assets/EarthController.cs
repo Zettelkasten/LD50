@@ -48,18 +48,6 @@ public class EarthController : MonoBehaviour
             ctrl.earth = this;
             ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
-
-        for (var i = 0; i < 30; i++)
-        {
-            //this.SpawnAsteroid();
-        }
-        for (var i = 0; i < 30; i++)
-        {
-            var obj = Instantiate(this.foodPrefab);
-            var ctrl = obj.GetComponent<FoodController>();
-            ctrl.pos = this.pos + new Vector2(5, 5);
-            this.foodList.Add(ctrl);
-        }
     }
 
     Vector2 RandomBorderPos()

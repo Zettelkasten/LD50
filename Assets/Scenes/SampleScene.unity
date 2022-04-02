@@ -498,7 +498,7 @@ MonoBehaviour:
   slots: []
   foodPrefab: {fileID: 7823006277032278249, guid: ea697a6b345efa97f954b0613d248ea8, type: 3}
   foodList: []
-  collectorSuckDistance: 5
+  collectorSuckDistance: 10
 --- !u!1 &1276495455
 GameObject:
   m_ObjectHideFlags: 0
