@@ -104,7 +104,7 @@ public class EarthController : MonoBehaviour
         var n_stars = 300;
         for (int i = 0; i < n_stars; i++)
         {
-            var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),0);
+            var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),2);
             var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
         }
             
