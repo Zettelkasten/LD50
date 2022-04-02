@@ -191,8 +191,8 @@ Canvas:
   m_GameObject: {fileID: 436469647}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -501,6 +501,8 @@ MonoBehaviour:
   slots: []
   foodPrefab: {fileID: 7823006277032278249, guid: ea697a6b345efa97f954b0613d248ea8, type: 3}
   foodList: []
+  numFood: 0
+  foodCounterText: {fileID: 1564576927}
   collectorSuckDistance: 10
 --- !u!1 &1276495455
 GameObject:
@@ -546,7 +548,7 @@ GameObject:
   - component: {fileID: 1564576928}
   - component: {fileID: 1564576927}
   m_Layer: 5
-  m_Name: Text
+  m_Name: FoodCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,10 +568,10 @@ RectTransform:
   m_Father: {fileID: 436469651}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -4, y: 35}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1564576927
 MonoBehaviour:
@@ -598,13 +600,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Score
+  m_Text: 5 Potatos
 --- !u!222 &1564576928
 CanvasRenderer:
   m_ObjectHideFlags: 0

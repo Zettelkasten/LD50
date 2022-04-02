@@ -32,6 +32,8 @@ public class EarthController : MonoBehaviour
 
     public GameObject foodPrefab;
     public List<FoodController> foodList = new List<FoodController>();
+    public int numFood = 0;
+    public Text foodCounterText;
 
     public float collectorSuckDistance;
 
@@ -120,6 +122,7 @@ public class EarthController : MonoBehaviour
     {
         this.foodList.Remove(food);
         Destroy(food.gameObject);
+        this.numFood += 1;
     }
     
     void ScatterStars()
@@ -140,6 +143,7 @@ public class EarthController : MonoBehaviour
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.7f * flamesize, -0.7f * flamesize, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
+        this.foodCounterText.text = this.numFood + " Potatos";
     }
 
     private void FixedUpdate()
