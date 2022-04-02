@@ -142,18 +142,6 @@ public class EarthController : MonoBehaviour
         }
     }
     
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.TryGetComponent<FoodController>(out var foodCtrl))
-        {
-            this.DestroyFood(foodCtrl);
-        }
-        else if (other.gameObject.TryGetComponent<AsteroidController>(out var astCtrl))
-        {  
-            this.DestroyAstroid(astCtrl);
-        }
-    }
-    
     void Update()
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
