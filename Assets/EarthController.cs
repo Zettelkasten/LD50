@@ -105,13 +105,20 @@ public class EarthController : MonoBehaviour
     }
     void SpawnFood()
     {
-        var asteroid = Instantiate(this.foodPrefab, this.pos, Quaternion.identity);
-        var ast_contr = asteroid.GetComponent<AsteroidController>();
-        var ast_pos = RandomBorderPos();
-        ast_contr.pos = ast_pos;
-        ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
-        ast_contr.earth = this;
+        var food = Instantiate(this.foodPrefab, this.pos, Quaternion.identity);
+        var contr = food.GetComponent<FoodController>();
+        var pos = RandomBorderPos();
+        contr.pos = pos;
+        contr.velo = 0.05f * (this.pos - pos).normalized;
+        this.foodList.Add(contr);
     }
+
+    public void DestroyFood(FoodController food)
+    {
+        this.foodList.Remove(food);
+        Destroy(food.gameObject);
+    }
+    
     void ScatterStars()
     {
         var bounds = 100f;
@@ -157,11 +164,5 @@ public class EarthController : MonoBehaviour
             velo += 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
         }
         this.pos += velo;
-    }
-
-    public void DestroyFood(FoodController food)
-    {
-        this.foodList.Remove(food);
-        Destroy(food.gameObject);
     }
 }
