@@ -9,10 +9,9 @@ public class SlotController : MonoBehaviour
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
 
-    private GameObject mouth;
-
     private void OnMouseDown()
     {
+        Debug.Log("WHY");
         if (this.earth == null)
         {
             return;  // no idea? wtf?
