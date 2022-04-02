@@ -17,13 +17,20 @@ public class EarthController : MonoBehaviour
     public Camera camera;
     public Random rnd = new Random();
     public int numSlots = 6;
+
     public GameObject slotPrefab;
+    public GameObject emptySlotPrefab;
+    public GameObject collectorPrefab;
     public GameObject[] slots;
 
     public GameObject foodPrefab;
+    public List<FoodController> foodList = new List<FoodController>();
+
+    public float collectorSuckDistance;
 
     void Start()
     {
+        Physics.queriesHitTriggers = true;
         this.slots = new GameObject[this.numSlots];
         for (var i = 0; i < this.numSlots; i++)
         {
@@ -31,6 +38,9 @@ public class EarthController : MonoBehaviour
             var pos = this.transform.localScale * 0.37f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
+            var ctrl = this.slots[i].GetComponent<SlotController>();
+            ctrl.earth = this;
+            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
 
         for (var i = 0; i < 30; i++)
@@ -40,13 +50,14 @@ public class EarthController : MonoBehaviour
         for (var i = 0; i < 30; i++)
         {
             var obj = Instantiate(this.foodPrefab);
-            obj.GetComponent<FoodController>().pos = this.pos + new Vector2(5, 5);
+            var ctrl = obj.GetComponent<FoodController>();
+            ctrl.pos = this.pos + new Vector2(5, 5);
+            this.foodList.Add(ctrl);
         }
     }
 
     void SpawnAsteroid()
     {   
-        
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
         var left_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, camera.pixelHeight, camera.nearClipPlane));    
         var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
@@ -106,7 +117,8 @@ public class EarthController : MonoBehaviour
         if (Input.GetKey("a"))
         {
             angle += 4f;
-        } else if (Input.GetKey("d"))
+        }
+        else if (Input.GetKey("d"))
         {
             angle -= 4f;
         }
@@ -117,5 +129,11 @@ public class EarthController : MonoBehaviour
             velo += 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
         }
         this.pos += velo;
+    }
+
+    public void DestroyFood(FoodController food)
+    {
+        this.foodList.Remove(food);
+        Destroy(food);
     }
 }
