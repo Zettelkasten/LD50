@@ -23,7 +23,10 @@ public class EarthController : MonoBehaviour
         this.slots = new GameObject[this.numSlots];
         for (var i = 0; i < this.numSlots; i++)
         {
-            this.slots[i] = Instantiate(this.slotPrefab, Util.Vector2FromAngle(2 * Mathf.PI * i / this.numSlots), Quaternion.identity, this.transform);
+            var angle = 360 * i / this.numSlots; 
+            var pos = this.transform.localScale * 0.4f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
+            this.slots[i] = Instantiate(this.slotPrefab, pos, Quaternion.identity, this.transform);
+            this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
         }
 
         for (var i = 0; i < 10; i++)
