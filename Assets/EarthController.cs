@@ -62,14 +62,12 @@ public class EarthController : MonoBehaviour
         }
     }
 
-    void SpawnAsteroid()
+    Vector2 RandomBorderPos()
     {
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
         var left_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, camera.pixelHeight, camera.nearClipPlane));    
         var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
         var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
-        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
-        var ast_contr = asteroid.GetComponent<AsteroidController>();
         var ast_pos = new Vector2(0, 0);
         int numX = rnd.Next(0, 2);
         int numY = rnd.Next(0, 2);
@@ -104,13 +102,28 @@ public class EarthController : MonoBehaviour
                 distance = (right_bottom.x - left_bottom.x) * (float) multiplier;
                 ast_pos.x = left_top.x + distance;
             }
+        }
+        return ast_pos;
+    }
 
-        } ;
+    void SpawnAsteroid()
+    {
+        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
+        var ast_contr = asteroid.GetComponent<AsteroidController>();
+        var ast_pos = RandomBorderPos();
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
         ast_contr.earth = this;
     }
-
+    void SpawnFood()
+    {
+        var asteroid = Instantiate(this.foodPrefab, this.pos, Quaternion.identity);
+        var ast_contr = asteroid.GetComponent<AsteroidController>();
+        var ast_pos = RandomBorderPos();
+        ast_contr.pos = ast_pos;
+        ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
+        ast_contr.earth = this;
+    }
     void ScatterStars()
     {
         var bounds = 100f;
@@ -120,7 +133,6 @@ public class EarthController : MonoBehaviour
             var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),2);
             var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
         }
-            
     }
 
     void Update()
@@ -132,11 +144,15 @@ public class EarthController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var prob = rnd.NextDouble();
-        if (prob <= 0.05)
+        if (rnd.NextDouble() <= 0.05)
         {
             this.SpawnAsteroid();
         }
+        if (rnd.NextDouble() <= 0.05)
+        {
+            this.SpawnFood();
+        }
+        
         
         if (Input.GetKey("a"))
         {
