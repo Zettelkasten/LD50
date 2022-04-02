@@ -110,10 +110,11 @@ public class EarthController : MonoBehaviour
         ast_contr.earth = this;
     }
     void SpawnFood()
-    {
-        var food = Instantiate(this.foodPrefab, this.pos, Quaternion.identity);
-        var contr = food.GetComponent<FoodController>();
+    {   
         var pos = RandomBorderPos();
+        var food = Instantiate(this.foodPrefab, pos, Quaternion.identity);
+        var contr = food.GetComponent<FoodController>();
+        
         contr.pos = pos;
         contr.velo = 0.05f * (this.pos - pos).normalized;
         this.foodList.Add(contr);

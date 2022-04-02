@@ -17,18 +17,29 @@ public class SlotController : MonoBehaviour
             return;  // no idea? wtf?
         }
 
+        if (earth.numFood >= 1)
+        {
+            SetInner(this.earth.shooterPrefab, SlotType.Shooter);
+        }
+
         // SetInner(this.earth.collectorPrefab, SlotType.Collector);
-        SetInner(this.earth.shooterPrefab, SlotType.Shooter);
+        
     }
 
     public void SetInner(GameObject innerPrefab, SlotType slotType)
     {
+        if (this.slotType != SlotType.Empty)
+        {
+            return; //do nothing, slot is taken already.
+        }
         if (this.currentInner != null)
         {
             Destroy(this.currentInner);
+            earth.numFood -= 1; 
         }
         this.currentInner = Instantiate(innerPrefab, this.transform);
         this.slotType = slotType;
+        
     }
     
     public enum SlotType
