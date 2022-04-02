@@ -20,17 +20,27 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject[] slots;
 
+    public GameObject foodPrefab;
+
     void Start()
     {
         this.slots = new GameObject[this.numSlots];
         for (var i = 0; i < this.numSlots; i++)
         {
-            this.slots[i] = Instantiate(this.slotPrefab, Util.Vector2FromAngle(2 * Mathf.PI * i / this.numSlots), Quaternion.identity, this.transform);
+            var angle = 360 * i / this.numSlots; 
+            var pos = this.transform.localScale * 0.37f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
+            this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
+            this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
         }
 
         for (var i = 0; i < 30; i++)
         {
             this.SpawnAsteroid();
+        }
+        for (var i = 0; i < 30; i++)
+        {
+            var obj = Instantiate(this.foodPrefab);
+            obj.GetComponent<FoodController>().pos = this.pos + new Vector2(5, 5);
         }
     }
 
