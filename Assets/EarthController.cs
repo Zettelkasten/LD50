@@ -13,6 +13,7 @@ public class EarthController : MonoBehaviour
     public Vector2 velo;
     public Camera camera;
     
+
     void Start()
     {
         this.SpawnAsteroid();
