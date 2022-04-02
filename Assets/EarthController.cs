@@ -15,12 +15,14 @@ public class EarthController : MonoBehaviour
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
     public GameObject thruster;
+    public GameObject flame;
     public Vector2 pos;
     public float angle = 90;  // in deg
     public Vector2 velo;
     public Camera camera;
     public Random rnd = new Random();
     public int numSlots = 6;
+    public bool accelerating = false;
 
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
@@ -134,6 +136,7 @@ public class EarthController : MonoBehaviour
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
+        this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
     }
 
@@ -162,6 +165,11 @@ public class EarthController : MonoBehaviour
         if (Input.GetKey("w"))
         {
             velo += 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+            accelerating = true;
+        }
+        else
+        {
+            accelerating = false;
         }
         this.pos += velo;
     }
