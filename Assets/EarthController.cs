@@ -8,29 +8,39 @@ using UnityEngine.UI;
 public class EarthController : MonoBehaviour
 {
     public GameObject asteroidPrefab;
+    public GameObject thruster;
     public Vector2 pos;
-    public float angle;  // in deg
+    public float angle = 90;  // in deg
     public Vector2 velo;
     public Camera camera;
-    
+
+    public int numSlots = 6;
+    public GameObject slotPrefab;
+    public GameObject[] slots;
 
     void Start()
     {
-        this.SpawnAsteroid();
+        this.slots = new GameObject[this.numSlots];
+        for (var i = 0; i < this.numSlots; i++)
+        {
+            this.slots[i] = Instantiate(this.slotPrefab, Util.Vector2FromAngle(2 * Mathf.PI * i / this.numSlots), Quaternion.identity, this.transform);
+        }
+
+        for (var i = 0; i < 10; i++)
+        {
+            this.SpawnAsteroid();
+        }
     }
 
     void SpawnAsteroid()
     {
-        for (var i = 0; i < 10; i++)
-        {
-            var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
-        }
+        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
     }
 
     void Update()
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
-        this.transform.eulerAngles = new Vector3(0, 0, this.angle);
+        this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
     }
 
