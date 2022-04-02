@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AsteroidController : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class AsteroidController : MonoBehaviour
     
     void Start()
     {
-        this.velo = new Vector2(0.02f, 0.01f);
+        this.velo = 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * 360 * Random.value);
     }
 
     void Update()

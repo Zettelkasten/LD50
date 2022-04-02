@@ -11,6 +11,7 @@ public class EarthController : MonoBehaviour
     public Vector2 pos;
     public float angle;  // in deg
     public Vector2 velo;
+    public Camera camera;
     
     void Start()
     {
@@ -19,13 +20,17 @@ public class EarthController : MonoBehaviour
 
     void SpawnAsteroid()
     {
-        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
+        for (var i = 0; i < 10; i++)
+        {
+            var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
+        }
     }
 
     void Update()
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.transform.eulerAngles = new Vector3(0, 0, this.angle);
+        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
     }
 
     private void FixedUpdate()

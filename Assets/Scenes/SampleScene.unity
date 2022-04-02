@@ -302,4 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc, type: 3}
+  pos: {x: 0, y: 0}
+  angle: 0
   velo: {x: 0, y: 0}
+  camera: {fileID: 519420031}
