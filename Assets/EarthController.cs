@@ -6,10 +6,12 @@ using UnityEngine;
 using UnityEngine.Experimental.Playables;
 using UnityEngine.UI;
 using Random = System.Random;
+using Random2 = UnityEngine.Random;
 
 public class EarthController : MonoBehaviour
 {
     public GameObject asteroidPrefab;
+    public GameObject starPrefab;
     public GameObject thruster;
     public Vector2 pos;
     public float angle = 90;  // in deg
@@ -32,6 +34,7 @@ public class EarthController : MonoBehaviour
     {
         Physics.queriesHitTriggers = true;
         this.slots = new GameObject[this.numSlots];
+        ScatterStars();
         for (var i = 0; i < this.numSlots; i++)
         {
             var angle = 360 * i / this.numSlots; 
@@ -103,6 +106,19 @@ public class EarthController : MonoBehaviour
         Debug.Log(numY);
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
+        asteroid.GetComponent<AsteroidController>().earth = this;
+    }
+
+    void ScatterStars()
+    {
+        var bounds = 100f;
+        var n_stars = 300;
+        for (int i = 0; i < n_stars; i++)
+        {
+            var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),2);
+            var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
+        }
+            
     }
 
     void Update()

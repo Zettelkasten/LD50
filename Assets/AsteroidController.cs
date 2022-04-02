@@ -10,6 +10,8 @@ public class AsteroidController : MonoBehaviour
     public Vector2 pos;
     public float angle;  // in deg
     public Vector2 velo;
+    public EarthController earth;
+    
 
     void Update()
     {
@@ -20,5 +22,10 @@ public class AsteroidController : MonoBehaviour
     private void FixedUpdate()
     {
         this.pos += velo;
+        var dist = earth.pos - pos;
+        var dist_norm = dist.sqrMagnitude;
+        this.velo += 1e+0f * dist / (0.01f + Mathf.Pow(dist_norm,1));
+        //this.velo += 1e-3f *  (earth.pos - pos);
+        this.velo *= 1 - 1e-2f;
     }
 }
