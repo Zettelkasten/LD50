@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Experimental.Playables;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class EarthController : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class EarthController : MonoBehaviour
     public float angle = 90;  // in deg
     public Vector2 velo;
     public Camera camera;
-
+    public Random rnd = new Random();
     public int numSlots = 6;
     public GameObject slotPrefab;
     public GameObject[] slots;
@@ -26,15 +28,59 @@ public class EarthController : MonoBehaviour
             this.slots[i] = Instantiate(this.slotPrefab, Util.Vector2FromAngle(2 * Mathf.PI * i / this.numSlots), Quaternion.identity, this.transform);
         }
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 30; i++)
         {
             this.SpawnAsteroid();
         }
     }
 
     void SpawnAsteroid()
-    {
+    {   
+        
+        var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+        var left_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, camera.pixelHeight, camera.nearClipPlane));    
+        var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
+        var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
         var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
+        var ast_contr = asteroid.GetComponent<AsteroidController>();
+        var ast_pos = new Vector3(0, 0,0);
+        int numX = rnd.Next(0, 2);
+        int numY = rnd.Next(0, 2);
+        var multiplier = rnd.NextDouble();
+        float distance;
+        if (numX == 1)
+        {
+            if (numY == 1)
+            {
+                ast_pos.x = left_bottom.x;
+                distance = (left_top.y - left_bottom.y) * (float)multiplier;
+                ast_pos.y = left_bottom.y + distance;
+            }
+            else
+            {   
+                ast_pos.x = right_bottom.x;
+                distance = (left_top.y - left_bottom.y) * (float)multiplier;
+                ast_pos.y = right_bottom.y + distance;
+            }
+        }
+        else
+        {
+            if (numY == 1)
+            {
+                ast_pos.y = left_bottom.y;
+                distance = (right_bottom.x - left_bottom.x) * (float) multiplier;
+                ast_pos.x = left_bottom.y + distance;
+            }
+            else
+            {
+                ast_pos.y = left_top.y;
+                distance = (right_bottom.x - left_bottom.x) * (float) multiplier;
+                ast_pos.x = left_top.y + distance;
+            }
+
+        }
+        Debug.Log(numY);
+        ast_contr.pos = ast_pos;
     }
 
     void Update()
