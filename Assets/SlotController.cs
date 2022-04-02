@@ -13,13 +13,13 @@ public class SlotController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("down mouse and so");
         if (this.earth == null)
         {
             return;  // no idea? wtf?
         }
 
-        SetInner(this.earth.collectorPrefab, SlotType.Collector);
+        // SetInner(this.earth.collectorPrefab, SlotType.Collector);
+        SetInner(this.earth.shooterPrefab, SlotType.Shooter);
     }
 
     public void SetInner(GameObject innerPrefab, SlotType slotType)
@@ -35,6 +35,7 @@ public class SlotController : MonoBehaviour
     public enum SlotType
     {
         Empty,
-        Collector
+        Collector,
+        Shooter
     }
 }

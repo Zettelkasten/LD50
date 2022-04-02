@@ -28,6 +28,7 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
     public GameObject collectorPrefab;
+    public GameObject shooterPrefab;
     public GameObject[] slots;
 
     public GameObject foodPrefab;
