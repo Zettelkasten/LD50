@@ -27,6 +27,7 @@ public class EarthController : MonoBehaviour
     void Start()
     {
         this.slots = new GameObject[this.numSlots];
+        ScatterStars();
         for (var i = 0; i < this.numSlots; i++)
         {
             var angle = 360 * i / this.numSlots; 
@@ -39,7 +40,6 @@ public class EarthController : MonoBehaviour
         {
             this.SpawnAsteroid();
         }
-        ScatterStars();
         for (var i = 0; i < 30; i++)
         {
             var obj = Instantiate(this.foodPrefab);
@@ -101,10 +101,10 @@ public class EarthController : MonoBehaviour
     void ScatterStars()
     {
         var bounds = 100f;
-        var n_stars = 200;
+        var n_stars = 300;
         for (int i = 0; i < n_stars; i++)
         {
-            var starPos = new Vector3(Random.Range(-bounds, bounds), Random.Range(-bounds, bounds),0);
+            var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),0);
             var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
         }
             
