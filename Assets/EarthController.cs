@@ -48,7 +48,7 @@ public class EarthController : MonoBehaviour
 
         for (var i = 0; i < 30; i++)
         {
-            this.SpawnAsteroid();
+            //this.SpawnAsteroid();
         }
         for (var i = 0; i < 30; i++)
         {
@@ -93,17 +93,16 @@ public class EarthController : MonoBehaviour
             {
                 ast_pos.y = left_bottom.y;
                 distance = (right_bottom.x - left_bottom.x) * (float) multiplier;
-                ast_pos.x = left_bottom.y + distance;
+                ast_pos.x = left_bottom.x + distance;
             }
             else
             {
                 ast_pos.y = left_top.y;
                 distance = (right_bottom.x - left_bottom.x) * (float) multiplier;
-                ast_pos.x = left_top.y + distance;
+                ast_pos.x = left_top.x + distance;
             }
 
-        }
-        Debug.Log(numY);
+        } ;
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
         ast_contr.earth = this;
@@ -130,6 +129,12 @@ public class EarthController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var prob = rnd.NextDouble();
+        if (prob <= 0.05)
+        {
+            this.SpawnAsteroid();
+        }
+        
         if (Input.GetKey("a"))
         {
             angle += 4f;
