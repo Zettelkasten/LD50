@@ -10,6 +10,8 @@ using Random2 = UnityEngine.Random;
 
 public class EarthController : MonoBehaviour
 {
+    public static EarthController instance;
+    
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
     public GameObject thruster;
@@ -32,6 +34,7 @@ public class EarthController : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         Physics.queriesHitTriggers = true;
         this.slots = new GameObject[this.numSlots];
         ScatterStars();
@@ -60,7 +63,7 @@ public class EarthController : MonoBehaviour
     }
 
     void SpawnAsteroid()
-    {   
+    {
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
         var left_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, camera.pixelHeight, camera.nearClipPlane));    
         var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
@@ -150,6 +153,6 @@ public class EarthController : MonoBehaviour
     public void DestroyFood(FoodController food)
     {
         this.foodList.Remove(food);
-        Destroy(food);
+        Destroy(food.gameObject);
     }
 }
