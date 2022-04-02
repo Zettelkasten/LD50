@@ -22,6 +22,9 @@ public class AsteroidController : MonoBehaviour
     private void FixedUpdate()
     {
         this.pos += velo;
+        var dist = earth.pos - pos;
+        var dist_norm = dist.sqrMagnitude;
+        this.velo += 1e-3f * dist / Mathf.Pow(dist_norm,3);
         //this.velo += 1e-3f *  (earth.pos - pos);
         //this.velo *= 1 - 1e-3f;
     }
