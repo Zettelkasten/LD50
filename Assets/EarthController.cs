@@ -3,41 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EarthController : MonoBehaviour
 {
     public GameObject asteroidPrefab;
+    public Vector2 pos;
+    public float angle;  // in deg
     public Vector2 velo;
     
     void Start()
     {
-        
+        this.SpawnAsteroid();
     }
 
-    public float Rotation
+    void SpawnAsteroid()
     {
-        get {
-            return Mathf.Deg2Rad * this.transform.localRotation.z;
-        }
-        set {
-            this.transform.localRotation = new Quaternion(0, 0, Mathf.Rad2Deg * value, 0);
-        }
+        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("w"))
-        {
-            this.velo += 0.01f * Util.Vector2FromAngle(this.Rotation);
-        }
-        if (Input.GetKeyDown("a"))
-        {
-            this.Rotation = this.Rotation + 0.1f;
-        }
+        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+        this.transform.eulerAngles = new Vector3(0, 0, this.angle);
     }
 
     private void FixedUpdate()
     {
-        this.transform.localPosition += new Vector3(velo.x, velo.y, 0);
+        if (Input.GetKey("a"))
+        {
+            angle += 4f;
+        } else if (Input.GetKey("d"))
+        {
+            angle -= 4f;
+        }
+
+        this.velo *= 0.9f;
+        if (Input.GetKey("w"))
+        {
+            velo += 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+        }
+        this.pos += velo;
     }
 }
