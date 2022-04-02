@@ -101,9 +101,9 @@ public class EarthController : MonoBehaviour
 
     void SpawnAsteroid()
     {
-        var asteroid = Instantiate(this.asteroidPrefab, this.pos, Quaternion.identity);
-        var ast_contr = asteroid.GetComponent<AsteroidController>();
         var ast_pos = RandomBorderPos();
+        var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
+        var ast_contr = asteroid.GetComponent<AsteroidController>();
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
         ast_contr.earth = this;
@@ -125,6 +125,11 @@ public class EarthController : MonoBehaviour
         this.numFood += 1;
     }
     
+    public void DestroyAstroid(AsteroidController ast)
+    {
+        Destroy(ast.gameObject);
+    }
+    
     void ScatterStars()
     {
         var bounds = 100f;
@@ -135,7 +140,19 @@ public class EarthController : MonoBehaviour
             var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
         }
     }
-
+    
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent<FoodController>(out var foodCtrl))
+        {
+            this.DestroyFood(foodCtrl);
+        }
+        else if (other.gameObject.TryGetComponent<AsteroidController>(out var astCtrl))
+        {  
+            this.DestroyAstroid(astCtrl);
+        }
+    }
+    
     void Update()
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
@@ -148,11 +165,11 @@ public class EarthController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rnd.NextDouble() <= 0.05)
+        if (rnd.NextDouble() <= 0.01)
         {
             this.SpawnAsteroid();
         }
-        if (rnd.NextDouble() <= 0.05)
+        if (rnd.NextDouble() <= 0.01)
         {
             this.SpawnFood();
         }
