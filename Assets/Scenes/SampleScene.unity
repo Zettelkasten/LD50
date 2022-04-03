@@ -247,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -641,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -947,7 +947,7 @@ Transform:
   m_GameObject: {fileID: 1201923676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 1276495456}
   - {fileID: 1609780491}
@@ -1664,6 +1664,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 436469651}
     m_Modifications:
+    - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
+      propertyPath: price
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: tileType
       value: 0
