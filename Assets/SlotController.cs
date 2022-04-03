@@ -42,6 +42,7 @@ public class SlotController : MonoBehaviour
     {
         if (CanBuildHere() && earth.numFood >= earth.currentShopPrice)
         {
+            EarthController.instance.paused = false;
             earth.numFood -= earth.currentShopPrice;
             if (earth.isUpgrading)
             {

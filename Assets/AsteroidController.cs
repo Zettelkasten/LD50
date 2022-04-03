@@ -22,6 +22,8 @@ public class AsteroidController : MonoBehaviour
     private void FixedUpdate()
     {
         var earth = EarthController.instance;
+        if (earth.paused)
+            return;
         this.pos += velo;
         var dist = earth.pos - pos;
         var dist_norm = dist.sqrMagnitude;

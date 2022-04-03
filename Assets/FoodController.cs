@@ -24,6 +24,8 @@ public class FoodController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (EarthController.instance.paused)
+            return;
         this.pos += velo;
         this.angle += 10;
     }

@@ -54,6 +54,7 @@ public class ShopItemComponent : MonoBehaviour
         EarthController.instance.currentShopPrice = price;
         EarthController.instance.UnselectAllShopItems();
         EarthController.instance.isBuilding = true;
+        EarthController.instance.paused = true;
         this.selected = true;
     }
 }
