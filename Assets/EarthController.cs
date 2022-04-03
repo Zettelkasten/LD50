@@ -33,7 +33,7 @@ public class EarthController : MonoBehaviour
     public float timer;
     public float[] balancing; //difficulty thresholds in seconds, doesnt work though, edited in Unity
     public float count; //timer for balancing
-    public int changeLv = 1; //value to change difficulty
+    public int changeLv = 1 ; //value to change difficulty
 
     public GameObject slotPrefab;
     public GameObject[] slots;
@@ -325,6 +325,7 @@ public class EarthController : MonoBehaviour
         }
         else
         {
+            /*
             var regeneration = 1f;
             foreach (var slot in (slots))
             {
@@ -336,7 +337,7 @@ public class EarthController : MonoBehaviour
             }
 
             CdAnimator.speed = regeneration;
-            Debug.Log(regeneration);
+            Debug.Log(regeneration);*/
             cdAnimation.SetActive(true);
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
