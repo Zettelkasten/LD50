@@ -75,7 +75,6 @@ public class EarthController : MonoBehaviour
 
     void Start()
     {
-        
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
         
         cdAnimation.SetActive(false);
