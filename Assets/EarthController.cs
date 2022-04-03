@@ -304,6 +304,11 @@ public class EarthController : MonoBehaviour
             angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
 
+        if (Input.GetKey("f"))
+        {
+            numFood += 10;
+        }
+
         this.velo *= 0.9f;
         if (Input.GetKey("w"))
         {
