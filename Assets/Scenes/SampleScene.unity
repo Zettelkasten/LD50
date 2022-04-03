@@ -246,6 +246,10 @@ PrefabInstance:
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: price
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
       value: 2
       objectReference: {fileID: 0}
@@ -633,6 +637,10 @@ PrefabInstance:
     - target: {fileID: 2853018479846654421, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: price
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType

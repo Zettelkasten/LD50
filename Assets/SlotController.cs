@@ -38,7 +38,7 @@ public class SlotController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (CanBuildHere() && earth.numFood >= 1)
+        if (CanBuildHere() && earth.numFood >= earth.currentShopPrice)
         {
             if (earth.isUpgrading)
             {
@@ -62,7 +62,7 @@ public class SlotController : MonoBehaviour
         if (this.currentInner != null)
         {
             Destroy(this.currentInner);
-            earth.numFood -= 1;
+            earth.numFood -= earth.currentShopPrice;
         }
         this.currentInner = Instantiate(innerPrefab, this.transform);
         this.currentInnerBaseScale = this.currentInner.transform.localScale;

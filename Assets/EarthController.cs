@@ -56,6 +56,7 @@ public class EarthController : MonoBehaviour
     public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector, SlotController.SlotType.FlyingShield };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;
+    public int currentShopPrice;
     public bool isUpgrading = false;
     public bool isBuilding = false;
 
