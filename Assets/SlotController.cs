@@ -19,11 +19,8 @@ public class SlotController : MonoBehaviour
 
         if (earth.numFood >= 1)
         {
-            SetInner(this.earth.shooterPrefab, SlotType.Shooter);
+            SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
         }
-
-        // SetInner(this.earth.collectorPrefab, SlotType.Collector);
-        
     }
 
     public void SetInner(GameObject innerPrefab, SlotType slotType)

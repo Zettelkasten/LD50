@@ -31,6 +31,8 @@ public class EarthController : MonoBehaviour
     public GameObject shooterPrefab;
     public GameObject[] slots;
 
+    public List<AsteroidController> asteroidList = new List<AsteroidController>();
+    
     public GameObject foodPrefab;
     public List<FoodController> foodList = new List<FoodController>();
     public int numFood = 0;
@@ -38,8 +40,14 @@ public class EarthController : MonoBehaviour
 
     public float collectorSuckDistance;
 
+    public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector };
+    public GameObject[] tileTypePrefabs;
+    public int currentTileType;
+    
     void Start()
     {
+        tileTypePrefabs = new[] { shooterPrefab, collectorPrefab };
+        Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
         Physics.queriesHitTriggers = true;
         this.slots = new GameObject[this.numSlots];
@@ -108,6 +116,7 @@ public class EarthController : MonoBehaviour
         ast_contr.pos = ast_pos;
         ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
         ast_contr.earth = this;
+        this.asteroidList.Add(ast_contr);
     }
     void SpawnFood()
     {   
@@ -129,6 +138,7 @@ public class EarthController : MonoBehaviour
     
     public void DestroyAstroid(AsteroidController ast)
     {
+        this.asteroidList.Remove(ast);
         Destroy(ast.gameObject);
     }
     
