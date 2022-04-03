@@ -165,6 +165,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   earth: {fileID: 0}
+  suckStrength:
+  - 0.005
+  - 0.007
+  - 0.01
+  suckDistance:
+  - 9
+  - 10
+  - 12
 --- !u!50 &652080050275026714
 Rigidbody2D:
   serializedVersion: 4

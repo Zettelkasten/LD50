@@ -148,7 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8740207787c23488cf5cd28324c7a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootCooldown: 2
+  shootCooldown:
+  - 4
+  - 3
+  - 2
   laserPrefab: {fileID: 7421418576725693666, guid: 36c39e37eeb2dcdf094540a662d02e1c, type: 3}
-  maxRadius: 15
-  currentLaserTimeMax: 0.5
+  maxRadius:
+  - 12
+  - 15
+  - 15
+  currentLaserTimeMax:
+  - 1
+  - 0.5
+  - 0.3

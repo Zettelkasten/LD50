@@ -49,8 +49,6 @@ public class EarthController : MonoBehaviour
     public const int n_stars = 200;
     public GameObject[] stars = new GameObject[n_stars];
 
-    public float collectorSuckDistance;
-
     public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector, SlotController.SlotType.FlyingShield };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;

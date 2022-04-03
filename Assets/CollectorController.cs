@@ -6,6 +6,8 @@ using UnityEngine;
 public class CollectorController : MonoBehaviour
 {
     public EarthController earth;
+    public float[] suckStrength;
+    public float[] suckDistance;
     
     public void Start()
     {
@@ -17,12 +19,12 @@ public class CollectorController : MonoBehaviour
         foreach (var food in this.earth.foodList)
         {
             var dist = (Vector2)this.transform.position - food.pos;
-            if (dist.magnitude < this.earth.collectorSuckDistance)
+            if (dist.magnitude < suckDistance[GetUpgradeLevel()])
             {
-                food.velo += 0.005f * dist.normalized;
+                food.velo += suckStrength[GetUpgradeLevel()] * dist.normalized;
                 if (food.velo.magnitude < 0.02)
                 {
-                    food.velo += 0.005f * dist.normalized;
+                    food.velo += suckStrength[GetUpgradeLevel()] * dist.normalized;
                 }
             }
         }
@@ -34,5 +36,11 @@ public class CollectorController : MonoBehaviour
         {
             this.earth.DestroyFood(ctrl);
         }
+    }
+    
+    private int GetUpgradeLevel()
+    {
+        // double parent: eyes <- greenie <- slot
+        return this.transform.parent.parent.GetComponent<SlotController>().upgradeLevel - 1;
     }
 }
