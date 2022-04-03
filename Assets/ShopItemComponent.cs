@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ShopItemComponent : MonoBehaviour
 {
-    private int tileType;
+    public int tileType;
 
     private void OnMouseDown()
     {
