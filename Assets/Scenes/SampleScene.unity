@@ -856,17 +856,14 @@ MonoBehaviour:
   timer: 0
   balancing:
   - 0.165
-  - 30
   - 60
-  - 90
   - 120
-  - 150
   - 180
+  - 240
+  - 300
+  - 360
   count: 0
   changeLv: 1
-  slotPrefab: {fileID: 1990767909471923902, guid: e4dbc4b2102d2d21aae308705ec51788, type: 3}
-  emptySlotPrefab: {fileID: 1990767909471923902, guid: 299777bdae56c80d28c27e5252c84d6f, type: 3}
-  timer: 0
   slotPrefab: {fileID: 1990767909471923902, guid: e4dbc4b2102d2d21aae308705ec51788, type: 3}
   slots: []
   asteroidList: []

@@ -239,7 +239,7 @@ public class EarthController : MonoBehaviour
     {
         this.count += Time.deltaTime;
         Debug.Log("Level:" + this.changeLv);
-        if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length)
+        if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
         {
             this.balancing[0] += 0.165f;
             changeLv += 1;
