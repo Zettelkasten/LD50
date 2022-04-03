@@ -6,27 +6,20 @@ using Random = UnityEngine.Random;
 
 public class PlanetController : MonoBehaviour
 {
-    public bool isPlanet;
-    public Vector2 origin;
     public Sprite[] spriteList;
-    public float dist;
+    public int numPlanets;
     
     void Start()
     {
-        if (Random.value >= 0.9)  // not star, but planet.
+        if (Random.value >= 0.7)  // not star, but planet or nebula.
         {
-            GetComponent<SpriteRenderer>().sprite = spriteList[(int)(Random.value * spriteList.Length)];
+            int spriteNum;
+            if (Random.value < 0.2)
+                spriteNum = (int)(Random.value * numPlanets);
+            else
+                spriteNum = (int)(Random.value * (spriteList.Length - numPlanets)) + numPlanets;
+            GetComponent<SpriteRenderer>().sprite = spriteList[spriteNum];
             this.transform.localScale = Vector3.one * (5.5f * Random.value + 0.5f);
         }
-        dist = 5 * Random.value + 0.2f;
-        dist = 1;  // fuck this
-    }
-
-    private void Update()
-    {
-        var earth = EarthController.instance;
-        var cam = earth.camera.transform.position;
-        var pos = -earth.pos / dist + origin;
-        // this.transform.position = pos; // fuck this too
     }
 }

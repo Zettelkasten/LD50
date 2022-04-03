@@ -43,7 +43,7 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject[] slots;
     private SlotController thrusterSlot;
-    private float[] regenerationSpeeds = new float[] { 0.3f, 0.5f, 0.6f };
+    private float[] regenerationSpeeds = new float[] { 0.5f, 0.9f, 1.3f };
     
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
     
@@ -215,7 +215,6 @@ public class EarthController : MonoBehaviour
             var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
             var star = Instantiate(this.planetPrefab, new Vector3(starPos.x, starPos.y, 4), Quaternion.identity);
             var comp = star.GetComponent<PlanetController>();
-            comp.origin = starPos;
             planetList.Add(comp);
         }
     }
@@ -234,11 +233,12 @@ public class EarthController : MonoBehaviour
         //var animator = CdAnimator.GetComponent<Animator>();
         //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
 
-
+        var thrusterfactor = thrusterSlot.upgradeScales[thrusterSlot.upgradeLevel-1];
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
+        this.flame.transform.localPosition = new Vector3(x: 0f, y: -0.42f * (thrusterfactor + 1)/2, 0);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
-        this.flame.transform.localScale = new Vector3(0.7f * flamesize, -0.7f * flamesize, 1f);
+        this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
         this.foodCounterText.text = this.numFood + " Potatos";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " dodged";
@@ -313,11 +313,16 @@ public class EarthController : MonoBehaviour
             angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
 
-        if (Input.GetKey("f"))
+        if (Input.GetKeyDown("f"))
         {
             numFood += 10;
         }
 
+        if (Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("EndScene"); 
+        }
+        
         this.velo *= 0.9f;
         if (Input.GetKey("w"))
         {
@@ -375,7 +380,6 @@ public class EarthController : MonoBehaviour
             }
 
             CdAnimator.speed = regenerationSpeed;
-            Debug.Log("regenerationSpeed" + regenerationSpeed);
             cdAnimation.SetActive(true);
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);

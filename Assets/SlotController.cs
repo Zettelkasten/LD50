@@ -79,7 +79,7 @@ public class SlotController : MonoBehaviour
         if (this.slotType == SlotType.Thruster)
         {
             earth.thruster.GetComponent<ThrusterWrapperComponent>().thruster.transform.localScale = Vector3.one * scale;
-            earth.flame.GetComponent<ThrusterWrapperComponent>().thruster.transform.localScale = Vector3.one * scale;
+            earth.flame.transform.localScale = Vector3.one * scale;
         }
     }
     
