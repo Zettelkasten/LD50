@@ -33,7 +33,8 @@ public class BlockCollider : MonoBehaviour
         if (other.gameObject.TryGetComponent<AsteroidController>(out var asteroid))
         {
             var normal = Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
-            asteroid.velo = Vector2.Reflect(asteroid.velo, normal) + 0.5f * earth.velo;
+            var toEarth = Vector2.Dot(normal, asteroid.velo) < 0;
+            asteroid.velo = normal * 0.2f + 0*(toEarth?1:-1) * Vector2.Reflect(asteroid.velo, normal) + 0.8f * earth.velo;
         }
     }
     private int GetUpgradeLevel()

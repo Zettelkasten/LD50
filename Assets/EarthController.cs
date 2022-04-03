@@ -31,7 +31,7 @@ public class EarthController : MonoBehaviour
     public Camera camera;
     public Random rnd = new Random();
     public int numEarthSlots = 6;
-    public int numFlyingSlots = 2;
+    public int numFlyingSlots = 6;
     public bool accelerating = false;
     public float flamesize = 0;
     public float timer;
@@ -94,8 +94,7 @@ public class EarthController : MonoBehaviour
 
         for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
         {
-            var ii = i - this.numEarthSlots;
-            var angle = 90 - 60 + 120 * ii;
+            var angle = 360 * (i - this.numEarthSlots) / this.numFlyingSlots;
             var pos = this.transform.localScale * 0.8f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);

@@ -972,12 +972,13 @@ MonoBehaviour:
   flame: {fileID: 1930162793}
   cdAnimation: {fileID: 48060365}
   CdAnimator: {fileID: 48060367}
+  highscore: 0
   pos: {x: 0, y: 0}
   angle: 90
   velo: {x: 0, y: 0}
   camera: {fileID: 519420031}
   numEarthSlots: 6
-  numFlyingSlots: 2
+  numFlyingSlots: 6
   accelerating: 0
   flamesize: 0
   timer: 0
@@ -1017,9 +1018,9 @@ MonoBehaviour:
   - 3
   - 4
   speed:
+  - 0.01
+  - 0.02
   - 0.03
-  - 0.05
-  - 0.06
   planetPrefab: {fileID: 6886836907900536935, guid: 933d66ae27d90bb538cbb040a14f72d2, type: 3}
   numPlanets: 300
 --- !u!1 &1276495455
