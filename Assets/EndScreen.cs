@@ -8,7 +8,6 @@ public class EndScreen : MonoBehaviour
    public void ExitButton()
    {
       Application.Quit();
-        
    }
 
    public void RestartGame()
