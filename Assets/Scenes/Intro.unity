@@ -410,6 +410,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596549202}
   m_CullTransparentMesh: 1
+--- !u!1 &877310608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4844987158867190633, guid: f8c6bb9882e150d74b756f06e34e7c21, type: 3}
+  m_PrefabInstance: {fileID: 362456039846279241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1323957547
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,8 +624,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3128d7ae353cbe9c0bd419959b7ad28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charLeft: {fileID: 0}
-  textLeft: {fileID: 0}
+  charList:
+  - {fileID: 0}
+  - {fileID: 877310608}
+  charNames:
+  - Mc
+  - Greenie
+  textBox: {fileID: 428141039}
+  dialogue:
+  - 'Greenie: HelloHelloHelloH elloHelloHelloHelloHelloHelloHelloHelloHelloHelloHell
+    oHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello'
+  - 'Guac: What the fuck'
+  - 'Greenie: Good bye'
+  charTime: 0.5
 --- !u!1 &1682195592
 GameObject:
   m_ObjectHideFlags: 0
