@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Experimental.Playables;
@@ -37,7 +38,9 @@ public class EarthController : MonoBehaviour
     public List<FoodController> foodList = new List<FoodController>();
     public int numFood = 0;
     public Text foodCounterText;
-    
+    public int numAsteroidsDodged = 0;
+    public Text asteroidCounterText;
+
     public const float starDist = 30f;
     public const float starDistSpawn = 28f;
     public const int n_stars = 200;
@@ -139,21 +142,25 @@ public class EarthController : MonoBehaviour
         this.foodList.Add(contr);
     }
 
-    public void DestroyFood(FoodController food)
+    public void DestroyFood(FoodController food, bool collected = true)
     {
         if (!this.foodList.Contains(food))
             return;
         this.foodList.Remove(food);
         Destroy(food.gameObject);
-        this.numFood += 1;
+        if (collected)
+            this.numFood += 1;
     }
     
-    public void DestroyAstroid(AsteroidController ast)
+    public void DestroyAstroid(AsteroidController ast, bool dodged = false)
     {
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
         Destroy(ast.gameObject);
+        // TODO if dodged=False, damage.
+        if (dodged)
+            this.numAsteroidsDodged +=1 ;
     }
     
     void ScatterStars()
@@ -161,7 +168,6 @@ public class EarthController : MonoBehaviour
         var bounds = 100f;
         for (int i = 0; i < n_stars; i++)
         {
-
             var starAngle = Random2.value * 2 * Mathf.PI;
             var starDist2 = Random2.value * starDistSpawn; // todo: even distribution
             var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
@@ -178,7 +184,7 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localScale = new Vector3(0.7f * flamesize, -0.7f * flamesize, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
         this.foodCounterText.text = this.numFood + " Potatos";
-
+        this.asteroidCounterText.text = this.numAsteroidsDodged + " dodged";
         updateStars();
     }
 
@@ -200,6 +206,7 @@ public class EarthController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // spawn new
         if (rnd.NextDouble() <= 0.01)
         {
             this.SpawnAsteroid();
@@ -209,7 +216,21 @@ public class EarthController : MonoBehaviour
             this.SpawnFood();
         }
         
+        // delete old
+        var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+        var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
+        var worldDiagonal = (right_top - left_bottom).magnitude;
+        var destroyAsteroidList = asteroidList.Where(asteroid => (asteroid.pos - this.pos).magnitude > worldDiagonal).ToList();
+        foreach (var asteroid in destroyAsteroidList)
+            DestroyAstroid(asteroid, true);
+        var destroyFoodList = foodList.Where(food => (food.pos - this.pos).magnitude > worldDiagonal).ToList();
+        foreach (var food in destroyFoodList)
+        {
+            DestroyFood(food, false);
+        }
         
+        
+        // movement
         if (Input.GetKey("a"))
         {
             angle += 4f;
@@ -231,6 +252,7 @@ public class EarthController : MonoBehaviour
         }
         this.pos += velo;
 
+        // flame
         if (accelerating)
         {
             if (flamesize < 0.8)
