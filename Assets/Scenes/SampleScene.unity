@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -675,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -1107,7 +1107,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: price
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: remover
