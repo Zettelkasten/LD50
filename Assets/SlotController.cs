@@ -40,6 +40,7 @@ public class SlotController : MonoBehaviour
     {
         if (CanBuildHere() && earth.numFood >= earth.currentShopPrice)
         {
+            earth.numFood -= earth.currentShopPrice;
             if (earth.isUpgrading)
             {
                 // upgrade.
@@ -62,7 +63,6 @@ public class SlotController : MonoBehaviour
         if (this.currentInner != null)
         {
             Destroy(this.currentInner);
-            earth.numFood -= earth.currentShopPrice;
         }
         this.currentInner = Instantiate(innerPrefab, this.transform);
         this.currentInnerBaseScale = this.currentInner.transform.localScale;
