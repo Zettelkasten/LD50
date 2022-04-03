@@ -19,6 +19,7 @@ public class EarthController : MonoBehaviour
     public GameObject thruster;
     public GameObject flame;
     public GameObject cdAnimation;
+    public Animator CdAnimator;
     public Vector2 pos;
     public float angle = 90;  // in deg
     public Vector2 velo;
@@ -28,6 +29,7 @@ public class EarthController : MonoBehaviour
     public int numFlyingSlots = 2;
     public bool accelerating = false;
     public float flamesize = 0;
+    public float timer;
 
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
@@ -190,6 +192,14 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        if (this.timer >= 0)
+        {
+            this.timer -= Time.deltaTime;
+            if (this.timer < 0)
+            {
+                cdAnimation.SetActive(false); 
+            }
+        }
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
@@ -290,9 +300,14 @@ public class EarthController : MonoBehaviour
         {
             Debug.Log("TOD!!!");
         }
-        cdAnimation.SetActive(true);
+        else
+        {
+            cdAnimation.SetActive(true);
+            var animator = CdAnimator.GetComponent<Animator>();
+            var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+            this.timer = clipinfo[0].clip.length;
+        }
         
-
     }
 
     public void UnselectAllShopItems()
