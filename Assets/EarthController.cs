@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using Object = System.Object;
 using Random = System.Random;
 using Random2 = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class EarthController : MonoBehaviour
 {
@@ -340,7 +341,8 @@ public class EarthController : MonoBehaviour
         //var ast_pos = RandomBorderPos();
         if (cdAnimation.activeSelf == true)
         {
-            Debug.Log("TOD!!!");
+            SceneManager.LoadScene("EndScene"); 
+            
         }
         else
         {
