@@ -86,6 +86,7 @@ public class SlotController : MonoBehaviour
         Collector,
         Shooter,
         FlyingShield,
+        Regenerator,
         Thruster
     }
 }
