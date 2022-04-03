@@ -11,6 +11,7 @@ public class SlotController : MonoBehaviour
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
     public bool flyingSlot = false;
+    public bool thrusterSlot = false;
     public int upgradeLevel = 0;
     public float[] upgradeScales = new float[] { 0.7f, 1.0f, 1.3f };
     public int upgradeMax = 3;
@@ -32,7 +33,7 @@ public class SlotController : MonoBehaviour
         if (earth.isUpgrading)
             return this.slotType != SlotType.Empty && this.upgradeLevel < upgradeMax;
         else
-            return this.slotType == SlotType.Empty && (earth.CurrentRequiresFlyingSlot() == flyingSlot);
+            return this.slotType == SlotType.Empty && (earth.CurrentRequiresFlyingSlot() == flyingSlot) && !thrusterSlot;
     }
 
     private void OnMouseDown()
@@ -82,6 +83,7 @@ public class SlotController : MonoBehaviour
         Empty,
         Collector,
         Shooter,
-        FlyingShield
+        FlyingShield,
+        Thruster
     }
 }

@@ -37,8 +37,8 @@ public class EarthController : MonoBehaviour
 
     public GameObject slotPrefab;
     public GameObject[] slots;
+    private SlotController thrusterSlot;
     
-
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
     
     public GameObject foodPrefab;
@@ -59,6 +59,9 @@ public class EarthController : MonoBehaviour
     public bool isUpgrading = false;
     public bool isBuilding = false;
 
+    public float[] angleVelocity;
+    public float[] speed;
+
     void Start()
     {
         cdAnimation.SetActive(false);
@@ -66,7 +69,7 @@ public class EarthController : MonoBehaviour
         instance = this;
         Physics.queriesHitTriggers = true;
         ScatterStars();
-        this.slots = new GameObject[this.numEarthSlots + this.numFlyingSlots];
+        this.slots = new GameObject[this.numEarthSlots + this.numFlyingSlots + 1];
         for (var i = 0; i < this.numEarthSlots; i++)
         {
             var angle = 360 * i / this.numEarthSlots; 
@@ -85,6 +88,13 @@ public class EarthController : MonoBehaviour
             var ctrl = this.slots[i].GetComponent<SlotController>();
             ctrl.flyingSlot = true;
         }
+
+        var thrusterObj = Instantiate(this.slotPrefab, new Vector3(0, 0, -1), Quaternion.identity, this.transform);
+        this.slots[this.numEarthSlots + this.numFlyingSlots] = thrusterObj;
+        this.thrusterSlot = thrusterObj.GetComponent<SlotController>();
+        this.thrusterSlot.thrusterSlot = true;
+        this.thrusterSlot.upgradeLevel = 1;
+        this.thrusterSlot.slotType = SlotController.SlotType.Thruster;
     }
 
     Vector2 RandomBorderPos()
@@ -265,17 +275,17 @@ public class EarthController : MonoBehaviour
         // movement
         if (Input.GetKey("a"))
         {
-            angle += 4f;
+            angle += angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
         else if (Input.GetKey("d"))
         {
-            angle -= 4f;
+            angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
 
         this.velo *= 0.9f;
         if (Input.GetKey("w"))
         {
-            velo += 0.05f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+            velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
             accelerating = true;
         }
         else
