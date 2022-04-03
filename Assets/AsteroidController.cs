@@ -10,7 +10,6 @@ public class AsteroidController : MonoBehaviour
     public Vector2 pos;
     public float angle;  // in deg
     public Vector2 velo;
-    public EarthController earth;
     
 
     void Update()
@@ -21,8 +20,7 @@ public class AsteroidController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (earth is null)
-            return;  // hacky stuff
+        var earth = EarthController.instance;
         this.pos += velo;
         var dist = earth.pos - pos;
         var dist_norm = dist.sqrMagnitude;

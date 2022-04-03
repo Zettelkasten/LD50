@@ -139,7 +139,6 @@ public class EarthController : MonoBehaviour
         var ast_contr = asteroid.GetComponent<AsteroidController>();
         ast_contr.pos = ast_pos;
         ast_contr.velo = RandomBorderVelo(ast_pos);
-        ast_contr.earth = this;
         this.asteroidList.Add(ast_contr);
     }
     void SpawnFood()
