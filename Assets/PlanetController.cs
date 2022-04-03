@@ -6,8 +6,6 @@ using Random = UnityEngine.Random;
 
 public class PlanetController : MonoBehaviour
 {
-    public bool isPlanet;
-    public Vector2 origin;
     public Sprite[] spriteList;
     public int numPlanets;
     
@@ -22,6 +20,6 @@ public class PlanetController : MonoBehaviour
                 spriteNum = (int)(Random.value * (spriteList.Length - numPlanets)) + numPlanets;
             GetComponent<SpriteRenderer>().sprite = spriteList[spriteNum];
             this.transform.localScale = Vector3.one * (5.5f * Random.value + 0.5f);
-e        }
+        }
     }
 }

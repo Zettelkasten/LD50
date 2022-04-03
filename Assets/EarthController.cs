@@ -208,7 +208,6 @@ public class EarthController : MonoBehaviour
             var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
             var star = Instantiate(this.planetPrefab, new Vector3(starPos.x, starPos.y, 4), Quaternion.identity);
             var comp = star.GetComponent<PlanetController>();
-            comp.origin = starPos;
             planetList.Add(comp);
         }
     }
