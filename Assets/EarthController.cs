@@ -18,6 +18,7 @@ public class EarthController : MonoBehaviour
     public GameObject starPrefab;
     public GameObject thruster;
     public GameObject flame;
+    public GameObject cdAnimation;
     public Vector2 pos;
     public float angle = 90;  // in deg
     public Vector2 velo;
@@ -31,6 +32,7 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
     public GameObject[] slots;
+    
 
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
     
@@ -55,6 +57,7 @@ public class EarthController : MonoBehaviour
 
     void Start()
     {
+        cdAnimation.SetActive(false);
         Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
         Physics.queriesHitTriggers = true;
@@ -278,6 +281,18 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
+    }
+    
+    public void SpawnCooldown()
+    {
+        //var ast_pos = RandomBorderPos();
+        if (cdAnimation.activeSelf == true)
+        {
+            Debug.Log("TOD!!!");
+        }
+        cdAnimation.SetActive(true);
+        
+
     }
 
     public void UnselectAllShopItems()

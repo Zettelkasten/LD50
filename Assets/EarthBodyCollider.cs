@@ -15,6 +15,7 @@ public class EarthBodyCollider : MonoBehaviour
         else if (other.gameObject.TryGetComponent<AsteroidController>(out var astCtrl))
         {  
             this.earth.DestroyAstroid(astCtrl);
+            this.earth.SpawnCooldown();
         }
     }
 }
