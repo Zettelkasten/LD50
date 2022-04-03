@@ -483,7 +483,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 1276495456}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!212 &438860772
 SpriteRenderer:
@@ -1099,6 +1099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1276495456}
+  - component: {fileID: 1276495457}
   m_Layer: 0
   m_Name: ThrusterWrapper
   m_TagString: Untagged
@@ -1117,11 +1118,24 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 438860771}
   - {fileID: 1930162794}
+  - {fileID: 438860771}
   m_Father: {fileID: 1201923678}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1276495457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276495455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff7b63570f4cc37be3098719299ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thruster: {fileID: 438860770}
 --- !u!1 &1448201027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1472,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: -0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 1276495456}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1930162795
 SpriteRenderer:

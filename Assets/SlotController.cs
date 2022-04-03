@@ -72,10 +72,12 @@ public class SlotController : MonoBehaviour
 
     private void UpdateInner()
     {
-        if (this.currentInner == null)
-            return;
         var scale = upgradeScales[Math.Min(upgradeLevel - 1, upgradeScales.Length - 1)];
-        this.currentInner.transform.localScale = currentInnerBaseScale * scale;
+
+        if (this.currentInner != null)
+            this.currentInner.transform.localScale = currentInnerBaseScale * scale;
+        if (this.slotType == SlotType.Thruster)
+            earth.thruster.GetComponent<ThrusterWrapperComponent>().thruster.transform.localScale = Vector3.one * scale;
     }
     
     public enum SlotType
