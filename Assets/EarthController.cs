@@ -26,7 +26,9 @@ public class EarthController : MonoBehaviour
     public GameObject cdAnimation;
     public Animator CdAnimator;
     public GameObject athmosphere;
+    public Text text_level;
     public int highscore;
+    public int level = 1;
     public Vector2 pos;
     public float angle = 90;  // in deg
     public Vector2 velo;
@@ -321,10 +323,21 @@ public class EarthController : MonoBehaviour
         if (paused)
             return;
         this.count += Time.deltaTime;
-        if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
+        
+        //6 Levels design
+        /* if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
+         {
+             this.balancing[0] += 0.165f;
+             changeLv += 1;
+         }*/
+        
+        //uncapped level design
+        if (this.count >= balancing[1])
         {
             this.balancing[0] += 0.165f;
-            changeLv += 1;
+            this.count = 0;
+            this.level += 1;
+            this.text_level.text = "Level: " + this.level;
         }
         
         // spawn new
