@@ -16,7 +16,8 @@ public class IntroComponent : MonoBehaviour
     private string currentSpeaker;
     private string currentMessage;
 
-    public string[] dialogue;
+    public TextAsset dialogueText;
+    private string[] dialogue;
 
     private int currentLine = 0;
     private float currentMessageProgress = 0;
@@ -26,6 +27,12 @@ public class IntroComponent : MonoBehaviour
     private void Start()
     {
         Assert.AreEqual(charList.Length, charNames.Length);
+        dialogue = dialogueText.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        
+        // disable all at beginning
+        foreach (var c in this.charList)
+            c.SetActive(false);
+
         currentLine = 0;
         ShowCurrentLine();
     }
@@ -49,10 +56,31 @@ public class IntroComponent : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (currentMessage == null)
+            return;
         if (currentMessageProgress < currentMessage.Length)
         {
             currentMessageProgress += charTime;
         }
         textBox.text = currentMessage.Substring(0, Math.Min((int) currentMessageProgress, currentMessage.Length));
+    }
+
+    public void MouseDown()
+    {
+        if (currentMessageProgress < currentMessage.Length)
+        {
+            currentMessageProgress = currentMessage.Length;
+            return;
+        }
+
+        if (currentLine + 1 < dialogue.Length)
+        {
+            currentLine += 1;
+            ShowCurrentLine();
+        }
+        else
+        {
+            // todo, start game.
+        }
     }
 }
