@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interface
   - Water
   - UI
   - 
@@ -29,8 +29,8 @@ TagManager:
   - 
   - 
   - 
-  - Interface
   - 
+  - Text
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: Interface
     uniqueID: 1739819223
+    locked: 0
+  - name: Text
+    uniqueID: 642052821
     locked: 0

@@ -78,7 +78,7 @@ public class EarthController : MonoBehaviour
         
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
         
-        Debug.Log(this.highscore);
+        //Debug.Log(this.highscore);
         cdAnimation.SetActive(false);
         Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
