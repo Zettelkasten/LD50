@@ -114,13 +114,18 @@ public class EarthController : MonoBehaviour
         return ast_pos;
     }
 
+    public Vector2 RandomBorderVelo(Vector2 borderPos)
+    {
+        return 0.05f * (this.pos - borderPos) * Random2.insideUnitCircle;
+    }
+
     void SpawnAsteroid()
     {
         var ast_pos = RandomBorderPos();
         var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
         var ast_contr = asteroid.GetComponent<AsteroidController>();
         ast_contr.pos = ast_pos;
-        ast_contr.velo = 0.05f * (this.pos - ast_pos).normalized;
+        ast_contr.velo = RandomBorderVelo(ast_pos);
         ast_contr.earth = this;
         this.asteroidList.Add(ast_contr);
     }
@@ -129,9 +134,8 @@ public class EarthController : MonoBehaviour
         var pos = RandomBorderPos();
         var food = Instantiate(this.foodPrefab, pos, Quaternion.identity);
         var contr = food.GetComponent<FoodController>();
-        
         contr.pos = pos;
-        contr.velo = 0.05f * (this.pos - pos).normalized;
+        contr.velo = RandomBorderVelo(pos);
         this.foodList.Add(contr);
     }
 
