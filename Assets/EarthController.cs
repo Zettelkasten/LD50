@@ -24,6 +24,7 @@ public class EarthController : MonoBehaviour
     public GameObject flame;
     public GameObject cdAnimation;
     public Animator CdAnimator;
+    public GameObject athmosphere;
     public int highscore;
     public Vector2 pos;
     public float angle = 90;  // in deg
@@ -236,6 +237,12 @@ public class EarthController : MonoBehaviour
             {
                 cdAnimation.SetActive(false); 
             }
+            
+            var animator = CdAnimator.GetComponent<Animator>();
+            var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+            var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7;
+            this.athmosphere.GetComponent<SpriteRenderer>().color = new Color(1,117f/255f,117f/255f,alpha);
+
         }
         //var animator = CdAnimator.GetComponent<Animator>();
         //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
