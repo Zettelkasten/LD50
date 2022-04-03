@@ -25,15 +25,14 @@ public class LaserEyeController : MonoBehaviour
             if (currentLaserTime <= 0)
             {
                 Destroy(currentLaser);
-                EarthController.instance.DestroyAstroid(currentLaserTarget);
+                if (currentLaserTarget.isActiveAndEnabled)
+                    EarthController.instance.DestroyAstroid(currentLaserTarget);
                 currentLaserTarget = null;
                 currentLaser = null;
                 currentLaserTime = 0;
             }
             else
             {
-                Debug.Log("ok?");
-                Debug.Log(currentLaserTime);
                 var color = currentLaser.GetComponent<LineRenderer>().startColor;
                 color = new Color(color.r, color.g, color.b, currentLaserTime / currentLaserTimeMax);
                 currentLaser.GetComponent<LineRenderer>().startColor = color;
