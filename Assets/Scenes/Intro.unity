@@ -1660,9 +1660,19 @@ MonoBehaviour:
   charList:
   - {fileID: 877310608}
   - {fileID: 877310608}
+  - {fileID: 877310608}
+  - {fileID: 877310608}
+  - {fileID: 877310608}
+  - {fileID: 877310608}
+  - {fileID: 877310608}
   charNames:
   - Mc
   - Greenie
+  - Guac & Greenie
+  - Guac
+  - Gizmo
+  - Ganfred
+  - Everyone
   textBox: {fileID: 428141039}
   dialogueText: {fileID: 4900000, guid: 9c6e4c98982b24944b6d7ff3ccb58571, type: 3}
   charTime: 0.5
