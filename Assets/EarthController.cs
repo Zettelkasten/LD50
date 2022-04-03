@@ -32,7 +32,6 @@ public class EarthController : MonoBehaviour
     public float timer;
 
     public GameObject slotPrefab;
-    public GameObject emptySlotPrefab;
     public GameObject[] slots;
     
 
@@ -72,8 +71,6 @@ public class EarthController : MonoBehaviour
             var pos = this.transform.localScale * 0.37f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
-            var ctrl = this.slots[i].GetComponent<SlotController>();
-            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
 
         for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
@@ -85,7 +82,6 @@ public class EarthController : MonoBehaviour
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
             var ctrl = this.slots[i].GetComponent<SlotController>();
             ctrl.flyingSlot = true;
-            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
     }
 

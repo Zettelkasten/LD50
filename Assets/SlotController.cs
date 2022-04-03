@@ -6,6 +6,7 @@ using UnityEngine;
 public class SlotController : MonoBehaviour
 {
     private GameObject currentInner = null;
+    public GameObject marker;
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
     public bool flyingSlot = false;
@@ -17,9 +18,8 @@ public class SlotController : MonoBehaviour
     }
 
     private void Update()
-    {
-        // also effects children, so always active when there is something built here.
-        this.currentInner.GetComponent<SpriteRenderer>().enabled = this.slotType != SlotType.Empty || CanBuildHere();
+    { ;
+        marker.SetActive(CanBuildHere());
     }
 
     public bool CanBuildHere()
@@ -48,23 +48,19 @@ public class SlotController : MonoBehaviour
                 this.upgradeLevel = 1;
             }
             EarthController.instance.UnselectAllShopItems();
+            EarthController.instance.isBuilding = false;
         }
     }
 
     public void SetInner(GameObject innerPrefab, SlotType slotType)
     {
-        if (this.slotType != SlotType.Empty)
-        {
-            return; //do nothing, slot is taken already.
-        }
         if (this.currentInner != null)
         {
             Destroy(this.currentInner);
-            earth.numFood -= 1; 
+            earth.numFood -= 1;
         }
         this.currentInner = Instantiate(innerPrefab, this.transform);
         this.slotType = slotType;
-        
     }
     
     public enum SlotType
