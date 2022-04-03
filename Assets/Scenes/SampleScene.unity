@@ -1414,9 +1414,9 @@ MonoBehaviour:
   isRemoving: 0
   isBuilding: 0
   angleVelocity:
-  - 2.5
-  - 3
   - 4
+  - 5
+  - 6
   speed:
   - 0.01
   - 0.02
@@ -1431,10 +1431,10 @@ Halo:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201923676}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Color:
     serializedVersion: 2
-    rgba: 4278190222
+    rgba: 224
   m_Size: 1.7
 --- !u!1 &1276495455
 GameObject:
@@ -1575,8 +1575,8 @@ Halo:
   m_Enabled: 1
   m_Color:
     serializedVersion: 2
-    rgba: 4285032696
-  m_Size: 90
+    rgba: 4286611584
+  m_Size: 1.6
 --- !u!1 &1448201027
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,7 +2031,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: price
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: tileType

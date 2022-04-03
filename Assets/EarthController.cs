@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using DefaultNamespace;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Playables;
 using UnityEngine.UI;
@@ -164,7 +165,12 @@ public class EarthController : MonoBehaviour
 
     public Vector2 RandomBorderVelo(Vector2 borderPos)
     {
-        return 0.015f * (this.pos - borderPos) * Random2.insideUnitCircle;
+        var angle = Random2.value*Mathf.PI*2;
+        var speed = Random2.value * 0.15f + 0.03f;
+        var dist = this.pos - borderPos;
+        var dist_norm = Mathf.Sqrt(dist.sqrMagnitude);
+        var direction = (dist / dist_norm + Util.Vector2FromAngle(angle)).normalized;
+        return speed * direction;
     }
 
     void SpawnAsteroid()
@@ -241,8 +247,19 @@ public class EarthController : MonoBehaviour
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
             var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
-            this.athmosphere.GetComponent<SpriteRenderer>().color = new Color(1,0.5f,0.5f,alpha);
+            var athmoscolor = new Color(1,0.5f,0.5f,alpha);
+            this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
+            //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
+            //halo.FindProperty("m_Color").colorValue = athmoscolor;
+            var halo = (Behaviour)this.GetComponent("Halo");
+            halo.enabled = true;
 
+        }
+        else
+        {
+            
+            var halo = (Behaviour)this.GetComponent("Halo");
+            halo.enabled = false;
         }
         //var animator = CdAnimator.GetComponent<Animator>();
         //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
