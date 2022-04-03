@@ -163,7 +163,7 @@ public class EarthController : MonoBehaviour
 
     public Vector2 RandomBorderVelo(Vector2 borderPos)
     {
-        return 0.03f * (this.pos - borderPos) * Random2.insideUnitCircle;
+        return 0.015f * (this.pos - borderPos) * Random2.insideUnitCircle;
     }
 
     void SpawnAsteroid()
