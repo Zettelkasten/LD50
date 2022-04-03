@@ -39,7 +39,7 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject[] slots;
     private SlotController thrusterSlot;
-    private float[] regenerationSpeeds = new float[] { 0.2f, 0.4f, 0.5f };
+    private float[] regenerationSpeeds = new float[] { 0.3f, 0.5f, 0.6f };
     
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
     
@@ -64,6 +64,9 @@ public class EarthController : MonoBehaviour
 
     public float[] angleVelocity;
     public float[] speed;
+    
+    public GameObject planetPrefab;
+    public int numPlanets;
 
     void Start()
     {
@@ -98,6 +101,12 @@ public class EarthController : MonoBehaviour
         this.thrusterSlot.thrusterSlot = true;
         this.thrusterSlot.upgradeLevel = 1;
         this.thrusterSlot.slotType = SlotController.SlotType.Thruster;
+        
+        // planets
+        for (var i = 0; i < numPlanets; i++)
+        {
+            Instantiate(planetPrefab);
+        }
     }
 
     Vector2 RandomBorderPos()
@@ -243,6 +252,13 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    public Vector2 GetWorldDiagonal()
+    {
+        var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+        var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
+        return right_top - left_bottom;
+    }
+
     private void FixedUpdate()
     {
         this.count += Time.deltaTime;
@@ -267,9 +283,7 @@ public class EarthController : MonoBehaviour
         
             
         // delete old
-        var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
-        var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
-        var worldDiagonal = (right_top - left_bottom).magnitude;
+        var worldDiagonal = GetWorldDiagonal().magnitude;
         var destroyAsteroidList = asteroidList.Where(asteroid => (asteroid.pos - this.pos).magnitude > worldDiagonal).ToList();
         foreach (var asteroid in destroyAsteroidList)
             DestroyAstroid(asteroid, true);
