@@ -54,7 +54,7 @@ public class EarthController : MonoBehaviour
     public const float starDist = 30f;
     public const float starDistSpawn = 28f;
     public const int n_stars = 200;
-    public GameObject[] stars = new GameObject[n_stars];
+    public List<PlanetController> planetList = new List<PlanetController>();
 
     public SlotController.SlotType[] tileTypes;
     public GameObject[] tileTypePrefabs;
@@ -201,14 +201,15 @@ public class EarthController : MonoBehaviour
     
     void ScatterStars()
     {
-        var bounds = 100f;
-        for (int i = 0; i < n_stars; i++)
+        for (int i = 0; i < numPlanets; i++)
         {
             var starAngle = Random2.value * 2 * Mathf.PI;
             var starDist2 = Random2.value * starDistSpawn; // todo: even distribution
             var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
-            var star = Instantiate(this.starPrefab, new Vector3(starPos.x, starPos.y, 4), Quaternion.identity);
-            stars[i] = star;
+            var star = Instantiate(this.planetPrefab, new Vector3(starPos.x, starPos.y, 4), Quaternion.identity);
+            var comp = star.GetComponent<PlanetController>();
+            comp.origin = starPos;
+            planetList.Add(comp);
         }
     }
     
@@ -234,21 +235,21 @@ public class EarthController : MonoBehaviour
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
         this.foodCounterText.text = this.numFood + " Potatos";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " dodged";
-        updateStars();
+        UpdatePlanets();
     }
 
-    private void updateStars()
+    private void UpdatePlanets()
     {
-        for (int i = 0; i < n_stars; i++)
+        foreach (var star in planetList)
         {
-            Vector2 starpos = stars[i].transform.position;
+            Vector2 starpos = star.transform.position;
             var dist = starpos - pos;
             var dist_norm = dist.SqrMagnitude();
             if (dist_norm > starDist * starDist)
             {
                 var starangle = (Random2.value-0.5f) * Mathf.PI + angle * Mathf.Deg2Rad;
                 var starpos_new = pos +  (Random2.value + starDistSpawn) * Util.Vector2FromAngle(starangle);
-                stars[i].transform.position = new Vector3(starpos_new.x,starpos_new.y,4);
+                star.transform.position = new Vector3(starpos_new.x,starpos_new.y,4);
             }
         }
     }
