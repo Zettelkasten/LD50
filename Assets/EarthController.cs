@@ -37,6 +37,11 @@ public class EarthController : MonoBehaviour
     public List<FoodController> foodList = new List<FoodController>();
     public int numFood = 0;
     public Text foodCounterText;
+    
+    public const float starDist = 30f;
+    public const float starDistSpawn = 28f;
+    public const int n_stars = 200;
+    public GameObject[] stars = new GameObject[n_stars];
 
     public float collectorSuckDistance;
 
@@ -145,11 +150,14 @@ public class EarthController : MonoBehaviour
     void ScatterStars()
     {
         var bounds = 100f;
-        var n_stars = 300;
         for (int i = 0; i < n_stars; i++)
         {
-            var starPos = new Vector3(Random2.Range(-bounds, bounds), Random2.Range(-bounds, bounds),2);
+
+            var starAngle = Random2.value * 2 * Mathf.PI;
+            var starDist2 = Random2.value * starDistSpawn; // todo: even distribution
+            var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
             var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
+            stars[i] = star;
         }
     }
     
@@ -161,6 +169,24 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localScale = new Vector3(0.7f * flamesize, -0.7f * flamesize, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
         this.foodCounterText.text = this.numFood + " Potatos";
+
+        updateStars();
+    }
+
+    private void updateStars()
+    {
+        for (int i = 0; i < n_stars; i++)
+        {
+            Vector2 starpos = stars[i].transform.position;
+            var dist = starpos - pos;
+            var dist_norm = dist.SqrMagnitude();
+            if (dist_norm > starDist * starDist)
+            {
+                var starangle = (Random2.value-0.5f) * Mathf.PI + angle * Mathf.Deg2Rad;
+                var starpos_new = pos +  (Random2.value + starDistSpawn) * Util.Vector2FromAngle(starangle);
+                stars[i].transform.position = new Vector3(starpos_new.x,starpos_new.y,2);
+            }
+        }
     }
 
     private void FixedUpdate()
