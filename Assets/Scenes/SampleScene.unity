@@ -2195,6 +2195,22 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1739819223
       objectReference: {fileID: 0}
+    - target: {fileID: 4823339826252042644, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.9999838
+      objectReference: {fileID: 0}
+    - target: {fileID: 4823339826252042644, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999547
+      objectReference: {fileID: 0}
+    - target: {fileID: 4823339826252042644, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.003010002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4823339826252042644, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.345
+      objectReference: {fileID: 0}
     - target: {fileID: 8177002870199987730, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer
       value: 1
