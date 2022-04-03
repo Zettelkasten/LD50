@@ -23,14 +23,13 @@ public class EarthController : MonoBehaviour
     public Vector2 velo;
     public Camera camera;
     public Random rnd = new Random();
-    public int numSlots = 6;
+    public int numEarthSlots = 6;
+    public int numFlyingSlots = 2;
     public bool accelerating = false;
     public float flamesize = 0;
 
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
-    public GameObject collectorPrefab;
-    public GameObject shooterPrefab;
     public GameObject[] slots;
 
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
@@ -49,27 +48,37 @@ public class EarthController : MonoBehaviour
 
     public float collectorSuckDistance;
 
-    public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector };
+    public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector, SlotController.SlotType.FlyingShield };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;
     public bool isBuilding = false;
 
     void Start()
     {
-        tileTypePrefabs = new[] { shooterPrefab, collectorPrefab };
         Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
         Physics.queriesHitTriggers = true;
-        this.slots = new GameObject[this.numSlots];
         ScatterStars();
-        for (var i = 0; i < this.numSlots; i++)
+        this.slots = new GameObject[this.numEarthSlots + this.numFlyingSlots];
+        for (var i = 0; i < this.numEarthSlots; i++)
         {
-            var angle = 360 * i / this.numSlots; 
+            var angle = 360 * i / this.numEarthSlots; 
             var pos = this.transform.localScale * 0.37f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
             var ctrl = this.slots[i].GetComponent<SlotController>();
-            ctrl.earth = this;
+            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
+        }
+
+        for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
+        {
+            var ii = i - this.numEarthSlots;
+            var angle = 90 - 60 + 120 * ii;
+            var pos = this.transform.localScale * 0.8f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
+            this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
+            this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
+            var ctrl = this.slots[i].GetComponent<SlotController>();
+            ctrl.flyingSlot = true;
             ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
     }
@@ -277,5 +286,10 @@ public class EarthController : MonoBehaviour
         foreach (var obj in FindObjectsOfType<ShopItemComponent>())
             obj.selected = false;
         this.isBuilding = false;
+    }
+
+    public bool CurrentRequiresFlyingSlot()
+    {
+        return this.tileTypes[this.currentTileType] == SlotController.SlotType.FlyingShield;
     }
 }
