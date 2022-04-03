@@ -16,7 +16,7 @@ public class SlotController : MonoBehaviour
         {
             return;  // no idea? wtf?
         }
-
+    
         if (earth.numFood >= 1)
         {
             SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);

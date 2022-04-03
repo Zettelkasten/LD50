@@ -136,6 +136,8 @@ public class EarthController : MonoBehaviour
 
     public void DestroyFood(FoodController food)
     {
+        if (!this.foodList.Contains(food))
+            return;
         this.foodList.Remove(food);
         Destroy(food.gameObject);
         this.numFood += 1;
@@ -143,6 +145,8 @@ public class EarthController : MonoBehaviour
     
     public void DestroyAstroid(AsteroidController ast)
     {
+        if (!this.asteroidList.Contains(ast))
+            return;
         this.asteroidList.Remove(ast);
         Destroy(ast.gameObject);
     }
