@@ -6,11 +6,14 @@ using UnityEngine;
 public class SlotController : MonoBehaviour
 {
     private GameObject currentInner = null;
+    private Vector3 currentInnerBaseScale = Vector3.zero;
     public GameObject marker;
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
     public bool flyingSlot = false;
     public int upgradeLevel = 0;
+    public float[] upgradeScales = new float[] { 0.7f, 1.0f, 1.3f };
+    public int upgradeMax = 3;
 
     private void Start()
     {
@@ -27,7 +30,7 @@ public class SlotController : MonoBehaviour
         if (!earth.isBuilding)
             return false;
         if (earth.isUpgrading)
-            return this.slotType != SlotType.Empty;
+            return this.slotType != SlotType.Empty && this.upgradeLevel < upgradeMax;
         else
             return this.slotType == SlotType.Empty && (earth.CurrentRequiresFlyingSlot() == flyingSlot);
     }
@@ -44,9 +47,10 @@ public class SlotController : MonoBehaviour
             else
             {
                 // build.
-                SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
                 this.upgradeLevel = 1;
+                SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
             }
+            UpdateInner();
             EarthController.instance.UnselectAllShopItems();
             EarthController.instance.isBuilding = false;
         }
@@ -60,7 +64,17 @@ public class SlotController : MonoBehaviour
             earth.numFood -= 1;
         }
         this.currentInner = Instantiate(innerPrefab, this.transform);
+        this.currentInnerBaseScale = this.currentInner.transform.localScale;
         this.slotType = slotType;
+        UpdateInner();
+    }
+
+    private void UpdateInner()
+    {
+        if (this.currentInner == null)
+            return;
+        var scale = upgradeScales[Math.Min(upgradeLevel - 1, upgradeScales.Length - 1)];
+        this.currentInner.transform.localScale = currentInnerBaseScale * scale;
     }
     
     public enum SlotType
