@@ -34,7 +34,7 @@ public class EarthController : MonoBehaviour
     public float regenerationSpeed = 1f;
     public float[] balancing; //difficulty thresholds in seconds, doesnt work though, edited in Unity
     public float count; //timer for balancing
-    public int changeLv = 1; //value to change difficulty
+    public int changeLv = 1 ; //value to change difficulty
 
     public GameObject slotPrefab;
     public GameObject[] slots;
