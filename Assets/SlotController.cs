@@ -31,7 +31,7 @@ public class SlotController : MonoBehaviour
         if (!earth.isBuilding)
             return false;
         if (earth.isRemoving)
-            return this.slotType != SlotType.Empty;
+            return this.slotType != SlotType.Empty && this.slotType != SlotType.Thruster;
         if (earth.isUpgrading)
             return this.slotType != SlotType.Empty && this.upgradeLevel < upgradeMax;
         else
