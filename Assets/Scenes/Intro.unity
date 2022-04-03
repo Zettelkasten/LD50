@@ -625,17 +625,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charList:
-  - {fileID: 0}
+  - {fileID: 877310608}
   - {fileID: 877310608}
   charNames:
   - Mc
   - Greenie
   textBox: {fileID: 428141039}
-  dialogue:
-  - 'Greenie: HelloHelloHelloH elloHelloHelloHelloHelloHelloHelloHelloHelloHelloHell
-    oHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello'
-  - 'Guac: What the fuck'
-  - 'Greenie: Good bye'
+  dialogueText: {fileID: 4900000, guid: 9c6e4c98982b24944b6d7ff3ccb58571, type: 3}
   charTime: 0.5
 --- !u!1 &1682195592
 GameObject:

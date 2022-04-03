@@ -17,7 +17,7 @@ public class IntroComponent : MonoBehaviour
     private string currentMessage;
 
     public TextAsset dialogueText;
-    public string[] dialogue;
+    private string[] dialogue;
 
     private int currentLine = 0;
     private float currentMessageProgress = 0;
@@ -26,18 +26,19 @@ public class IntroComponent : MonoBehaviour
 
     private void Start()
     {
-        dialogue = dialogueText.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         Assert.AreEqual(charList.Length, charNames.Length);
+        dialogue = dialogueText.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        
+        // disable all at beginning
+        foreach (var c in this.charList)
+            c.SetActive(false);
+
         currentLine = 0;
         ShowCurrentLine();
     }
 
     public void ShowCurrentLine()
     {
-        // disable others
-        foreach (var c in this.charList)
-            c.SetActive(false);
-        
         var fullLine = dialogue[currentLine];
         var splitBy = new char[] { ':' };
         var split = fullLine.Split(splitBy, 2);
