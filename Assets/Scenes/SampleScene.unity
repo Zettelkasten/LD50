@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 1201923678}
   - component: {fileID: 1201923677}
   - component: {fileID: 1201923679}
+  - component: {fileID: 1201923680}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Untagged
@@ -1421,6 +1422,18 @@ MonoBehaviour:
   paused: 0
   planetPrefab: {fileID: 6886836907900536935, guid: 933d66ae27d90bb538cbb040a14f72d2, type: 3}
   numPlanets: 300
+--- !u!122 &1201923680
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201923676}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1.7
 --- !u!1 &1276495455
 GameObject:
   m_ObjectHideFlags: 0

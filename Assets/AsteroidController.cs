@@ -27,9 +27,9 @@ public class AsteroidController : MonoBehaviour
         this.pos += velo;
         var dist = earth.pos - pos;
         var dist_norm = dist.sqrMagnitude;
-        this.velo += 1e-1f * dist / (0.01f + Mathf.Pow(dist_norm,2));
+        this.velo += 2e-2f * dist / (0.01f + Mathf.Pow(dist_norm,2));
         // this.velo += 1e-3f *  (earth.pos - pos);
-        this.velo *= 1 - 1e-20f;
+        //this.velo *= 1 - 1e-20f;
         // this.angle += 2;
     }
 }

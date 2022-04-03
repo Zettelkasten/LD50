@@ -304,7 +304,7 @@ public class EarthController : MonoBehaviour
         {
             this.SpawnAsteroid();
         }
-        if (rnd.NextDouble() <= 0.02)
+        if (rnd.NextDouble() <= 0.03)
         {
             this.SpawnFood();
         }
