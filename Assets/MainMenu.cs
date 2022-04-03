@@ -11,8 +11,9 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    public void RestartGame()
+    public void StartGame()
     {
-        SceneManager.LoadScene("Game"); 
+        SceneManager.LoadScene("SampleScene"); 
     }
+    
 }
