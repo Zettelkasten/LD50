@@ -39,7 +39,7 @@ public class EarthController : MonoBehaviour
     public GameObject slotPrefab;
     public GameObject[] slots;
     private SlotController thrusterSlot;
-    private float[] regenerationSpeeds = new float[] { 0.2f, 0.4f, 0.5f };
+    private float[] regenerationSpeeds = new float[] { 0.3f, 0.5f, 0.6f };
     
     public List<AsteroidController> asteroidList = new List<AsteroidController>();
     

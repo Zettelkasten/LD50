@@ -21,11 +21,14 @@ public class CollectorController : MonoBehaviour
             var dist = (Vector2)this.transform.position - food.pos;
             if (dist.magnitude < suckDistance[GetUpgradeLevel()])
             {
-                food.velo += suckStrength[GetUpgradeLevel()] * dist.normalized;
+                /*food.velo += suckStrength[GetUpgradeLevel()] * dist.normalized;
                 if (food.velo.magnitude < 0.02)
                 {
                     food.velo += suckStrength[GetUpgradeLevel()] * dist.normalized;
-                }
+                }*/
+                var foodVelo = food.velo;
+                var velo_para = foodVelo * Vector2.Dot(foodVelo,dist);
+
             }
         }
     }
