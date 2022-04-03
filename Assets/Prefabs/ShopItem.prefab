@@ -280,7 +280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.002, y: 0.223}
+  m_AnchoredPosition: {x: 0.002, y: 0.238}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2062519245111688750
@@ -312,8 +312,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 26
+    m_Font: {fileID: 12800000, guid: 4af48799769f3524ea91829b4a38f674, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -385,6 +385,7 @@ MonoBehaviour:
   price: 10
   tooExpansive: {r: 0.8392157, g: 0.3529412, b: 0.21176471, a: 1}
   upgrader: 0
+  remover: 0
   selected: 0
 --- !u!61 &543328884736481027
 BoxCollider2D:

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3637658812999750461}
   - component: {fileID: 4155925923492920807}
   m_Layer: 0
-  m_Name: Flyi
+  m_Name: Gizzmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

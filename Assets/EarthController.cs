@@ -69,13 +69,14 @@ public class EarthController : MonoBehaviour
 
     public float[] angleVelocity;
     public float[] speed;
+
+    public bool paused = false;
     
     public GameObject planetPrefab;
     public int numPlanets;
 
     void Start()
     {
-        
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
         
         cdAnimation.SetActive(false);
@@ -220,8 +221,15 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        if (paused)
+        {
+            if (this.timer >= 0)
+                CdAnimator.speed = 0;
+            return;
+        }
         if (this.timer >= 0)
         {
+            CdAnimator.speed = regenerationSpeed;
             this.timer -= Time.deltaTime * regenerationSpeed;
 
             if (this.timer < 0)
@@ -267,17 +275,30 @@ public class EarthController : MonoBehaviour
         return right_top - left_bottom;
     }
 
+    public void CalcRegenerationSpeed()
+    {
+        regenerationSpeed = 1f;
+        foreach (var slot in (slots))
+        {
+            var component = slot.GetComponent<SlotController>();
+            if (component.slotType == SlotController.SlotType.Regenerator)
+            {
+                regenerationSpeed += regenerationSpeeds[component.upgradeLevel - 1];
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
+        if (paused)
+            return;
         this.count += Time.deltaTime;
-        //Debug.Log("Level:" + this.changeLv);
         if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
         {
             this.balancing[0] += 0.165f;
             changeLv += 1;
         }
-
-
+        
         // spawn new
         if (rnd.NextDouble() <= 0.1 * this.balancing[0])
         {
@@ -368,22 +389,12 @@ public class EarthController : MonoBehaviour
         }
         else
         {
-            regenerationSpeed = 1f;
-            foreach (var slot in (slots))
-            {
-                var component = slot.GetComponent<SlotController>();
-                if (component.slotType == SlotController.SlotType.Regenerator)
-                {
-                    regenerationSpeed += regenerationSpeeds[component.upgradeLevel - 1];
-                }
-            }
-
+            CalcRegenerationSpeed();
             CdAnimator.speed = regenerationSpeed;
             cdAnimation.SetActive(true);
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
             this.timer = clipinfo[0].clip.length;
-            
         }
         
     }
