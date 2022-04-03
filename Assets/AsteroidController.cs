@@ -10,7 +10,6 @@ public class AsteroidController : MonoBehaviour
     public Vector2 pos;
     public float angle;  // in deg
     public Vector2 velo;
-    
 
     void Update()
     {

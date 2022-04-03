@@ -36,7 +36,6 @@ public class EarthController : MonoBehaviour
     public int changeLv = 1; //value to change difficulty
 
     public GameObject slotPrefab;
-    public GameObject emptySlotPrefab;
     public GameObject[] slots;
     
 
@@ -54,11 +53,10 @@ public class EarthController : MonoBehaviour
     public const int n_stars = 200;
     public GameObject[] stars = new GameObject[n_stars];
 
-    public float collectorSuckDistance;
-
     public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector, SlotController.SlotType.FlyingShield };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;
+    public bool isUpgrading = false;
     public bool isBuilding = false;
 
     void Start()
@@ -75,8 +73,6 @@ public class EarthController : MonoBehaviour
             var pos = this.transform.localScale * 0.37f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
-            var ctrl = this.slots[i].GetComponent<SlotController>();
-            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
 
         for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
@@ -88,7 +84,6 @@ public class EarthController : MonoBehaviour
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
             var ctrl = this.slots[i].GetComponent<SlotController>();
             ctrl.flyingSlot = true;
-            ctrl.SetInner(emptySlotPrefab, SlotController.SlotType.Empty);
         }
     }
 
@@ -329,7 +324,6 @@ public class EarthController : MonoBehaviour
     {
         foreach (var obj in FindObjectsOfType<ShopItemComponent>())
             obj.selected = false;
-        this.isBuilding = false;
     }
 
     public bool CurrentRequiresFlyingSlot()
