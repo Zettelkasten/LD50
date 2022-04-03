@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Experimental.Playables;
@@ -30,6 +31,9 @@ public class EarthController : MonoBehaviour
     public bool accelerating = false;
     public float flamesize = 0;
     public float timer;
+    public float[] balancing; //difficulty thresholds in seconds, doesnt work though, edited in Unity
+    public float count; //timer for balancing
+    public int changeLv = 1; //value to change difficulty
 
     public GameObject slotPrefab;
     public GameObject emptySlotPrefab;
@@ -228,16 +232,27 @@ public class EarthController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        this.count += Time.deltaTime;
+        Debug.Log("Level:" + this.changeLv);
+        if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length)
+        {
+            this.balancing[0] += 0.165f;
+            changeLv += 1;
+        }
+
+
         // spawn new
-        if (rnd.NextDouble() <= 0.01)
+        if (rnd.NextDouble() <= 0.1 * this.balancing[0])
         {
             this.SpawnAsteroid();
         }
-        if (rnd.NextDouble() <= 0.01)
+        if (rnd.NextDouble() <= 0.02)
         {
             this.SpawnFood();
         }
         
+        
+            
         // delete old
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
         var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
