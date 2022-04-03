@@ -31,6 +31,7 @@ public class EarthController : MonoBehaviour
     public bool accelerating = false;
     public float flamesize = 0;
     public float timer;
+    public float regenerationSpeed = 1f;
     public float[] balancing; //difficulty thresholds in seconds, doesnt work though, edited in Unity
     public float count; //timer for balancing
     public int changeLv = 1 ; //value to change difficulty
@@ -145,7 +146,7 @@ public class EarthController : MonoBehaviour
 
     public Vector2 RandomBorderVelo(Vector2 borderPos)
     {
-        return 0.05f * (this.pos - borderPos) * Random2.insideUnitCircle;
+        return 0.03f * (this.pos - borderPos) * Random2.insideUnitCircle;
     }
 
     void SpawnAsteroid()
@@ -205,13 +206,17 @@ public class EarthController : MonoBehaviour
     {
         if (this.timer >= 0)
         {
-            this.timer -= Time.deltaTime;
+            this.timer -= Time.deltaTime * regenerationSpeed;
 
             if (this.timer < 0)
             {
                 cdAnimation.SetActive(false); 
             }
         }
+        //var animator = CdAnimator.GetComponent<Animator>();
+        //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+
+
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
@@ -325,19 +330,18 @@ public class EarthController : MonoBehaviour
         }
         else
         {
-            /*
-            var regeneration = 1f;
+            regenerationSpeed = 1f;
             foreach (var slot in (slots))
             {
-                var component = slot.transform.parent.parent.GetComponent<SlotController>();
+                var component = slot.GetComponent<SlotController>();
                 if (component.slotType == SlotController.SlotType.Regenerator)
                 {
-                    regeneration += regenerationSpeeds[component.upgradeLevel - 1];
+                    regenerationSpeed += regenerationSpeeds[component.upgradeLevel - 1];
                 }
             }
 
-            CdAnimator.speed = regeneration;
-            Debug.Log(regeneration);*/
+            CdAnimator.speed = regenerationSpeed;
+            Debug.Log("regenerationSpeed" + regenerationSpeed);
             cdAnimation.SetActive(true);
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
