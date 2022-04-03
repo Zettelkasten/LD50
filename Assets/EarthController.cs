@@ -64,6 +64,7 @@ public class EarthController : MonoBehaviour
     public int currentTileType;
     public int currentShopPrice;
     public bool isUpgrading = false;
+    public bool isRemoving = false;
     public bool isBuilding = false;
 
     public float[] angleVelocity;

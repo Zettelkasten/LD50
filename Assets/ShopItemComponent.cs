@@ -14,6 +14,7 @@ public class ShopItemComponent : MonoBehaviour
     public Color tooExpansive;
 
     public bool upgrader = false;
+    public bool remover = false;
 
     public bool selected = false;
 
@@ -35,11 +36,19 @@ public class ShopItemComponent : MonoBehaviour
         if (this.upgrader)
         {
             EarthController.instance.isUpgrading = true;
+            EarthController.instance.isRemoving = false;
+            EarthController.instance.currentTileType = -1;
+        }
+        else if (this.remover)
+        {
+            EarthController.instance.isUpgrading = false;
+            EarthController.instance.isRemoving = true;
             EarthController.instance.currentTileType = -1;
         }
         else
         {
             EarthController.instance.isUpgrading = false;
+            EarthController.instance.isRemoving = false;
             EarthController.instance.currentTileType = tileType;
         }
         EarthController.instance.currentShopPrice = price;

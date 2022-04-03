@@ -30,6 +30,8 @@ public class SlotController : MonoBehaviour
     {
         if (!earth.isBuilding)
             return false;
+        if (earth.isRemoving)
+            return this.slotType != SlotType.Empty;
         if (earth.isUpgrading)
             return this.slotType != SlotType.Empty && this.upgradeLevel < upgradeMax;
         else
@@ -45,6 +47,14 @@ public class SlotController : MonoBehaviour
             {
                 // upgrade.
                 this.upgradeLevel++;
+            }
+            else if (earth.isRemoving)
+            {
+                earth.numFood += 5;
+                Destroy(this.currentInner);
+                this.currentInner = null;
+                this.slotType = SlotType.Empty;
+                return;
             }
             else
             {
