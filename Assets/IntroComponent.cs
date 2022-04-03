@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class IntroComponent : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class IntroComponent : MonoBehaviour
         currentChar.SetActive(true);
 
         textBox.text = "";
+        currentMessageProgress = 0;
     }
 
     private void FixedUpdate()
@@ -63,6 +65,11 @@ public class IntroComponent : MonoBehaviour
             currentMessageProgress += charTime;
         }
         textBox.text = currentMessage.Substring(0, Math.Min((int) currentMessageProgress, currentMessage.Length));
+        
+        if (Input.GetKeyDown("space"))
+        {
+            MouseDown();
+        }
     }
 
     public void MouseDown()
