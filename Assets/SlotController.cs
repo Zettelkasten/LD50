@@ -16,7 +16,6 @@ public class SlotController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("WHY");
         if (this.earth == null)
         {
             return;  // no idea? wtf?
@@ -25,7 +24,7 @@ public class SlotController : MonoBehaviour
         if (earth.isBuilding && earth.numFood >= 1)
         {
             SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
-            earth.isBuilding = false;
+            EarthController.instance.UnselectAllShopItems();
         }
     }
 

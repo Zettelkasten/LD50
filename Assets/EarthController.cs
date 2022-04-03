@@ -6,6 +6,7 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Experimental.Playables;
 using UnityEngine.UI;
+using Object = System.Object;
 using Random = System.Random;
 using Random2 = UnityEngine.Random;
 
@@ -269,5 +270,12 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
+    }
+
+    public void UnselectAllShopItems()
+    {
+        foreach (var obj in FindObjectsOfType<ShopItemComponent>())
+            obj.selected = false;
+        this.isBuilding = false;
     }
 }
