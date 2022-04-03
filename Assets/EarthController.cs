@@ -12,9 +12,11 @@ using Random = System.Random;
 using Random2 = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
+
 public class EarthController : MonoBehaviour
 {
     public static EarthController instance;
+    
     
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
@@ -22,6 +24,7 @@ public class EarthController : MonoBehaviour
     public GameObject flame;
     public GameObject cdAnimation;
     public Animator CdAnimator;
+    public int highscore;
     public Vector2 pos;
     public float angle = 90;  // in deg
     public Vector2 velo;
@@ -71,6 +74,10 @@ public class EarthController : MonoBehaviour
 
     void Start()
     {
+        
+        this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
+        
+        Debug.Log(this.highscore);
         cdAnimation.SetActive(false);
         Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
@@ -347,8 +354,13 @@ public class EarthController : MonoBehaviour
         //var ast_pos = RandomBorderPos();
         if (cdAnimation.activeSelf == true)
         {
-            SceneManager.LoadScene("EndScene"); 
-            
+            if (this.numAsteroidsDodged > this.highscore)
+            {
+                this.highscore = this.numAsteroidsDodged;
+                PlayerPrefs.SetInt("highscore", highscore);
+                PlayerPrefs.Save();
+            }
+            SceneManager.LoadScene("EndScene");
         }
         else
         {
