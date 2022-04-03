@@ -156,7 +156,7 @@ public class EarthController : MonoBehaviour
             var starAngle = Random2.value * 2 * Mathf.PI;
             var starDist2 = Random2.value * starDistSpawn; // todo: even distribution
             var starPos = pos +  starDist2 * Util.Vector2FromAngle(starAngle);
-            var star = Instantiate(this.starPrefab, starPos, Quaternion.identity);
+            var star = Instantiate(this.starPrefab, new Vector3(starPos.x, starPos.y, 4), Quaternion.identity);
             stars[i] = star;
         }
     }
@@ -184,7 +184,7 @@ public class EarthController : MonoBehaviour
             {
                 var starangle = (Random2.value-0.5f) * Mathf.PI + angle * Mathf.Deg2Rad;
                 var starpos_new = pos +  (Random2.value + starDistSpawn) * Util.Vector2FromAngle(starangle);
-                stars[i].transform.position = new Vector3(starpos_new.x,starpos_new.y,2);
+                stars[i].transform.position = new Vector3(starpos_new.x,starpos_new.y,4);
             }
         }
     }
