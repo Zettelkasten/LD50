@@ -25,7 +25,7 @@ public class LaserEyeController : MonoBehaviour
             if (currentLaserTime <= 0)
             {
                 Destroy(currentLaser);
-                if (currentLaserTarget.isActiveAndEnabled)
+                if (EarthController.instance.asteroidList.Contains(currentLaserTarget))
                     EarthController.instance.DestroyAstroid(currentLaserTarget);
                 currentLaserTarget = null;
                 currentLaser = null;
