@@ -41,6 +41,7 @@ public class EarthController : MonoBehaviour
     public float[] balancing; //difficulty thresholds in seconds, doesnt work though, edited in Unity
     public float count; //timer for balancing
     public int changeLv = 1 ; //value to change difficulty
+    public float shakeAmount;
 
     public GameObject slotPrefab;
     public GameObject[] slots;
@@ -253,11 +254,9 @@ public class EarthController : MonoBehaviour
             //halo.FindProperty("m_Color").colorValue = athmoscolor;
             var halo = (Behaviour)this.GetComponent("Halo");
             halo.enabled = true;
-
         }
         else
         {
-            
             var halo = (Behaviour)this.GetComponent("Halo");
             halo.enabled = false;
         }
@@ -270,7 +269,12 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localPosition = new Vector3(x: 0f, y: -0.42f * (thrusterfactor + 1)/2, 0);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
-        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.camera.transform.position.z);
+        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
+            this.camera.transform.position.z);
+        if (this.timer >= 0)
+        {
+            this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
+        }
         this.foodCounterText.text = this.numFood + " Potatos";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " dodged";
         UpdatePlanets();

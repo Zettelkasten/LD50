@@ -1392,6 +1392,7 @@ MonoBehaviour:
   - 360
   count: 0
   changeLv: 1
+  shakeAmount: 0.2
   slotPrefab: {fileID: 1990767909471923902, guid: e4dbc4b2102d2d21aae308705ec51788, type: 3}
   slots: []
   asteroidList: []
