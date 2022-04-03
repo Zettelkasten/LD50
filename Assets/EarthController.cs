@@ -328,7 +328,7 @@ public class EarthController : MonoBehaviour
             var regeneration = 1f;
             foreach (var slot in (slots))
             {
-                var component = slot.transform.parent.parent.GetComponent<SlotController>();
+                var component = slot.GetComponent<SlotController>();
                 if (component.slotType == SlotController.SlotType.Regenerator)
                 {
                     regeneration += regenerationSpeeds[component.upgradeLevel - 1];
