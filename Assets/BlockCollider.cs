@@ -7,7 +7,7 @@ using UnityEngine;
 public class BlockCollider : MonoBehaviour
 {
     public float angle;  // in deg
-    public float angleSpeed = 1;
+    public float[] angleSpeed;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class BlockCollider : MonoBehaviour
 
     public void FixedUpdate()
     {
-        angle += this.angleSpeed;
+        angle += this.angleSpeed[GetUpgradeLevel()];
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -35,5 +35,9 @@ public class BlockCollider : MonoBehaviour
             var normal = Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             asteroid.velo = Vector2.Reflect(asteroid.velo, normal) + 0.5f * earth.velo;
         }
+    }
+    private int GetUpgradeLevel()
+    {
+        return this.transform.parent.GetComponent<SlotController>().upgradeLevel - 1;
     }
 }

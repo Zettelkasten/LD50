@@ -165,4 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  angleSpeed: 1
+  angleSpeed:
+  - 2
+  - 3
+  - 4
