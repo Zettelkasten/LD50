@@ -276,7 +276,7 @@ public class EarthController : MonoBehaviour
             this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
         }
         this.foodCounterText.text = this.numFood + " Potatos";
-        this.asteroidCounterText.text = this.numAsteroidsDodged + " dodged";
+        this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
         UpdatePlanets();
     }
 
