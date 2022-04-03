@@ -10,5 +10,6 @@ public class ShopItemComponent : MonoBehaviour
     private void OnMouseDown()
     {
         EarthController.instance.currentTileType = tileType;
+        EarthController.instance.isBuilding = true;
     }
 }

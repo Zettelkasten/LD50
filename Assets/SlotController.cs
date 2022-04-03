@@ -9,6 +9,11 @@ public class SlotController : MonoBehaviour
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
 
+    private void Update()
+    {
+        this.currentInner.GetComponent<SpriteRenderer>().enabled = this.slotType != SlotType.Empty || this.earth.isBuilding;
+    }
+
     private void OnMouseDown()
     {
         Debug.Log("WHY");
@@ -16,10 +21,11 @@ public class SlotController : MonoBehaviour
         {
             return;  // no idea? wtf?
         }
-    
-        if (earth.numFood >= 1)
+
+        if (earth.isBuilding && earth.numFood >= 1)
         {
             SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
+            earth.isBuilding = false;
         }
     }
 

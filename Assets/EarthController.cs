@@ -48,7 +48,8 @@ public class EarthController : MonoBehaviour
     public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;
-    
+    public bool isBuilding = false;
+
     void Start()
     {
         tileTypePrefabs = new[] { shooterPrefab, collectorPrefab };
