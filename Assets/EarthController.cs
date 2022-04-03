@@ -222,9 +222,14 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         if (paused)
+        {
+            if (this.timer >= 0)
+                CdAnimator.speed = 0;
             return;
+        }
         if (this.timer >= 0)
         {
+            CdAnimator.speed = regenerationSpeed;
             this.timer -= Time.deltaTime * regenerationSpeed;
 
             if (this.timer < 0)
@@ -268,6 +273,19 @@ public class EarthController : MonoBehaviour
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
         var right_top = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, camera.nearClipPlane));
         return right_top - left_bottom;
+    }
+
+    public void CalcRegenerationSpeed()
+    {
+        regenerationSpeed = 1f;
+        foreach (var slot in (slots))
+        {
+            var component = slot.GetComponent<SlotController>();
+            if (component.slotType == SlotController.SlotType.Regenerator)
+            {
+                regenerationSpeed += regenerationSpeeds[component.upgradeLevel - 1];
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -371,22 +389,12 @@ public class EarthController : MonoBehaviour
         }
         else
         {
-            regenerationSpeed = 1f;
-            foreach (var slot in (slots))
-            {
-                var component = slot.GetComponent<SlotController>();
-                if (component.slotType == SlotController.SlotType.Regenerator)
-                {
-                    regenerationSpeed += regenerationSpeeds[component.upgradeLevel - 1];
-                }
-            }
-
+            CalcRegenerationSpeed();
             CdAnimator.speed = regenerationSpeed;
             cdAnimation.SetActive(true);
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
             this.timer = clipinfo[0].clip.length;
-            
         }
         
     }
