@@ -55,6 +55,7 @@ public class EarthController : MonoBehaviour
     public SlotController.SlotType[] tileTypes = new[] { SlotController.SlotType.Shooter, SlotController.SlotType.Collector, SlotController.SlotType.FlyingShield };
     public GameObject[] tileTypePrefabs;
     public int currentTileType;
+    public bool isUpgrading = false;
     public bool isBuilding = false;
 
     void Start()
@@ -314,7 +315,6 @@ public class EarthController : MonoBehaviour
     {
         foreach (var obj in FindObjectsOfType<ShopItemComponent>())
             obj.selected = false;
-        this.isBuilding = false;
     }
 
     public bool CurrentRequiresFlyingSlot()

@@ -9,6 +9,7 @@ public class SlotController : MonoBehaviour
     public EarthController earth;
     public SlotType slotType = SlotType.Empty;
     public bool flyingSlot = false;
+    public int upgradeLevel = 0;
 
     private void Start()
     {
@@ -23,14 +24,29 @@ public class SlotController : MonoBehaviour
 
     public bool CanBuildHere()
     {
-        return this.slotType == SlotType.Empty && earth.isBuilding && (earth.CurrentRequiresFlyingSlot() == flyingSlot);
+        if (!earth.isBuilding)
+            return false;
+        if (earth.isUpgrading)
+            return this.slotType != SlotType.Empty;
+        else
+            return this.slotType == SlotType.Empty && (earth.CurrentRequiresFlyingSlot() == flyingSlot);
     }
 
     private void OnMouseDown()
     {
         if (CanBuildHere() && earth.numFood >= 1)
         {
-            SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
+            if (earth.isUpgrading)
+            {
+                // upgrade.
+                this.upgradeLevel++;
+            }
+            else
+            {
+                // build.
+                SetInner(this.earth.tileTypePrefabs[this.earth.currentTileType], this.earth.tileTypes[this.earth.currentTileType]);
+                this.upgradeLevel = 1;
+            }
             EarthController.instance.UnselectAllShopItems();
         }
     }

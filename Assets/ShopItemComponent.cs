@@ -9,6 +9,8 @@ public class ShopItemComponent : MonoBehaviour
     public GameObject background;
     public GameObject selectedBackground;
 
+    public bool upgrader = false;
+
     public bool selected = false;
 
     private void Update()
@@ -19,9 +21,18 @@ public class ShopItemComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        EarthController.instance.currentTileType = tileType;
+        if (this.upgrader)
+        {
+            EarthController.instance.isUpgrading = true;
+            EarthController.instance.currentTileType = -1;
+        }
+        else
+        {
+            EarthController.instance.isUpgrading = false;
+            EarthController.instance.currentTileType = tileType;
+        }
         EarthController.instance.UnselectAllShopItems();
-        this.selected = true;
         EarthController.instance.isBuilding = true;
+        this.selected = true;
     }
 }
