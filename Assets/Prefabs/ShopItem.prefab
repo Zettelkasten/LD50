@@ -383,6 +383,7 @@ MonoBehaviour:
   selectedBackground: {fileID: 5156356199429035040}
   moneyText: {fileID: 7261440306893691441}
   price: 10
+  tooExpansive: {r: 0.8392157, g: 0.3529412, b: 0.21176471, a: 1}
   upgrader: 0
   selected: 0
 --- !u!61 &543328884736481027

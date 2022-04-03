@@ -11,6 +11,7 @@ public class ShopItemComponent : MonoBehaviour
     public GameObject selectedBackground;
     public Text moneyText;
     public int price;
+    public Color tooExpansive;
 
     public bool upgrader = false;
 
@@ -21,6 +22,7 @@ public class ShopItemComponent : MonoBehaviour
         this.selectedBackground.SetActive(selected);
         this.background.SetActive(!selected);
         this.moneyText.text = "" + price;
+        this.moneyText.color = EarthController.instance.numFood < this.price ? tooExpansive : Color.white;
     }
 
     private void OnMouseDown()
