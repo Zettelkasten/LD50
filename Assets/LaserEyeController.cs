@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.UI;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class LaserEyeController : MonoBehaviour
