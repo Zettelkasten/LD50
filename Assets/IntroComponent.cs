@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -74,7 +75,7 @@ public class IntroComponent : MonoBehaviour
 
     public void MouseDown()
     {
-        if (currentMessageProgress < currentMessage.Length)
+         if (currentMessageProgress < currentMessage.Length)
         {
             currentMessageProgress = currentMessage.Length;
             return;
@@ -86,8 +87,9 @@ public class IntroComponent : MonoBehaviour
             ShowCurrentLine();
         }
         else
-        {
-            // todo, start game.
+        {           
+            SceneManager.LoadScene("SampleScene");
+            EarthController.instance.paused = false;
         }
     }
 }
