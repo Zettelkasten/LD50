@@ -86,8 +86,6 @@ public class EarthController : MonoBehaviour
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool introAsteroidWasVisible = false;
-    public bool asteroidTutorialPlayed = false;
-    public bool firstUpgradeTutorialPlayed = false;
 
     public float deathTotalWaitingTime;
     public float deathRemainingWaitingTime = 0;
@@ -274,7 +272,8 @@ public class EarthController : MonoBehaviour
             this.mainMusic.volume = 0f;
             this.panicMusic.volume = 0f;
         }
-        
+
+        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
             this.camera.transform.position.z);
         if (this.timer > 0 || this.currentScreenshakeTime > 0)
@@ -283,7 +282,6 @@ public class EarthController : MonoBehaviour
             if (this.currentScreenshakeTime > 0)
                 this.currentScreenshakeTime -= Time.deltaTime;
         }
-        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         
         this.pauseText.SetActive(this.paused);
         
@@ -417,7 +415,7 @@ public class EarthController : MonoBehaviour
         }
         
         // spawn new
-        if (asteroidTutorialPlayed && (currentScenePlaying == null || !currentScenePausing)) // default case.
+        if (Util.asteroidTutorialPlayed && (currentScenePlaying == null || !currentScenePausing)) // default case.
         {
             if (rnd.NextDouble() <= 0.08 * this.balancing[0])
             {
@@ -520,19 +518,19 @@ public class EarthController : MonoBehaviour
             introAsteroidWasVisible = false;
             return;
         }
-        if (!asteroidTutorialPlayed && introAsteroidSpawned)
+        if (!Util.asteroidTutorialPlayed && introAsteroidSpawned)
         {
             introAsteroidWasVisible |= asteroidList.Count > 0 && asteroidList[0].GetComponent<Renderer>().isVisible;
             if (asteroidList.Count == 0 || (introAsteroidWasVisible && !asteroidList[0].GetComponent<Renderer>().isVisible)) // wait for asteroid to despawn.
             {
-                asteroidTutorialPlayed = true;
+                Util.asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
             }
         }
 
-        if (!firstUpgradeTutorialPlayed && this.numFood >= 8)
+        if (!Util.firstUpgradeTutorialPlayed && this.numFood >= 8)
         {
-            firstUpgradeTutorialPlayed = true;
+            Util.firstUpgradeTutorialPlayed = true;
             PlayScene(firstUpgradeTutorialScene, true);
         }
     }
