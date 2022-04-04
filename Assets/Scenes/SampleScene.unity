@@ -11286,6 +11286,7 @@ MonoBehaviour:
   - 0.008
   - 0.015
   - 0.023
+  apocalypse: 0
   paused: 0
   pauseText: {fileID: 1870465903}
   planetPrefab: {fileID: 6886836907900536935, guid: 933d66ae27d90bb538cbb040a14f72d2, type: 3}
@@ -11298,7 +11299,7 @@ MonoBehaviour:
   currentScenePausing: 0
   introAsteroidSpawned: 0
   introAsteroidWasVisible: 0
-  deathTotalWaitingTime: 2
+  deathTotalWaitingTime: 4
   deathRemainingWaitingTime: 0
   mainMusic: {fileID: 1201923681}
   panicMusic: {fileID: 954478906}
