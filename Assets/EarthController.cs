@@ -256,76 +256,54 @@ public class EarthController : MonoBehaviour
             this.panicMusic.volume = 0f;
         }
         
-        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
+            this.camera.transform.position.z);
         if (this.timer > 0 || this.currentScreenshakeTime > 0)
         { // shake effect.
             this.camera.transform.localPosition += (Vector3) Random2.insideUnitCircle * shakeAmount;
             if (this.currentScreenshakeTime > 0)
                 this.currentScreenshakeTime -= Time.deltaTime;
         }
+        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         
         this.pauseText.SetActive(this.paused);
-        if (currentScenePlaying != null && currentScenePausing)
-            return;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            this.paused = !this.paused;
-            if (!this.paused)
-            {
-                this.isBuilding = false;
-                this.UnselectAllShopItems();
-            }
-        }
         
-        if (paused || (this.currentScenePlaying != null && this.currentScenePausing))
+        if (this.timer > 0)
         {
-            if (this.timer > 0)
-                CdAnimator.speed = 0;
-            return;
-        }
-
-        if (this.currentScenePlaying == null || !this.currentScenePausing)
-        {
-            if (this.timer > 0)
-            {
-                CdAnimator.speed = regenerationSpeed;
+            CdAnimator.speed = regenerationSpeed;
+            if (!this.paused && (this.currentScenePlaying == null || !this.currentScenePausing))
                 this.timer -= Time.deltaTime * regenerationSpeed;
 
-                if (this.timer <= 0)
-                {
-                    cdAnimation.SetActive(false); 
-                }
-                
-                var animator = CdAnimator.GetComponent<Animator>();
-                var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
-                if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
-                {
-                    var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
-                    var athmoscolor = new Color(1,0.5f,0.5f,alpha);
-                    this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
-                }
-                //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
-                //halo.FindProperty("m_Color").colorValue = athmoscolor;
-                var halo = (Behaviour)this.GetComponent("Halo");
-                halo.enabled = true;
-            }
-            else
+            if (this.timer <= 0)
             {
-                cdAnimation.SetActive(false);
-                var halo = (Behaviour)this.GetComponent("Halo");
-                halo.enabled = false;
+                cdAnimation.SetActive(false); 
             }
+                
+            var animator = CdAnimator.GetComponent<Animator>();
+            var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+            if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
+            {
+                var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
+                var athmoscolor = new Color(1,0.5f,0.5f,alpha);
+                this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
+            }
+            //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
+            //halo.FindProperty("m_Color").colorValue = athmoscolor;
+            var halo = (Behaviour)this.GetComponent("Halo");
+            halo.enabled = true;
         }
-        //var animator = CdAnimator.GetComponent<Animator>();
-        //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+        else
+        {
+            cdAnimation.SetActive(false);
+            var halo = (Behaviour)this.GetComponent("Halo");
+            halo.enabled = false;
+        }
 
         var thrusterfactor = thrusterSlot.upgradeScales[thrusterSlot.upgradeLevel-1];
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localPosition = new Vector3(x: 0f, y: -0.42f * (thrusterfactor + 1)/2, 0);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
-        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
-            this.camera.transform.position.z);
         this.thruster.particles.enableEmission = flamesize > 0.001;
 
         this.foodCounterText.text = this.numFood + " Potatoes";
@@ -338,6 +316,24 @@ public class EarthController : MonoBehaviour
         thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
         slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
         slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
+
+        
+        if (paused || (currentScenePlaying != null && currentScenePausing))
+            if (this.timer > 0)
+                CdAnimator.speed = 0;
+        
+        if (currentScenePlaying == null || !currentScenePausing)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                this.paused = !this.paused;
+                if (!this.paused)
+                {
+                    this.isBuilding = false;
+                    this.UnselectAllShopItems();
+                }
+            }
+        }
     }
 
     private void UpdatePlanets()
