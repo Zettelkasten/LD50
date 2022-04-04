@@ -521,7 +521,7 @@ public class EarthController : MonoBehaviour
             DestroyFood(food, false);
         }
 
-        if (Input.GetKeyDown("z") && Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown("t") && Input.GetKey(KeyCode.LeftShift))
         {
             if(!apocalypse)
                 apocalpse();    
@@ -700,7 +700,12 @@ public class EarthController : MonoBehaviour
 
 
     public void apocalpse()
+    
     {
+        if (apocalypse)
+        {
+            return;
+        }
         apocalypse = true;
         this.deathSound.Play();
         this.transform.localScale = new Vector3(0, 0, 0);
