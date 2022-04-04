@@ -26,6 +26,10 @@ public class EarthController : MonoBehaviour
     public GameObject cdAnimation;
     public Animator CdAnimator;
     public GameObject athmosphere;
+    public GameObject w_button;
+    public GameObject a_button;
+    public GameObject d_button;
+    public GameObject space_button;
     public Text text_level;
     public int highscore;
     public int level = 1;
@@ -102,7 +106,10 @@ public class EarthController : MonoBehaviour
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
-        
+        w_button.SetActive(false);
+        a_button.SetActive(false);
+        d_button.SetActive(false);
+        space_button.SetActive(false);
         cdAnimation.SetActive(false);
         Debug.Assert(tileTypePrefabs.Length == tileTypes.Length);
         instance = this;
@@ -401,6 +408,26 @@ public class EarthController : MonoBehaviour
         if (paused)
             return;
         this.count += Time.deltaTime;
+        
+        if (Util.asteroidTutorialPlayed == false)
+        {
+            w_button.SetActive(true);
+            a_button.SetActive(true);
+            d_button.SetActive(true);
+            space_button.SetActive(true);
+            if (this.count >= 2)
+            {
+                w_button.SetActive(false);
+                a_button.SetActive(false);
+                d_button.SetActive(false);
+                space_button.SetActive(false);
+            }
+            else
+            {
+                return;
+            }
+        }
+
 
         UpdateTutorialsAndScenes();
         if (this.currentScenePlaying != null && this.currentScenePausing)

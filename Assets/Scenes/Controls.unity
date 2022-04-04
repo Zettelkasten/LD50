@@ -575,7 +575,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '- Backspace to pause the game'
+  m_Text: '- Space to pause the game'
 --- !u!222 &1184822878
 CanvasRenderer:
   m_ObjectHideFlags: 0
