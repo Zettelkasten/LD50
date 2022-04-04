@@ -63,7 +63,7 @@ public class LaserEyeController : MonoBehaviour
                 currentLaser.GetComponent<LineRenderer>().SetPositions(new Vector3[] {this.transform.position, closest.transform.position});
                 currentLaserTarget = closest;
                 currentLaserTime = currentLaserTimeMax[GetUpgradeLevel()];
-            }
+            }   
         }
     }
 
