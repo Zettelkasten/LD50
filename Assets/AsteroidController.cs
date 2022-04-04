@@ -11,7 +11,7 @@ public class AsteroidController : MonoBehaviour
     public float angle;  // in deg
     public Vector2 velo;
     public GameObject schweif;
-    public float criticalSpeed = 0.15f;
+    public float criticalSpeed = 0.14f;
 
     private void Start()
     {

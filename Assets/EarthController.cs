@@ -107,7 +107,7 @@ public class EarthController : MonoBehaviour
         for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
         {
             var angle = 360 * (i - this.numEarthSlots) / this.numFlyingSlots;
-            var pos = this.transform.localScale * 0.8f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
+            var pos = this.transform.localScale * 0.7f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
             var ctrl = this.slots[i].GetComponent<SlotController>();
@@ -127,10 +127,10 @@ public class EarthController : MonoBehaviour
             Instantiate(planetPrefab);
         }
 
-        if (tutorialScenesPlayed)
+       /* if (tutorialScenesPlayed)
         {
             introAsteroidSpawned = true;
-        }
+        }*/
         if (!introAsteroidSpawned)
         {
             SpawnAsteroid();
@@ -184,7 +184,7 @@ public class EarthController : MonoBehaviour
     public Vector2 RandomBorderVelo(Vector2 borderPos)
     {
         var angle = Random2.value*Mathf.PI*2;
-        var speed = Random2.value * 0.15f + 0.03f;
+        var speed = Random2.value * 0.14f + 0.015f;
         var dist = this.pos - borderPos;
         var dist_norm = Mathf.Sqrt(dist.sqrMagnitude);
         var direction = (dist / dist_norm + Util.Vector2FromAngle(angle)).normalized;
@@ -373,7 +373,7 @@ public class EarthController : MonoBehaviour
         //uncapped level design
         if (this.count >= balancing[1])
         {
-            this.balancing[0] += 0.13f;//0.165f;
+            this.balancing[0] += 0.14f;//0.165f;
             this.count = 0;
             this.level += 1;
             this.text_level.text = "Level: " + this.level;
@@ -385,6 +385,7 @@ public class EarthController : MonoBehaviour
             if (rnd.NextDouble() <= 0.08 * this.balancing[0])
             {
                 this.SpawnAsteroid();
+                Debug.Log("spawn a");
             }
             if (rnd.NextDouble() <= 0.02)
             {
