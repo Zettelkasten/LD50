@@ -76,6 +76,7 @@ public class EarthController : MonoBehaviour
     public float[] speed;
 
     public bool paused = false;
+    public GameObject pauseText;
     
     public GameObject planetPrefab;
     public int numPlanets;
@@ -232,6 +233,17 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        this.pauseText.SetActive(this.paused);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            this.paused = !this.paused;
+            if (!this.paused)
+            {
+                this.isBuilding = false;
+                this.UnselectAllShopItems();
+            }
+        }
+        
         if (paused)
         {
             if (this.timer > 0)
