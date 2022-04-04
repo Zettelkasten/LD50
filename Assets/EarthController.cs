@@ -462,18 +462,22 @@ public class EarthController : MonoBehaviour
         {
             SceneManager.LoadScene("EndScene"); 
         }
-        
-        this.velo *= 0.9f;
-        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftShift))
+
+        if (deathRemainingWaitingTime <= 0)
         {
-            velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
-            accelerating = true;
+            this.velo *= 0.9f;
+            if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftShift))
+            {
+                velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+                accelerating = true;
+            }
+            else
+            {
+                accelerating = false;
+            }
+
+            this.pos += velo;
         }
-        else
-        {
-            accelerating = false;
-        }
-        this.pos += velo;
 
         // flame
         if (accelerating)
