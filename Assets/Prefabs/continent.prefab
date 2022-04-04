@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 27e9041813ed296408c99db143448648, type: 3}
   - {fileID: 21300000, guid: 3b2935e5d7ef0da47b17264b70a30f35, type: 3}
   - {fileID: 21300000, guid: 3b156d7d3243c1b4e8f1d7c2d0dc6d7b, type: 3}
+  - {fileID: 21300000, guid: aeee0f32d22a317468e8826bf89517d8, type: 3}
   i_continent: 0
   spawn_x:
   - -1

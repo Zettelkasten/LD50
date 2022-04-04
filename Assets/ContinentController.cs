@@ -27,13 +27,14 @@ public class ContinentController : MonoBehaviour
         if (i_continent < 4)
         {
             pos += new Vector2(spawn_x[i_continent], spawn_y[i_continent]);
-        }else if (i_continent == 5)
+            velo = (Vector2) Random.onUnitSphere * 0.1f;
+        }else if (i_continent == 4)
         {
-            pos += (Vector2) Random.onUnitSphere * 0.5f;
+            pos += (Vector2) Random.onUnitSphere * 0.4f;
+            velo = (Vector2) Random.onUnitSphere * 0.15f;
             
         }
-        angleVelo = (float) Random.value * 1.1f;
-        velo = (Vector2) Random.onUnitSphere * 0.2f;
+        angleVelo = (float) Random.value * 0.9f;
     }
 
     void Update()
@@ -49,6 +50,6 @@ public class ContinentController : MonoBehaviour
         this.pos += velo;
         var dist = earth.pos - pos;
         var dist_norm = Mathf.Sqrt(dist.sqrMagnitude);
-        this.velo += 2e-3f * dist / (0.01f + dist_norm);
+        this.velo += 5e-4f * dist / (0.01f + dist_norm);
     }
 }

@@ -8519,6 +8519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc, type: 3}
   starPrefab: {fileID: 7971276072409180905, guid: 99ac06d12e4f29945b1be7a894c99c8d, type: 3}
+  continentPrefab: {fileID: 7403619054152403092, guid: b1f56a7b89ae1444cb02c6faf812250f, type: 3}
   thruster: {fileID: 1276495457}
   flame: {fileID: 1930162793}
   cdAnimation: {fileID: 48060365}

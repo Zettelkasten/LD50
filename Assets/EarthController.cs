@@ -608,5 +608,12 @@ public class EarthController : MonoBehaviour
             continent.GetComponent<ContinentController>().pos = this.pos;
             continent.GetComponent<ContinentController>().setContinent(i);
         }
+        
+        for (int i = 0; i < 500; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = this.pos;
+            continent.GetComponent<ContinentController>().setContinent(4);
+        }
     }
 }
