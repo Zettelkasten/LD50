@@ -5,4 +5,5 @@ using UnityEngine;
 public class ThrusterWrapperComponent : MonoBehaviour
 {
     public GameObject thruster;
+    public ParticleSystem particles;
 }

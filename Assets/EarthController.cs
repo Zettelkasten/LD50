@@ -21,7 +21,7 @@ public class EarthController : MonoBehaviour
     
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
-    public GameObject thruster;
+    public ThrusterWrapperComponent thruster;
     public GameObject flame;
     public GameObject cdAnimation;
     public Animator CdAnimator;
@@ -275,6 +275,7 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
             this.camera.transform.position.z);
+        this.thruster.particles.enableEmission = flamesize > 0.001;
         if (this.timer > 0)
         { // shake effect.
             this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
