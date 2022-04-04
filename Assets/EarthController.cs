@@ -89,6 +89,9 @@ public class EarthController : MonoBehaviour
     public bool asteroidTutorialPlayed = false;
     public bool firstUpgradeTutorialPlayed = false;
 
+    public float deathTotalWaitingTime;
+    public float deathRemainingWaitingTime = 0;
+
     public AudioSource mainMusic;
     public AudioSource panicMusic;
 
@@ -248,6 +251,22 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        if (deathRemainingWaitingTime > 0)
+        {
+            deathRemainingWaitingTime -= Time.deltaTime;
+            if (deathRemainingWaitingTime <= 0)
+            {
+                // actually dead.
+                if (this.numAsteroidsDodged > this.highscore)
+                {
+                    this.highscore = this.numAsteroidsDodged;
+                    PlayerPrefs.SetInt("highscore", highscore);
+                    PlayerPrefs.Save();
+                }
+                SceneManager.LoadScene("EndScene");
+            }
+        }
+        
         this.mainMusic.volume = this.timer <= 0 ? 1 : 0.000001f;
         this.panicMusic.volume = this.timer > 0 ? 1 : 0.000001f;
         if (this.currentScenePlaying != null)
@@ -317,7 +336,6 @@ public class EarthController : MonoBehaviour
         slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
         slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
 
-        
         if (paused || (currentScenePlaying != null && currentScenePausing))
             if (this.timer > 0)
                 CdAnimator.speed = 0;
@@ -531,13 +549,8 @@ public class EarthController : MonoBehaviour
     {
         if (cdAnimation.activeSelf)
         {
-            if (this.numAsteroidsDodged > this.highscore)
-            {
-                this.highscore = this.numAsteroidsDodged;
-                PlayerPrefs.SetInt("highscore", highscore);
-                PlayerPrefs.Save();
-            }
-            SceneManager.LoadScene("EndScene");
+            deathRemainingWaitingTime = deathTotalWaitingTime;
+            // @DAVID: pack hier rein wie die erde explodiert
         }
         else
         {

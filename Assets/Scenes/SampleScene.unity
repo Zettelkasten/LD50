@@ -7864,6 +7864,8 @@ MonoBehaviour:
   introAsteroidWasVisible: 0
   asteroidTutorialPlayed: 0
   firstUpgradeTutorialPlayed: 0
+  deathTotalWaitingTime: 2
+  deathRemainingWaitingTime: 0
   mainMusic: {fileID: 1201923681}
   panicMusic: {fileID: 954478906}
   currentScreenshakeTime: 0
