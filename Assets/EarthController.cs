@@ -85,6 +85,9 @@ public class EarthController : MonoBehaviour
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool asteroidTutorialPlayed = false;
+
+    public AudioSource mainMusic;
+    public AudioSource panicMusic;
         
     void Start()
     {
@@ -239,6 +242,9 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        this.mainMusic.volume = this.timer <= 0 ? 1 : 0.000001f;
+        this.panicMusic.volume = this.timer > 0 ? 1 : 0.000001f;
+        
         this.pauseText.SetActive(this.paused);
         if (currentScenePlaying != null && currentScenePausing)
             return;
@@ -258,34 +264,38 @@ public class EarthController : MonoBehaviour
                 CdAnimator.speed = 0;
             return;
         }
-        if (this.timer > 0)
-        {
-            CdAnimator.speed = regenerationSpeed;
-            this.timer -= Time.deltaTime * regenerationSpeed;
 
-            if (this.timer <= 0)
-            {
-                cdAnimation.SetActive(false); 
-            }
-            
-            var animator = CdAnimator.GetComponent<Animator>();
-            var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
-            if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
-            {
-                var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
-                var athmoscolor = new Color(1,0.5f,0.5f,alpha);
-                this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
-            }
-            //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
-            //halo.FindProperty("m_Color").colorValue = athmoscolor;
-            var halo = (Behaviour)this.GetComponent("Halo");
-            halo.enabled = true;
-        }
-        else
+        if (this.currentScenePlaying == null || !this.currentScenePausing)
         {
-            cdAnimation.SetActive(false);
-            var halo = (Behaviour)this.GetComponent("Halo");
-            halo.enabled = false;
+            if (this.timer > 0)
+            {
+                CdAnimator.speed = regenerationSpeed;
+                this.timer -= Time.deltaTime * regenerationSpeed;
+
+                if (this.timer <= 0)
+                {
+                    cdAnimation.SetActive(false); 
+                }
+                
+                var animator = CdAnimator.GetComponent<Animator>();
+                var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
+                if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
+                {
+                    var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
+                    var athmoscolor = new Color(1,0.5f,0.5f,alpha);
+                    this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
+                }
+                //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
+                //halo.FindProperty("m_Color").colorValue = athmoscolor;
+                var halo = (Behaviour)this.GetComponent("Halo");
+                halo.enabled = true;
+            }
+            else
+            {
+                cdAnimation.SetActive(false);
+                var halo = (Behaviour)this.GetComponent("Halo");
+                halo.enabled = false;
+            }
         }
         //var animator = CdAnimator.GetComponent<Animator>();
         //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
@@ -491,7 +501,6 @@ public class EarthController : MonoBehaviour
         currentScenePlaying = scene;
         currentScenePausing = pausing;
         currentScenePlaying.gameObject.SetActive(true);
-        Debug.Log("Play scene");
         
     }
 
