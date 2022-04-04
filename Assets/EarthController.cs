@@ -78,6 +78,7 @@ public class EarthController : MonoBehaviour
 
     public float[] angleVelocity;
     public float[] speed;
+    public bool apocalypse = false;
 
     public bool paused = false;
     public GameObject pauseText;
@@ -110,6 +111,7 @@ public class EarthController : MonoBehaviour
     public AudioSource collectFoodSound;
     public AudioSource deathSound;
     public AudioSource thrusterSound;
+    
 
     void Start()
     {
@@ -521,7 +523,10 @@ public class EarthController : MonoBehaviour
 
         if (Input.GetKeyDown("z") && Input.GetKey(KeyCode.LeftShift))
         {
-            apocalpse();
+            if(!apocalypse)
+                apocalpse();    
+            else
+                antiApocalypse();
         }
         
         // movement
@@ -696,6 +701,7 @@ public class EarthController : MonoBehaviour
 
     public void apocalpse()
     {
+        apocalypse = true;
         this.deathSound.Play();
         this.transform.localScale = new Vector3(0, 0, 0);
         for (int i = 0; i < 4; i++)
@@ -717,5 +723,12 @@ public class EarthController : MonoBehaviour
             continent.GetComponent<ContinentController>().pos = this.pos;
             continent.GetComponent<ContinentController>().setContinent(5);
         }
+    }
+
+    public void antiApocalypse()
+    {
+        apocalypse = false;
+        this.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        deathRemainingWaitingTime = 0;
     }
 }

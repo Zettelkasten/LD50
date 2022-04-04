@@ -84,6 +84,8 @@ public class ContinentController : MonoBehaviour
             this.velo += 3e-4f * dist / (0.01f + dist_norm);
             if (dist_norm > 1.3f) // allow the earth to rebuild itself
                 this.velo *= 0.995f;
+            if(earth.apocalypse == false)
+                Destroy(this);
         }
         
 
