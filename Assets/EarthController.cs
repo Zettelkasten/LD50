@@ -98,6 +98,7 @@ public class EarthController : MonoBehaviour
     public float currentScreenshakeTime = 0;
 
     public string[] godLines;
+    public TutorialSceneComponent godLineScene;
 
     void Start()
     {
@@ -143,6 +144,17 @@ public class EarthController : MonoBehaviour
         asteroidTutorialScene.gameObject.SetActive(false);
         firstUpgradeTutorialScene.gameObject.SetActive(false);
         firstHitTutorialScene.gameObject.SetActive(false);
+        godLineScene.gameObject.SetActive(false);
+        if (!Util.godLinesShuffled)
+        {
+            for (int i = 0; i < godLines.Length; i++) {
+                int rnd = Random2.Range(0, godLines.Length);
+                var tempGO = godLines[rnd];
+                godLines[rnd] = godLines[i];
+                godLines[i] = tempGO;
+            }
+            Util.godLinesShuffled = true;
+        }
     }
 
     Vector2 RandomBorderPos()
@@ -420,6 +432,7 @@ public class EarthController : MonoBehaviour
             this.count = 0;
             this.level += 1;
             this.text_level.text = "Level: " + this.level;
+            this.PlayNextGodScene();
         }
         
         // spawn new
@@ -507,6 +520,15 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
+    }
+
+    private void PlayNextGodScene()
+    {
+        if (this.currentScenePlaying != null)
+            return;
+        PlayScene(this.godLineScene, false);
+        this.currentScenePlaying.ResetDialogue(new string[] { "God: " + this.godLines[Util.godLineCounter] });
+        Util.godLineCounter = (Util.godLineCounter + 1) % godLines.Length;
     }
 
     public void UpdateTutorialsAndScenes()
