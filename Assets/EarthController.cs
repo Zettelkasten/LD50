@@ -531,7 +531,7 @@ public class EarthController : MonoBehaviour
             var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
             var ast_contr = asteroid.GetComponent<AsteroidController>();
             ast_contr.pos = ast_pos;
-            ast_contr.velo = Util.Vector2FromAngle(Mathf.Deg2Rad * 70) * (0.7f * 0.15f + 0.03f);
+            ast_contr.velo = Util.Vector2FromAngle(Mathf.Deg2Rad * 70) * (1.4f * 0.15f + 0.03f);
             this.asteroidList.Add(ast_contr);
             
             introAsteroidSpawned = true;
