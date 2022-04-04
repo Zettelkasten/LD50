@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -5529,7 +5529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: price
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -5840,6 +5840,10 @@ PrefabInstance:
     - target: {fileID: 2853018479846654421, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: price
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: tileType
@@ -6441,7 +6445,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4286611584
-  m_Size: 2.1
+  m_Size: 1.7
 --- !u!1 &1448201027
 GameObject:
   m_ObjectHideFlags: 0
@@ -6896,7 +6900,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: price
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 113777494902447810, guid: 25df71097e7444b028a8667d3d0818ae, type: 3}
       propertyPath: tileType
@@ -7050,6 +7054,10 @@ PrefabInstance:
     - target: {fileID: 2713744057344628658, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayerID
       value: 1739819223
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976710422582972313, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: price
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3744194275395880261, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer

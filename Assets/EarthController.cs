@@ -336,18 +336,18 @@ public class EarthController : MonoBehaviour
         //uncapped level design
         if (this.count >= balancing[1])
         {
-            this.balancing[0] += 0.165f;
+            this.balancing[0] += 0.13f;//0.165f;
             this.count = 0;
             this.level += 1;
             this.text_level.text = "Level: " + this.level;
         }
         
         // spawn new
-        if (rnd.NextDouble() <= 0.1 * this.balancing[0])
+        if (rnd.NextDouble() <= 0.08 * this.balancing[0])
         {
             this.SpawnAsteroid();
         }
-        if (rnd.NextDouble() <= 0.03)
+        if (rnd.NextDouble() <= 0.02)
         {
             this.SpawnFood();
         }
