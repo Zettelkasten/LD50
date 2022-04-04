@@ -80,8 +80,8 @@ public class EarthController : MonoBehaviour
     public GameObject planetPrefab;
     public int numPlanets;
 
-    public GameObject asteroidTutorialScene;
-    private GameObject currentScenePlaying = null;
+    public TutorialSceneComponent asteroidTutorialScene;
+    public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool asteroidTutorialPlayed = false;
@@ -126,17 +126,9 @@ public class EarthController : MonoBehaviour
         {
             Instantiate(planetPrefab);
         }
-
-        if (tutorialScenesPlayed)
-        {
-            introAsteroidSpawned = true;
-        }
-        if (!introAsteroidSpawned)
-        {
-            SpawnAsteroid();
-        }
+        
+        asteroidTutorialScene.gameObject.SetActive(false);
     }
-
     Vector2 RandomBorderPos()
     {
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
@@ -248,6 +240,8 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         this.pauseText.SetActive(this.paused);
+        if (currentScenePlaying != null && currentScenePausing)
+            return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             this.paused = !this.paused;
@@ -258,7 +252,7 @@ public class EarthController : MonoBehaviour
             }
         }
         
-        if (paused)
+        if (paused || (this.currentScenePlaying != null && this.currentScenePausing))
         {
             if (this.timer > 0)
                 CdAnimator.speed = 0;
@@ -453,21 +447,52 @@ public class EarthController : MonoBehaviour
 
         }
 
-        // intro
+        UpdateTutorialsAndScenes();
+    }
+
+    public void UpdateTutorialsAndScenes()
+    {
+        if (currentScenePlaying != null)
+        {
+            if (currentScenePlaying.isDone)
+            {
+                currentScenePlaying.gameObject.SetActive(false);
+                currentScenePlaying = null;
+                currentScenePausing = false;
+            }
+        }
+        if (!introAsteroidSpawned)
+        {
+            // spawn asteroid
+            var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+            var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
+            var ast_pos = 0.9f * left_bottom + 0.2f * right_bottom;
+            var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
+            var ast_contr = asteroid.GetComponent<AsteroidController>();
+            ast_contr.pos = ast_pos;
+            ast_contr.velo = Util.Vector2FromAngle(Mathf.Deg2Rad * 70) * (0.7f * 0.15f + 0.03f);
+            this.asteroidList.Add(ast_contr);
+            
+            introAsteroidSpawned = true;
+            return;
+        }
         if (!asteroidTutorialPlayed && introAsteroidSpawned)
         {
-            asteroidTutorialPlayed = true;
-            if (asteroidList.Count == 0)
+            if (asteroidList.Count == 0) // wait for asteroid to despawn.
             {
+                asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
             }
         }
     }
-
-    private void PlayScene(GameObject o, bool b)
+    
+    private void PlayScene(TutorialSceneComponent scene, bool pausing)
     {
-        currentScenePlaying = asteroidTutorialScene;
-        currentScenePausing = true;
+        currentScenePlaying = scene;
+        currentScenePausing = pausing;
+        currentScenePlaying.gameObject.SetActive(true);
+        Debug.Log("Play scene");
+        
     }
 
     public void SpawnCooldown()
