@@ -106,6 +106,8 @@ public class EarthController : MonoBehaviour
     public string[] godLines;
     public TutorialSceneComponent godLineScene;
 
+    public AudioSource deathSound;
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -253,6 +255,22 @@ public class EarthController : MonoBehaviour
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
+        
+        for (int i = 6; i < 9; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = ast.pos;
+            continent.GetComponent<ContinentController>().velo = ast.velo;
+            continent.GetComponent<ContinentController>().setContinent(i);
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = ast.pos;
+            continent.GetComponent<ContinentController>().velo = ast.velo;
+            continent.GetComponent<ContinentController>().setContinent(9);
+        }
+        
         if (ast.gameObject == null)
             return;
         Destroy(ast.gameObject);
@@ -355,12 +373,12 @@ public class EarthController : MonoBehaviour
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
         UpdatePlanets();
         
-        // move thruster slot to position
-        var slotController = this.thrusterSlot;
-        Vector2 thrusterPos = this.thruster.particles.transform.position;
-        thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
-        slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
-        slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
+        // move thruster slot to position: ok apparently we dont want this >(
+        // var slotController = this.thrusterSlot;
+        // Vector2 thrusterPos = this.thruster.particles.transform.position;
+        // thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+        // slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
+        // slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
 
         if (paused || (currentScenePlaying != null && currentScenePausing))
             if (this.timer > 0)
@@ -437,7 +455,10 @@ public class EarthController : MonoBehaviour
             }
             else
             {
-                return;
+                if (this.count < 0.5f)
+                {
+                    return;
+                }
             }
         }
 
@@ -664,6 +685,7 @@ public class EarthController : MonoBehaviour
 
     public void apocalpse()
     {
+        this.deathSound.Play();
         this.transform.localScale = new Vector3(0, 0, 0);
         for (int i = 0; i < 4; i++)
         {
@@ -672,11 +694,17 @@ public class EarthController : MonoBehaviour
             continent.GetComponent<ContinentController>().setContinent(i);
         }
         
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < 200; i++)
         {
             var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
             continent.GetComponent<ContinentController>().pos = this.pos;
             continent.GetComponent<ContinentController>().setContinent(4);
+        }
+        for (int i = 0; i < 200; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = this.pos;
+            continent.GetComponent<ContinentController>().setContinent(5);
         }
     }
 }

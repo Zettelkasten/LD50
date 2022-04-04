@@ -54,6 +54,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3b2935e5d7ef0da47b17264b70a30f35, type: 3}
   - {fileID: 21300000, guid: 3b156d7d3243c1b4e8f1d7c2d0dc6d7b, type: 3}
   - {fileID: 21300000, guid: aeee0f32d22a317468e8826bf89517d8, type: 3}
+  - {fileID: 21300000, guid: 681aff2229c332742a90ce22b9d835e5, type: 3}
+  - {fileID: 21300000, guid: 14b8ff1be6ea04644bab1280073e8931, type: 3}
+  - {fileID: 21300000, guid: 4972b99267e127f4cbbb34a615156f20, type: 3}
+  - {fileID: 21300000, guid: a25a08c9b6d76db4d9198cbce948ce97, type: 3}
+  - {fileID: 21300000, guid: 1f4554c873583fd4683277fc9e66ac19, type: 3}
   i_continent: 0
   spawn_x:
   - -1
@@ -65,6 +70,7 @@ MonoBehaviour:
   - -1
   - 1
   - -1
+  lifetime: -1
 --- !u!212 &-8036203677685455271
 SpriteRenderer:
   m_ObjectHideFlags: 0

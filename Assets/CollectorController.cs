@@ -8,6 +8,8 @@ public class CollectorController : MonoBehaviour
     public EarthController earth;
     public float[] suckStrength;
     public float[] suckDistance;
+
+    public AudioSource soundEffect;
     
     public void Start()
     {
@@ -33,7 +35,6 @@ public class CollectorController : MonoBehaviour
                 var velo_para = foodVelo * Vector2.Dot(foodVelo,dist)/(foodVelo.sqrMagnitude * dist.sqrMagnitude);
                 var velo_ort = food.velo - velo_para;
                 food.velo = velo_para + velo_ort * 0.95f;
-
             }
         }
     }
@@ -42,6 +43,7 @@ public class CollectorController : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<FoodController>(out var ctrl))
         {
+            soundEffect.Play();
             this.earth.DestroyFood(ctrl);
         }
     }

@@ -30,7 +30,8 @@ public class ShopItemComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        clickAudio.Play();
+        if (clickAudio != null)
+            clickAudio.Play();
         if (EarthController.instance.numFood < this.price)
         {
             // haha u r broke
