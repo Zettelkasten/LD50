@@ -357,6 +357,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1739819223
       objectReference: {fileID: 0}
+    - target: {fileID: 6826156763412942204, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8c3ebd90e84c73e468ab2d43674275cd, type: 3}
     - target: {fileID: 8177002870199987730, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -6264,6 +6268,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1739819223
       objectReference: {fileID: 0}
+    - target: {fileID: 6826156763412942204, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 98e6c8494ab82234abd1957cfd8e7a86, type: 3}
     - target: {fileID: 8177002870199987730, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -7644,6 +7652,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1739819223
       objectReference: {fileID: 0}
+    - target: {fileID: 6826156763412942204, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bb5048885d8bc654681fac8c49d3db58, type: 3}
     - target: {fileID: 8177002870199987730, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -8519,6 +8531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 6886836907900536935, guid: b312f1d9b0d48d25dbc7149e6e799ccc, type: 3}
   starPrefab: {fileID: 7971276072409180905, guid: 99ac06d12e4f29945b1be7a894c99c8d, type: 3}
+  continentPrefab: {fileID: 0}
   thruster: {fileID: 1276495457}
   flame: {fileID: 1930162793}
   cdAnimation: {fileID: 48060365}
@@ -10714,6 +10727,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.345
       objectReference: {fileID: 0}
+    - target: {fileID: 6826156763412942204, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7521693d58e5bab4499059caf44c9bb9, type: 3}
     - target: {fileID: 8177002870199987730, guid: 1730cb2d6ee34a1b099ac185fc25ad17, type: 3}
       propertyPath: m_SortingLayer
       value: 1
