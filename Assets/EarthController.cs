@@ -20,6 +20,7 @@ public class EarthController : MonoBehaviour
 
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
+    public GameObject continentPrefab;
     public ThrusterWrapperComponent thruster;
     public GameObject flame;
     public GameObject cdAnimation;
@@ -96,6 +97,8 @@ public class EarthController : MonoBehaviour
 
     public float currentScreenshakeTime = 0f;
 
+    public string[] godLines;
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -141,6 +144,7 @@ public class EarthController : MonoBehaviour
         firstUpgradeTutorialScene.gameObject.SetActive(false);
         firstHitTutorialScene.gameObject.SetActive(false);
     }
+
     Vector2 RandomBorderPos()
     {
         var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
@@ -188,7 +192,7 @@ public class EarthController : MonoBehaviour
     public Vector2 RandomBorderVelo(Vector2 borderPos)
     {
         var angle = Random2.value*Mathf.PI*2;
-        var speed = Random2.value * 0.15f + 0.03f;
+        var speed = Random2.value * 0.14f + 0.015f;
         var dist = this.pos - borderPos;
         var dist_norm = Mathf.Sqrt(dist.sqrMagnitude);
         var direction = (dist / dist_norm + Util.Vector2FromAngle(angle)).normalized;
@@ -441,6 +445,11 @@ public class EarthController : MonoBehaviour
         {
             DestroyFood(food, false);
         }
+
+        if (Input.GetKeyDown("z"))
+        {
+            apocalpse();
+        }
         
         // movement
         if (deathRemainingWaitingTime <= 0)
@@ -565,7 +574,7 @@ public class EarthController : MonoBehaviour
         if (cdAnimation.activeSelf)
         {
             deathRemainingWaitingTime = deathTotalWaitingTime;
-            // @DAVID: pack hier rein wie die erde explodiert
+            apocalpse();
         }
         else
         {
@@ -587,5 +596,17 @@ public class EarthController : MonoBehaviour
     public bool CurrentRequiresFlyingSlot()
     {
         return this.tileTypes[this.currentTileType] == SlotController.SlotType.FlyingShield;
+    }
+
+
+    public void apocalpse()
+    {
+        this.transform.localScale = new Vector3(0, 0, 0);
+        for (int i = 0; i < 4; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = this.pos;
+            continent.GetComponent<ContinentController>().setContinent(i);
+        }
     }
 }
