@@ -88,7 +88,7 @@ public class IntroComponent : MonoBehaviour
         }
         else
         {           
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Controls");
             EarthController.instance.paused = false;
         }
     }
