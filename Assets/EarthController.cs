@@ -82,6 +82,7 @@ public class EarthController : MonoBehaviour
 
     public TutorialSceneComponent asteroidTutorialScene;
     public TutorialSceneComponent firstUpgradeTutorialScene;
+    public TutorialSceneComponent firstHitTutorialScene;
     public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
@@ -138,6 +139,7 @@ public class EarthController : MonoBehaviour
         
         asteroidTutorialScene.gameObject.SetActive(false);
         firstUpgradeTutorialScene.gameObject.SetActive(false);
+        firstHitTutorialScene.gameObject.SetActive(false);
     }
 
     Vector2 RandomBorderPos()
@@ -542,6 +544,12 @@ public class EarthController : MonoBehaviour
         {
             Util.firstUpgradeTutorialPlayed = true;
             PlayScene(firstUpgradeTutorialScene, true);
+        }
+
+        if (Util.asteroidTutorialPlayed && !Util.firstHitTutorialPlayed && this.timer > 0)
+        {
+            Util.firstHitTutorialPlayed = true;
+            PlayScene(firstHitTutorialScene, true);
         }
     }
     
