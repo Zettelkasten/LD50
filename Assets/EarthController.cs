@@ -85,7 +85,7 @@ public class EarthController : MonoBehaviour
     public TutorialSceneComponent firstUpgradeTutorialScene;
     public TutorialSceneComponent firstHitTutorialScene;
     public TutorialSceneComponent currentScenePlaying = null;
-    private bool currentScenePausing = false;
+    public bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool introAsteroidWasVisible = false;
 
@@ -95,7 +95,7 @@ public class EarthController : MonoBehaviour
     public AudioSource mainMusic;
     public AudioSource panicMusic;
 
-    public float currentScreenshakeTime = 0f;
+    public float currentScreenshakeTime = 0;
 
     public string[] godLines;
 
@@ -464,12 +464,12 @@ public class EarthController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown("f"))
+        if (Input.GetKeyDown("f") && Input.GetKey(KeyCode.LeftShift))
         {
             numFood += 10;
         }
 
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r") && Input.GetKey(KeyCode.LeftShift))
         {
             SceneManager.LoadScene("EndScene"); 
         }
@@ -554,7 +554,7 @@ public class EarthController : MonoBehaviour
             PlayScene(firstUpgradeTutorialScene, true);
         }
 
-        if (Util.asteroidTutorialPlayed && !Util.firstHitTutorialPlayed && this.timer > 0)
+        if (!Util.firstHitTutorialPlayed && this.timer > 0)
         {
             Util.firstHitTutorialPlayed = true;
             PlayScene(firstHitTutorialScene, true);
