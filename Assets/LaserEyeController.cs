@@ -11,6 +11,8 @@ public class LaserEyeController : MonoBehaviour
     private GameObject currentLaser = null;
     private float currentLaserTime = 0;
     public float[] currentLaserTimeMax = new float[] { 1f, 0.5f, 0.3f };
+
+    public AudioSource soundEffect;
     
     private void FixedUpdate()
     {
@@ -57,6 +59,7 @@ public class LaserEyeController : MonoBehaviour
 
             if (closest != null && closestDist <= maxRadius[GetUpgradeLevel()])
             {
+                soundEffect.Play();
                 // shoot it.
                 currentCooldown = shootCooldown[GetUpgradeLevel()];
                 currentLaser = Instantiate(laserPrefab, EarthController.instance.transform);
