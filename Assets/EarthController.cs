@@ -515,7 +515,7 @@ public class EarthController : MonoBehaviour
             DestroyFood(food, false);
         }
 
-        if (Input.GetKeyDown("z"))
+        if (Input.GetKeyDown("z") && Input.GetKey(KeyCode.LeftShift))
         {
             apocalpse();
         }
@@ -545,7 +545,7 @@ public class EarthController : MonoBehaviour
 
         if (deathRemainingWaitingTime <= 0)
         {
-            this.velo *= 0.9f;
+            this.velo *= 0.94f;
             if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftShift))
             {
                 velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
