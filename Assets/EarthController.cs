@@ -728,7 +728,7 @@ public class EarthController : MonoBehaviour
     public void antiApocalypse()
     {
         apocalypse = false;
-        this.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        this.transform.localScale = new Vector3(5f, 5f, 1f);
         deathRemainingWaitingTime = 0;
     }
 }
