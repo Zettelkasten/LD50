@@ -45,7 +45,7 @@ public class AsteroidController : MonoBehaviour
     private void FixedUpdate()
     {
         var earth = EarthController.instance;
-        if (earth.paused)
+        if (earth.paused || (earth.currentScenePlaying != null && earth.currentScenePausing))
             return;
         this.pos += velo;
         var dist = earth.pos - pos;
