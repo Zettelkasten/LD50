@@ -30,6 +30,7 @@ public class ShopItemComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
+        clickAudio.Play();
         if (EarthController.instance.numFood < this.price)
         {
             // haha u r broke
@@ -49,7 +50,6 @@ public class ShopItemComponent : MonoBehaviour
         }
         else
         { // normal buy
-            clickAudio.Play();
             EarthController.instance.isUpgrading = false;
             EarthController.instance.isRemoving = false;
             EarthController.instance.currentTileType = tileType;

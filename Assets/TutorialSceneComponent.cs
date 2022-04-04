@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -19,7 +20,7 @@ public class TutorialSceneComponent : MonoBehaviour
     private string currentMessage;
 
     public TextAsset dialogueText;
-    private string[] dialogue;
+    public string[] dialogue;
 
     private int currentLine = 0;
     private float currentMessageProgress = 0;
@@ -27,6 +28,8 @@ public class TutorialSceneComponent : MonoBehaviour
     public float charTime;
 
     public bool isDone = false;
+
+    public float autoContinue = 300f;
 
     private void Start()
     {
@@ -46,6 +49,11 @@ public class TutorialSceneComponent : MonoBehaviour
         var fullLine = dialogue[currentLine];
         var splitBy = new char[] { ':' };
         var split = fullLine.Split(splitBy, 2);
+        if (split.Length != 2)
+        {
+            Debug.Log("this is wrong!!!");
+        }
+
         currentSpeaker = split[0].Trim();
         currentMessage = split[1].Trim();
         
@@ -73,6 +81,12 @@ public class TutorialSceneComponent : MonoBehaviour
         {
             MouseDown();
         }
+        autoContinue -= Time.fixedTime;
+        if (autoContinue < 0)
+        {
+            MouseDown();
+            autoContinue = 300f;
+        }
     }
 
     public void MouseDown()
@@ -92,5 +106,13 @@ public class TutorialSceneComponent : MonoBehaviour
         {
             isDone = true;
         }
+    }
+
+    public void ResetDialogue(string[] dialogue)
+    {
+        this.dialogue = dialogue;
+        this.isDone = false;
+        this.currentLine = 0;
+        this.ShowCurrentLine();
     }
 }

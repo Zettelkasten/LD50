@@ -88,6 +88,8 @@ public class EarthController : MonoBehaviour
     public TutorialSceneComponent asteroidTutorialScene;
     public TutorialSceneComponent firstUpgradeTutorialScene;
     public TutorialSceneComponent firstHitTutorialScene;
+    public TutorialSceneComponent manyDinosTutorialScene;
+
     public TutorialSceneComponent currentScenePlaying = null;
     public bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
@@ -102,6 +104,7 @@ public class EarthController : MonoBehaviour
     public float currentScreenshakeTime = 0;
 
     public string[] godLines;
+    public TutorialSceneComponent godLineScene;
 
     void Start()
     {
@@ -150,6 +153,16 @@ public class EarthController : MonoBehaviour
         asteroidTutorialScene.gameObject.SetActive(false);
         firstUpgradeTutorialScene.gameObject.SetActive(false);
         firstHitTutorialScene.gameObject.SetActive(false);
+        manyDinosTutorialScene.gameObject.SetActive(false);
+        godLineScene.gameObject.SetActive(false);
+        if (!Util.godLinesShuffled)
+        {
+            for (int i = 0; i < godLines.Length; i++) {
+                int rnd = Random2.Range(0, godLines.Length);
+                (godLines[rnd], godLines[i]) = (godLines[i], godLines[rnd]);
+            }
+            Util.godLinesShuffled = true;
+        }
     }
 
     Vector2 RandomBorderPos()
@@ -447,6 +460,7 @@ public class EarthController : MonoBehaviour
             this.count = 0;
             this.level += 1;
             this.text_level.text = "Level: " + this.level;
+            this.PlayNextGodScene();
         }
         
         // spawn new
@@ -536,6 +550,16 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    private void PlayNextGodScene()
+    {
+        if (this.currentScenePlaying != null)
+            return;
+        PlayScene(this.godLineScene, false);
+        this.currentScenePlaying.ResetDialogue(new string[] { "God: " + this.godLines[Util.godLineCounter] });
+        this.currentScenePlaying.autoContinue = 7f;
+        Util.godLineCounter = (Util.godLineCounter + 1) % godLines.Length;
+    }
+
     public void UpdateTutorialsAndScenes()
     {
         if (currentScenePlaying != null)
@@ -585,6 +609,17 @@ public class EarthController : MonoBehaviour
         {
             Util.firstHitTutorialPlayed = true;
             PlayScene(firstHitTutorialScene, true);
+        }
+
+        var numPlaced = -1; // thruster
+        foreach (var slot in slots)
+        {
+            numPlaced += slot.GetComponent<SlotController>().slotType != SlotController.SlotType.Empty ? 1 : 0;
+        }
+        if (!Util.manyDinosTutorialPlayed && numPlaced >= 3)
+        {
+            Util.manyDinosTutorialPlayed = true;
+            PlayScene(manyDinosTutorialScene, true);
         }
     }
     
