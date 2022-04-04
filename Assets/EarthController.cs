@@ -365,14 +365,15 @@ public class EarthController : MonoBehaviour
         
         
         // movement
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
             angle += angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
-        else if (Input.GetKey("d"))
+        else if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
             angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
+        
 
         if (Input.GetKeyDown("f"))
         {
@@ -385,7 +386,7 @@ public class EarthController : MonoBehaviour
         }
         
         this.velo *= 0.9f;
-        if (Input.GetKey("w"))
+        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
         {
             velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
             accelerating = true;
