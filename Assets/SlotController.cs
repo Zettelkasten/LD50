@@ -22,7 +22,7 @@ public class SlotController : MonoBehaviour
     }
 
     private void Update()
-    { ;
+    {
         marker.SetActive(CanBuildHere());
     }
 

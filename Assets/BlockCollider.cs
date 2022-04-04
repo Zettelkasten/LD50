@@ -20,6 +20,11 @@ public class BlockCollider : MonoBehaviour
         var pos = earth.transform.localScale * 0.8f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
         this.transform.position = earth.transform.position + new Vector3(pos.x, pos.y, 0);
         this.transform.eulerAngles = new Vector3(0, 0, angle - 90);
+        
+        // move slot to position
+        var slotController = this.transform.parent.GetComponent<SlotController>();
+        slotController.transform.position = earth.transform.position + new Vector3(pos.x, pos.y, -1);
+        slotController.transform.eulerAngles = new Vector3(0, 0, angle - 90);
     }
 
     public void FixedUpdate()
