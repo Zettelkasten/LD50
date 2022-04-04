@@ -389,7 +389,7 @@ public class EarthController : MonoBehaviour
         }
         
         this.velo *= 0.9f;
-        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftShift))
         {
             velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
             accelerating = true;
