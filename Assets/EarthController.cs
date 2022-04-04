@@ -529,6 +529,7 @@ public class EarthController : MonoBehaviour
             return;
         PlayScene(this.godLineScene, false);
         this.currentScenePlaying.ResetDialogue(new string[] { "God: " + this.godLines[Util.godLineCounter] });
+        this.currentScenePlaying.autoContinue = 7f;
         Util.godLineCounter = (Util.godLineCounter + 1) % godLines.Length;
     }
 

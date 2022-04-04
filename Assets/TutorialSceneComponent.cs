@@ -29,6 +29,8 @@ public class TutorialSceneComponent : MonoBehaviour
 
     public bool isDone = false;
 
+    public float autoContinue = 300f;
+
     private void Start()
     {
         Assert.AreEqual(charList.Length, charNames.Length);
@@ -78,6 +80,12 @@ public class TutorialSceneComponent : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             MouseDown();
+        }
+        autoContinue -= Time.fixedTime;
+        if (autoContinue < 0)
+        {
+            MouseDown();
+            autoContinue = 300f;
         }
     }
 

@@ -16,6 +16,5 @@ namespace DefaultNamespace
         
         public static int godLineCounter = 0;
         public static bool godLinesShuffled = false;
-
     }
 }
