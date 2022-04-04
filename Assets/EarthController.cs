@@ -17,8 +17,7 @@ using UnityEngine.SceneManagement;
 public class EarthController : MonoBehaviour
 {
     public static EarthController instance;
-    
-    
+
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
     public ThrusterWrapperComponent thruster;
@@ -81,6 +80,12 @@ public class EarthController : MonoBehaviour
     public GameObject planetPrefab;
     public int numPlanets;
 
+    public GameObject asteroidTutorialScene;
+    private GameObject currentScenePlaying = null;
+    private bool currentScenePausing = false;
+    public bool introAsteroidSpawned = false;
+    public bool asteroidTutorialPlayed = false;
+        
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -120,6 +125,15 @@ public class EarthController : MonoBehaviour
         for (var i = 0; i < numPlanets; i++)
         {
             Instantiate(planetPrefab);
+        }
+
+        if (tutorialScenesPlayed)
+        {
+            introAsteroidSpawned = true;
+        }
+        if (!introAsteroidSpawned)
+        {
+            SpawnAsteroid();
         }
     }
 
@@ -366,17 +380,18 @@ public class EarthController : MonoBehaviour
         }
         
         // spawn new
-        if (rnd.NextDouble() <= 0.08 * this.balancing[0])
+        if (asteroidTutorialPlayed && (currentScenePlaying == null || !currentScenePausing)) // default case.
         {
-            this.SpawnAsteroid();
-        }
-        if (rnd.NextDouble() <= 0.02)
-        {
-            this.SpawnFood();
+            if (rnd.NextDouble() <= 0.08 * this.balancing[0])
+            {
+                this.SpawnAsteroid();
+            }
+            if (rnd.NextDouble() <= 0.02)
+            {
+                this.SpawnFood();
+            }
         }
         
-        
-            
         // delete old
         var worldDiagonal = GetWorldDiagonal().magnitude;
         var destroyAsteroidList = asteroidList.Where(asteroid => (asteroid.pos - this.pos).magnitude > worldDiagonal).ToList();
@@ -388,7 +403,6 @@ public class EarthController : MonoBehaviour
             DestroyFood(food, false);
         }
         
-        
         // movement
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -398,7 +412,6 @@ public class EarthController : MonoBehaviour
         {
             angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
         }
-        
 
         if (Input.GetKeyDown("f"))
         {
@@ -439,8 +452,24 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
+
+        // intro
+        if (!asteroidTutorialPlayed && introAsteroidSpawned)
+        {
+            asteroidTutorialPlayed = true;
+            if (asteroidList.Count == 0)
+            {
+                PlayScene(asteroidTutorialScene, true);
+            }
+        }
     }
-    
+
+    private void PlayScene(GameObject o, bool b)
+    {
+        currentScenePlaying = asteroidTutorialScene;
+        currentScenePausing = true;
+    }
+
     public void SpawnCooldown()
     {
         if (cdAnimation.activeSelf)
