@@ -8583,6 +8583,7 @@ MonoBehaviour:
   numPlanets: 300
   asteroidTutorialScene: {fileID: 763695904}
   firstUpgradeTutorialScene: {fileID: 789054351}
+  firstHitTutorialScene: {fileID: 1967169000}
   currentScenePlaying: {fileID: 0}
   introAsteroidSpawned: 0
   introAsteroidWasVisible: 0
