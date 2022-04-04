@@ -210,10 +210,11 @@ public class EarthController : MonoBehaviour
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
+        if (ast.gameObject == null)
+            return;
         Destroy(ast.gameObject);
-        // TODO if dodged=False, damage.
         if (dodged)
-            this.numAsteroidsDodged +=1 ;
+            this.numAsteroidsDodged +=1;
     }
     
     void ScatterStars()
@@ -419,8 +420,7 @@ public class EarthController : MonoBehaviour
     
     public void SpawnCooldown()
     {
-        //var ast_pos = RandomBorderPos();
-        if (cdAnimation.activeSelf == true)
+        if (cdAnimation.activeSelf)
         {
             if (this.numAsteroidsDodged > this.highscore)
             {
