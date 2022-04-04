@@ -441,13 +441,16 @@ public class EarthController : MonoBehaviour
         }
         
         // movement
-        if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
+        if (deathRemainingWaitingTime <= 0)
         {
-            angle += angleVelocity[thrusterSlot.upgradeLevel - 1];
-        }
-        else if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
-        {
-            angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
+            if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
+            {
+                angle += angleVelocity[thrusterSlot.upgradeLevel - 1];
+            }
+            else if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
+            {
+                angle -= angleVelocity[thrusterSlot.upgradeLevel - 1];
+            }
         }
 
         if (Input.GetKeyDown("f"))
