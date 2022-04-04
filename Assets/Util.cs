@@ -11,5 +11,6 @@ namespace DefaultNamespace
 
         public static bool asteroidTutorialPlayed = false;
         public static bool firstUpgradeTutorialPlayed = false;
+        public static bool firstHitTutorialPlayed = false;
     }
 }
