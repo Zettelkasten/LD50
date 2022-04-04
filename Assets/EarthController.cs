@@ -106,6 +106,8 @@ public class EarthController : MonoBehaviour
     public string[] godLines;
     public TutorialSceneComponent godLineScene;
 
+    public AudioSource deathSound;
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -667,6 +669,7 @@ public class EarthController : MonoBehaviour
 
     public void apocalpse()
     {
+        this.deathSound.Play();
         this.transform.localScale = new Vector3(0, 0, 0);
         for (int i = 0; i < 4; i++)
         {
