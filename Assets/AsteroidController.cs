@@ -12,6 +12,7 @@ public class AsteroidController : MonoBehaviour
     public Vector2 velo;
     public GameObject schweif;
     public float criticalSpeed = 0.14f;
+    public GameObject path;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class AsteroidController : MonoBehaviour
         
         var halo = (Behaviour)this.GetComponent("Halo");
         var dist_norm = Mathf.Sqrt(velo.SqrMagnitude());
+
         if (dist_norm > criticalSpeed)
         {
             halo.enabled = true;
@@ -33,9 +35,10 @@ public class AsteroidController : MonoBehaviour
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.transform.eulerAngles = new Vector3(0, 0, this.angle);
-        this.schweif.transform.eulerAngles = new Vector3(0, 0, -Vector2.SignedAngle(velo, Vector2.right));
+        this.schweif.transform.eulerAngles = new Vector3(0, 0, -Vector2.SignedAngle(velo, Vector2.right) + Mathf.PI);
         
-        
+        //var velo_angle = Mathf.Atan2(velo.x, velo.y) + angle;
+        this.path.transform.eulerAngles = new Vector3(0, 0, -Vector2.SignedAngle(velo, Vector2.right));//new Vector3(velo_angle,0,0);
         
     }
 

@@ -8994,6 +8994,8 @@ MonoBehaviour:
     type: 3}
   starPrefab: {fileID: 7971276072409180905, guid: 99ac06d12e4f29945b1be7a894c99c8d,
     type: 3}
+  continentPrefab: {fileID: 7403619054152403092, guid: b1f56a7b89ae1444cb02c6faf812250f,
+    type: 3}
   thruster: {fileID: 1276495457}
   flame: {fileID: 1930162793}
   cdAnimation: {fileID: 48060365}
@@ -10053,8 +10055,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 54, y: 54, z: 54}
-  m_Children:
-  - {fileID: 802321046}
+  m_Children: [{fileID: 802321046}]
   m_Father: {fileID: 789054350}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

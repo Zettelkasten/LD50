@@ -20,6 +20,7 @@ public class EarthController : MonoBehaviour
 
     public GameObject asteroidPrefab;
     public GameObject starPrefab;
+    public GameObject continentPrefab;
     public ThrusterWrapperComponent thruster;
     public GameObject flame;
     public GameObject cdAnimation;
@@ -442,6 +443,11 @@ public class EarthController : MonoBehaviour
         {
             DestroyFood(food, false);
         }
+
+        if (Input.GetKeyDown("z"))
+        {
+            apocalpse();
+        }
         
         // movement
         if (deathRemainingWaitingTime <= 0)
@@ -566,7 +572,7 @@ public class EarthController : MonoBehaviour
         if (cdAnimation.activeSelf)
         {
             deathRemainingWaitingTime = deathTotalWaitingTime;
-            // @DAVID: pack hier rein wie die erde explodiert
+            apocalpse();
         }
         else
         {
@@ -588,5 +594,17 @@ public class EarthController : MonoBehaviour
     public bool CurrentRequiresFlyingSlot()
     {
         return this.tileTypes[this.currentTileType] == SlotController.SlotType.FlyingShield;
+    }
+
+
+    public void apocalpse()
+    {
+        this.transform.localScale = new Vector3(0, 0, 0);
+        for (int i = 0; i < 4; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = this.pos;
+            continent.GetComponent<ContinentController>().setContinent(i);
+        }
     }
 }
