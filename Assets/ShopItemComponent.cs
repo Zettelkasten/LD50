@@ -18,6 +18,8 @@ public class ShopItemComponent : MonoBehaviour
 
     public bool selected = false;
 
+    public AudioSource clickAudio;
+
     private void Update()
     {
         this.selectedBackground.SetActive(selected);
@@ -46,7 +48,8 @@ public class ShopItemComponent : MonoBehaviour
             EarthController.instance.currentTileType = -1;
         }
         else
-        {
+        { // normal buy
+            clickAudio.Play();
             EarthController.instance.isUpgrading = false;
             EarthController.instance.isRemoving = false;
             EarthController.instance.currentTileType = tileType;
