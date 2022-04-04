@@ -81,7 +81,7 @@ public class EarthController : MonoBehaviour
     public int numPlanets;
 
     public TutorialSceneComponent asteroidTutorialScene;
-    private TutorialSceneComponent currentScenePlaying = null;
+    public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool asteroidTutorialPlayed = false;
