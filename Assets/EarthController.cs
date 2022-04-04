@@ -85,6 +85,9 @@ public class EarthController : MonoBehaviour
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool asteroidTutorialPlayed = false;
+
+    public AudioSource mainMusic;
+    public AudioSource panicMusic;
         
     void Start()
     {
@@ -239,6 +242,9 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
+        this.mainMusic.volume = this.timer == 0 ? 1 : 0;
+        this.panicMusic.volume = this.timer > 0 ? 1 : 0;
+        
         this.pauseText.SetActive(this.paused);
         if (currentScenePlaying != null && currentScenePausing)
             return;
