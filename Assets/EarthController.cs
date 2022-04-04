@@ -84,6 +84,8 @@ public class EarthController : MonoBehaviour
     public TutorialSceneComponent asteroidTutorialScene;
     public TutorialSceneComponent firstUpgradeTutorialScene;
     public TutorialSceneComponent firstHitTutorialScene;
+    public TutorialSceneComponent manyDinosTutorialScene;
+
     public TutorialSceneComponent currentScenePlaying = null;
     public bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
@@ -144,6 +146,7 @@ public class EarthController : MonoBehaviour
         asteroidTutorialScene.gameObject.SetActive(false);
         firstUpgradeTutorialScene.gameObject.SetActive(false);
         firstHitTutorialScene.gameObject.SetActive(false);
+        manyDinosTutorialScene.gameObject.SetActive(false);
         godLineScene.gameObject.SetActive(false);
         if (!Util.godLinesShuffled)
         {
@@ -578,6 +581,17 @@ public class EarthController : MonoBehaviour
         {
             Util.firstHitTutorialPlayed = true;
             PlayScene(firstHitTutorialScene, true);
+        }
+
+        var numPlaced = -1; // thruster
+        foreach (var slot in slots)
+        {
+            numPlaced += slot.GetComponent<SlotController>().slotType != SlotController.SlotType.Empty ? 1 : 0;
+        }
+        if (!Util.manyDinosTutorialPlayed && numPlaced >= 3)
+        {
+            Util.manyDinosTutorialPlayed = true;
+            PlayScene(manyDinosTutorialScene, true);
         }
     }
     
