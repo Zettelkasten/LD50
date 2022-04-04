@@ -262,9 +262,12 @@ public class EarthController : MonoBehaviour
             
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
-            var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
-            var athmoscolor = new Color(1,0.5f,0.5f,alpha);
-            this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
+            if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
+            {
+                var alpha = Mathf.Sqrt(Mathf.Sqrt(this.timer / clipinfo[0].clip.length)) * 0.7f;
+                var athmoscolor = new Color(1,0.5f,0.5f,alpha);
+                this.athmosphere.GetComponent<SpriteRenderer>().color = athmoscolor;
+            }
             //var halo = new SerializedObject(this.GetComponent("Halo"));//= new Color(1,0.5f,0.5f,alpha);
             //halo.FindProperty("m_Color").colorValue = athmoscolor;
             var halo = (Behaviour)this.GetComponent("Halo");
