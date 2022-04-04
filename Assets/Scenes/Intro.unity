@@ -855,7 +855,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Greenie
+  m_Text: Greedy
 --- !u!222 &428141040
 CanvasRenderer:
   m_ObjectHideFlags: 0
