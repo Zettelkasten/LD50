@@ -245,8 +245,8 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
-        this.mainMusic.volume = this.timer <= 0 ? 1 : 0.000001f;
-        this.panicMusic.volume = this.timer > 0 ? 1 : 0.000001f;
+        this.mainMusic.volume = this.timer <= 0 ? 0.007f : 0.000000f;
+        this.panicMusic.volume = this.timer > 0 ? 0.007f : 0.000000f;
         if (this.currentScenePlaying != null)
         {
             this.mainMusic.volume = 0f;

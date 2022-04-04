@@ -9,4 +9,12 @@ public class Controls : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene"); 
     }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            SceneManager.LoadScene("SampleScene"); 
+        }
+    }
 }
