@@ -29,7 +29,8 @@ public class TutorialSceneComponent : MonoBehaviour
 
     public bool isDone = false;
 
-    public float autoContinue = 300f;
+    public bool autoContinueEnabled = false;
+    public float autoContinue = -1;
 
     private void Start()
     {
@@ -81,11 +82,15 @@ public class TutorialSceneComponent : MonoBehaviour
         {
             MouseDown();
         }
-        autoContinue -= Time.fixedTime;
-        if (autoContinue < 0)
+
+        if (autoContinueEnabled)
         {
-            MouseDown();
-            autoContinue = 300f;
+            autoContinue -= Time.fixedDeltaTime;
+            if (autoContinue < 0)
+            {
+                MouseDown();
+                autoContinue = 300f;
+            }
         }
     }
 
