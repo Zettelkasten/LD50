@@ -149,9 +149,7 @@ public class EarthController : MonoBehaviour
         {
             for (int i = 0; i < godLines.Length; i++) {
                 int rnd = Random2.Range(0, godLines.Length);
-                var tempGO = godLines[rnd];
-                godLines[rnd] = godLines[i];
-                godLines[i] = tempGO;
+                (godLines[rnd], godLines[i]) = (godLines[i], godLines[rnd]);
             }
             Util.godLinesShuffled = true;
         }
