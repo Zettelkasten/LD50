@@ -357,12 +357,12 @@ public class EarthController : MonoBehaviour
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
         UpdatePlanets();
         
-        // move thruster slot to position
-        var slotController = this.thrusterSlot;
-        Vector2 thrusterPos = this.thruster.particles.transform.position;
-        thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
-        slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
-        slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
+        // move thruster slot to position: ok apparently we dont want this >(
+        // var slotController = this.thrusterSlot;
+        // Vector2 thrusterPos = this.thruster.particles.transform.position;
+        // thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
+        // slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
+        // slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
 
         if (paused || (currentScenePlaying != null && currentScenePausing))
             if (this.timer > 0)
