@@ -80,8 +80,8 @@ public class EarthController : MonoBehaviour
     public GameObject planetPrefab;
     public int numPlanets;
 
-    public GameObject asteroidTutorialScene;
-    private GameObject currentScenePlaying = null;
+    public TutorialSceneComponent asteroidTutorialScene;
+    private TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool asteroidTutorialPlayed = false;
@@ -107,7 +107,7 @@ public class EarthController : MonoBehaviour
         for (var i = this.numEarthSlots; i < this.numEarthSlots + this.numFlyingSlots; i++)
         {
             var angle = 360 * (i - this.numEarthSlots) / this.numFlyingSlots;
-            var pos = this.transform.localScale * 0.7f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
+            var pos = this.transform.localScale * 0.8f * Util.Vector2FromAngle(Mathf.Deg2Rad * angle);
             this.slots[i] = Instantiate(this.slotPrefab, new Vector3(pos.x, pos.y, -1), Quaternion.identity, this.transform);
             this.slots[i].transform.eulerAngles = new Vector3(0, 0, angle - 90);
             var ctrl = this.slots[i].GetComponent<SlotController>();
@@ -126,15 +126,8 @@ public class EarthController : MonoBehaviour
         {
             Instantiate(planetPrefab);
         }
-
-       /* if (tutorialScenesPlayed)
-        {
-            introAsteroidSpawned = true;
-        }*/
-        if (!introAsteroidSpawned)
-        {
-            SpawnAsteroid();
-        }
+        
+        asteroidTutorialScene.gameObject.SetActive(false);
     }
 
     Vector2 RandomBorderPos()
@@ -248,6 +241,8 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         this.pauseText.SetActive(this.paused);
+        if (currentScenePlaying != null && currentScenePausing)
+            return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             this.paused = !this.paused;
@@ -373,7 +368,7 @@ public class EarthController : MonoBehaviour
         //uncapped level design
         if (this.count >= balancing[1])
         {
-            this.balancing[0] += 0.14f;//0.165f;
+            this.balancing[0] += 0.13f;//0.165f;
             this.count = 0;
             this.level += 1;
             this.text_level.text = "Level: " + this.level;
@@ -385,7 +380,6 @@ public class EarthController : MonoBehaviour
             if (rnd.NextDouble() <= 0.08 * this.balancing[0])
             {
                 this.SpawnAsteroid();
-                Debug.Log("spawn a");
             }
             if (rnd.NextDouble() <= 0.02)
             {
@@ -454,21 +448,43 @@ public class EarthController : MonoBehaviour
 
         }
 
-        // intro
+        UpdateTutorialsAndScenes();
+    }
+
+    public void UpdateTutorialsAndScenes()
+    {
+        if (currentScenePlaying != null)
+        {
+            if (currentScenePlaying.isDone)
+            {
+                currentScenePlaying.gameObject.SetActive(false);
+                currentScenePlaying = null;
+                currentScenePausing = false;
+            }
+        }
+        if (!introAsteroidSpawned)
+        {
+            SpawnAsteroid();
+            introAsteroidSpawned = true;
+            return;
+        }
         if (!asteroidTutorialPlayed && introAsteroidSpawned)
         {
-            asteroidTutorialPlayed = true;
-            if (asteroidList.Count == 0)
+            if (asteroidList.Count == 0) // wait for asteroid to despawn.
             {
+                asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
             }
         }
     }
-
-    private void PlayScene(GameObject o, bool b)
+    
+    private void PlayScene(TutorialSceneComponent scene, bool pausing)
     {
-        currentScenePlaying = asteroidTutorialScene;
-        currentScenePausing = true;
+        currentScenePlaying = scene;
+        currentScenePausing = pausing;
+        currentScenePlaying.gameObject.SetActive(true);
+        Debug.Log("Play scene");
+        
     }
 
     public void SpawnCooldown()
