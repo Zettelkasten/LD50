@@ -255,6 +255,22 @@ public class EarthController : MonoBehaviour
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
+        
+        for (int i = 6; i < 9; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = ast.pos;
+            continent.GetComponent<ContinentController>().velo = ast.velo;
+            continent.GetComponent<ContinentController>().setContinent(i);
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = ast.pos;
+            continent.GetComponent<ContinentController>().velo = ast.velo;
+            continent.GetComponent<ContinentController>().setContinent(9);
+        }
+        
         if (ast.gameObject == null)
             return;
         Destroy(ast.gameObject);
@@ -678,11 +694,17 @@ public class EarthController : MonoBehaviour
             continent.GetComponent<ContinentController>().setContinent(i);
         }
         
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < 200; i++)
         {
             var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
             continent.GetComponent<ContinentController>().pos = this.pos;
             continent.GetComponent<ContinentController>().setContinent(4);
+        }
+        for (int i = 0; i < 200; i++)
+        {
+            var continent = Instantiate(this.continentPrefab, this.pos, Quaternion.identity);
+            continent.GetComponent<ContinentController>().pos = this.pos;
+            continent.GetComponent<ContinentController>().setContinent(5);
         }
     }
 }
