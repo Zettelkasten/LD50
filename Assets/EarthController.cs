@@ -84,10 +84,13 @@ public class EarthController : MonoBehaviour
     public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
+    public bool introAsteroidWasVisible = false;
     public bool asteroidTutorialPlayed = false;
 
     public AudioSource mainMusic;
     public AudioSource panicMusic;
+
+    public float currentScreenshakeTime = 0f;
         
     void Start()
     {
@@ -244,6 +247,19 @@ public class EarthController : MonoBehaviour
     {
         this.mainMusic.volume = this.timer <= 0 ? 1 : 0.000001f;
         this.panicMusic.volume = this.timer > 0 ? 1 : 0.000001f;
+        if (this.currentScenePlaying != null)
+        {
+            this.mainMusic.volume = 0f;
+            this.panicMusic.volume = 0f;
+        }
+        
+        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+        if (this.timer > 0 || this.currentScreenshakeTime > 0)
+        { // shake effect.
+            this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
+            if (this.currentScreenshakeTime > 0)
+                this.currentScreenshakeTime -= Time.deltaTime;
+        }
         
         this.pauseText.SetActive(this.paused);
         if (currentScenePlaying != null && currentScenePausing)
@@ -301,7 +317,6 @@ public class EarthController : MonoBehaviour
         //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
 
         var thrusterfactor = thrusterSlot.upgradeScales[thrusterSlot.upgradeLevel-1];
-        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localPosition = new Vector3(x: 0f, y: -0.42f * (thrusterfactor + 1)/2, 0);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
@@ -309,10 +324,7 @@ public class EarthController : MonoBehaviour
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
             this.camera.transform.position.z);
         this.thruster.particles.enableEmission = flamesize > 0.001;
-        if (this.timer > 0)
-        { // shake effect.
-            this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
-        }
+
         this.foodCounterText.text = this.numFood + " Potatoes";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
         UpdatePlanets();
@@ -366,6 +378,10 @@ public class EarthController : MonoBehaviour
         if (paused)
             return;
         this.count += Time.deltaTime;
+
+        UpdateTutorialsAndScenes();
+        if (this.currentScenePlaying != null && this.currentScenePausing)
+            return;
         
         //6 Levels design
         /* if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
@@ -456,8 +472,6 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
-
-        UpdateTutorialsAndScenes();
     }
 
     public void UpdateTutorialsAndScenes()
@@ -484,11 +498,13 @@ public class EarthController : MonoBehaviour
             this.asteroidList.Add(ast_contr);
             
             introAsteroidSpawned = true;
+            introAsteroidWasVisible = false;
             return;
         }
         if (!asteroidTutorialPlayed && introAsteroidSpawned)
         {
-            if (asteroidList.Count == 0) // wait for asteroid to despawn.
+            introAsteroidWasVisible |= asteroidList[0].GetComponent<Renderer>().isVisible;
+            if (asteroidList.Count == 0 || (introAsteroidWasVisible && !asteroidList[0].GetComponent<Renderer>().isVisible)) // wait for asteroid to despawn.
             {
                 asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
@@ -498,10 +514,10 @@ public class EarthController : MonoBehaviour
     
     private void PlayScene(TutorialSceneComponent scene, bool pausing)
     {
+        this.currentScreenshakeTime = 0.5f;
         currentScenePlaying = scene;
         currentScenePausing = pausing;
         currentScenePlaying.gameObject.SetActive(true);
-        
     }
 
     public void SpawnCooldown()

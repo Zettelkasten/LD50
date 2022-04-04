@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &4180215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4844987158867190633, guid: f8c6bb9882e150d74b756f06e34e7c21, type: 3}
+  m_PrefabInstance: {fileID: 1109394636}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &48060365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5694,6 +5699,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535811052}
   m_CullTransparentMesh: 1
+--- !u!1 &607403631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4844987158867190633, guid: f8c6bb9882e150d74b756f06e34e7c21, type: 3}
+  m_PrefabInstance: {fileID: 916177114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &628727212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6116,8 +6126,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charList:
   - {fileID: 278975080}
+  - {fileID: 607403631}
+  - {fileID: 4180215}
   charNames:
   - God
+  - Greedy
+  - Mc
   textBox: {fileID: 802321047}
   dialogueText: {fileID: 4900000, guid: 63989e4531395cef3a5db745e3fc3c22, type: 3}
   charTime: 0.5
@@ -7414,9 +7428,11 @@ MonoBehaviour:
   asteroidTutorialScene: {fileID: 789054351}
   currentScenePlaying: {fileID: 0}
   introAsteroidSpawned: 0
+  introAsteroidWasVisible: 0
   asteroidTutorialPlayed: 0
   mainMusic: {fileID: 1201923681}
   panicMusic: {fileID: 954478906}
+  currentScreenshakeTime: 0
 --- !u!122 &1201923680
 Halo:
   m_ObjectHideFlags: 0
