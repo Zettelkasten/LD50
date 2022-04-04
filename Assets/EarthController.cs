@@ -96,6 +96,8 @@ public class EarthController : MonoBehaviour
 
     public float currentScreenshakeTime = 0f;
 
+    public string[] godLines;
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
