@@ -256,7 +256,7 @@ public class EarthController : MonoBehaviour
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         if (this.timer > 0 || this.currentScreenshakeTime > 0)
         { // shake effect.
-            this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
+            this.camera.transform.localPosition += (Vector3) Random2.insideUnitCircle * shakeAmount;
             if (this.currentScreenshakeTime > 0)
                 this.currentScreenshakeTime -= Time.deltaTime;
         }
@@ -483,6 +483,8 @@ public class EarthController : MonoBehaviour
                 currentScenePlaying.gameObject.SetActive(false);
                 currentScenePlaying = null;
                 currentScenePausing = false;
+                this.paused = false;
+                return;
             }
         }
         if (!introAsteroidSpawned)
@@ -503,7 +505,7 @@ public class EarthController : MonoBehaviour
         }
         if (!asteroidTutorialPlayed && introAsteroidSpawned)
         {
-            introAsteroidWasVisible |= asteroidList[0].GetComponent<Renderer>().isVisible;
+            introAsteroidWasVisible |= asteroidList.Count > 0 && asteroidList[0].GetComponent<Renderer>().isVisible;
             if (asteroidList.Count == 0 || (introAsteroidWasVisible && !asteroidList[0].GetComponent<Renderer>().isVisible)) // wait for asteroid to despawn.
             {
                 asteroidTutorialPlayed = true;
