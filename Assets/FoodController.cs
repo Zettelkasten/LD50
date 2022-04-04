@@ -27,6 +27,6 @@ public class FoodController : MonoBehaviour
         if (EarthController.instance.paused)
             return;
         this.pos += velo;
-        this.angle += 10;
+        this.angle += 5;
     }
 }

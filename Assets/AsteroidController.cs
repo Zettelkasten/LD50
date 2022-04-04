@@ -12,6 +12,11 @@ public class AsteroidController : MonoBehaviour
     public Vector2 velo;
     public GameObject schweif;
 
+    private void Start()
+    {
+        this.angle = Random.value * 360;
+    }
+
     void Update()
     {
         this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
