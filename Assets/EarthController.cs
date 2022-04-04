@@ -437,7 +437,10 @@ public class EarthController : MonoBehaviour
             }
             else
             {
-                return;
+                if (this.count < 0.5f)
+                {
+                    return;
+                }
             }
         }
 
