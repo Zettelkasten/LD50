@@ -43,6 +43,8 @@ public class LaserEyeController : MonoBehaviour
             AsteroidController closest = null;
             foreach (var ast in EarthController.instance.asteroidList)
             {
+                if (ast == null)
+                    continue; // weird hack idk?
                 var newDist = ((Vector2)(ast.transform.position - this.transform.position)).magnitude;
                 if (newDist < closestDist)
                 {
