@@ -47,7 +47,7 @@ public class ContinentController : MonoBehaviour
         {
             velo += (Vector2) Random.insideUnitCircle * 0.08f*Random.value;
             this.transform.localScale = this.transform.localScale * 0.5f;
-            this.lifetime = 4;
+            this.lifetime = 3;
             pos += (Vector2) Random.insideUnitCircle * 0.3f;
             z = -1f;
         }
@@ -71,9 +71,12 @@ public class ContinentController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var earth = EarthController.instance;
+        if (earth.paused && i_continent > 5)
+            return;
+        
         this.pos += velo;
         this.angle += angleVelo;
-        var earth = EarthController.instance;
         if (this.i_continent < 6)
         {
             var dist = earth.pos - pos;
@@ -84,17 +87,14 @@ public class ContinentController : MonoBehaviour
         }
         
 
-        if (!earth.paused)
+        if (lifetime > 0)
         {
-            if (lifetime > 0)
+            if (lifetime - Time.deltaTime < 0)
             {
-                if (lifetime - Time.deltaTime < 0)
-                {
-                    Destroy(this);
-                }
-
-                this.lifetime -= Time.deltaTime;
+                Destroy(this);
             }
+
+            this.lifetime -= Time.deltaTime;
         }
     }
 }
