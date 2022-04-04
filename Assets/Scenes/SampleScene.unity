@@ -9072,6 +9072,14 @@ MonoBehaviour:
   mainMusic: {fileID: 1201923681}
   panicMusic: {fileID: 954478906}
   currentScreenshakeTime: 0
+  godLines:
+  - Stop this! You can't win!
+  - Sooner or later, you will die!
+  - Thou shalt not make unto thee any graven image!
+  - You cannot escape your fate!
+  - You cannot alter my timeline!
+  - What you are doing is pointless.
+  - Your fate is already set!
 --- !u!122 &1201923680
 Halo:
   m_ObjectHideFlags: 0
