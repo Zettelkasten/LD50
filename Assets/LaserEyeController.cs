@@ -14,6 +14,8 @@ public class LaserEyeController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (EarthController.instance.paused)
+            return;
         if (currentLaser != null)
         {
             currentLaserTime -= Time.fixedDeltaTime;

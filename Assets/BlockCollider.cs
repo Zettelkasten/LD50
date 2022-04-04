@@ -24,6 +24,8 @@ public class BlockCollider : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (EarthController.instance.paused)
+            return;
         angle += this.angleSpeed[GetUpgradeLevel()];
     }
 

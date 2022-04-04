@@ -16,6 +16,8 @@ public class CollectorController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (EarthController.instance.paused)
+            return;
         foreach (var food in this.earth.foodList)
         {
             var dist = (Vector2)this.transform.position - food.pos;

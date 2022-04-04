@@ -233,16 +233,16 @@ public class EarthController : MonoBehaviour
     {
         if (paused)
         {
-            if (this.timer >= 0)
+            if (this.timer > 0)
                 CdAnimator.speed = 0;
             return;
         }
-        if (this.timer >= 0)
+        if (this.timer > 0)
         {
             CdAnimator.speed = regenerationSpeed;
             this.timer -= Time.deltaTime * regenerationSpeed;
 
-            if (this.timer < 0)
+            if (this.timer <= 0)
             {
                 cdAnimation.SetActive(false); 
             }
@@ -259,6 +259,7 @@ public class EarthController : MonoBehaviour
         }
         else
         {
+            cdAnimation.SetActive(false);
             var halo = (Behaviour)this.GetComponent("Halo");
             halo.enabled = false;
         }
@@ -273,8 +274,8 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
             this.camera.transform.position.z);
-        if (this.timer >= 0)
-        {
+        if (this.timer > 0)
+        { // shake effect.
             this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
         }
         this.foodCounterText.text = this.numFood + " Potatos";
@@ -438,7 +439,6 @@ public class EarthController : MonoBehaviour
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
             this.timer = clipinfo[0].clip.length;
         }
-        
     }
 
     public void UnselectAllShopItems()
