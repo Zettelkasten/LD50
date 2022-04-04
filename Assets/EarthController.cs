@@ -81,11 +81,20 @@ public class EarthController : MonoBehaviour
     public int numPlanets;
 
     public TutorialSceneComponent asteroidTutorialScene;
+    public TutorialSceneComponent firstUpgradeTutorialScene;
     public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
-    public bool asteroidTutorialPlayed = false;
-        
+    public bool introAsteroidWasVisible = false;
+
+    public float deathTotalWaitingTime;
+    public float deathRemainingWaitingTime = 0;
+
+    public AudioSource mainMusic;
+    public AudioSource panicMusic;
+
+    public float currentScreenshakeTime = 0f;
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -128,6 +137,7 @@ public class EarthController : MonoBehaviour
         }
         
         asteroidTutorialScene.gameObject.SetActive(false);
+        firstUpgradeTutorialScene.gameObject.SetActive(false);
     }
 
     Vector2 RandomBorderPos()
@@ -240,35 +250,55 @@ public class EarthController : MonoBehaviour
     
     void Update()
     {
-        this.pauseText.SetActive(this.paused);
-        if (currentScenePlaying != null && currentScenePausing)
-            return;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (deathRemainingWaitingTime > 0)
         {
-            this.paused = !this.paused;
-            if (!this.paused)
+            deathRemainingWaitingTime -= Time.deltaTime;
+            if (deathRemainingWaitingTime <= 0)
             {
-                this.isBuilding = false;
-                this.UnselectAllShopItems();
+                // actually dead.
+                if (this.numAsteroidsDodged > this.highscore)
+                {
+                    this.highscore = this.numAsteroidsDodged;
+                    PlayerPrefs.SetInt("highscore", highscore);
+                    PlayerPrefs.Save();
+                }
+                SceneManager.LoadScene("EndScene");
             }
         }
         
-        if (paused)
+        this.mainMusic.volume = this.timer <= 0 ? 1 : 0.000001f;
+        this.panicMusic.volume = this.timer > 0 ? 1 : 0.000001f;
+        this.mainMusic.volume = this.timer <= 0 ? 0.007f : 0.000000f;
+        this.panicMusic.volume = this.timer > 0 ? 0.007f : 0.000000f;
+        if (this.currentScenePlaying != null)
         {
-            if (this.timer > 0)
-                CdAnimator.speed = 0;
-            return;
+            this.mainMusic.volume = 0f;
+            this.panicMusic.volume = 0f;
         }
+
+        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
+            this.camera.transform.position.z);
+        if (this.timer > 0 || this.currentScreenshakeTime > 0)
+        { // shake effect.
+            this.camera.transform.localPosition += (Vector3) Random2.insideUnitCircle * shakeAmount;
+            if (this.currentScreenshakeTime > 0)
+                this.currentScreenshakeTime -= Time.deltaTime;
+        }
+        
+        this.pauseText.SetActive(this.paused);
+        
         if (this.timer > 0)
         {
             CdAnimator.speed = regenerationSpeed;
-            this.timer -= Time.deltaTime * regenerationSpeed;
+            if (!this.paused && (this.currentScenePlaying == null || !this.currentScenePausing))
+                this.timer -= Time.deltaTime * regenerationSpeed;
 
             if (this.timer <= 0)
             {
                 cdAnimation.SetActive(false); 
             }
-            
+                
             var animator = CdAnimator.GetComponent<Animator>();
             var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
             if (clipinfo.Length > 0)  // if this is 0, that is odd, but ok, no clue whats going on! :)
@@ -288,22 +318,14 @@ public class EarthController : MonoBehaviour
             var halo = (Behaviour)this.GetComponent("Halo");
             halo.enabled = false;
         }
-        //var animator = CdAnimator.GetComponent<Animator>();
-        //var clipinfo = animator.GetCurrentAnimatorClipInfo(0);
 
         var thrusterfactor = thrusterSlot.upgradeScales[thrusterSlot.upgradeLevel-1];
-        this.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         this.thruster.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localPosition = new Vector3(x: 0f, y: -0.42f * (thrusterfactor + 1)/2, 0);
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
-        this.camera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y,
-            this.camera.transform.position.z);
         this.thruster.particles.enableEmission = flamesize > 0.001;
-        if (this.timer > 0)
-        { // shake effect.
-            this.camera.transform.localPosition += ((Vector3) Random2.insideUnitCircle * shakeAmount);
-        }
+
         this.foodCounterText.text = this.numFood + " Potatoes";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
         UpdatePlanets();
@@ -314,6 +336,23 @@ public class EarthController : MonoBehaviour
         thrusterPos -= 0.9f * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);
         slotController.transform.position = new Vector3(thrusterPos.x, thrusterPos.y, -1);
         slotController.transform.eulerAngles = this.thruster.thruster.transform.eulerAngles;
+
+        if (paused || (currentScenePlaying != null && currentScenePausing))
+            if (this.timer > 0)
+                CdAnimator.speed = 0;
+        
+        if (currentScenePlaying == null || !currentScenePausing)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                this.paused = !this.paused;
+                if (!this.paused)
+                {
+                    this.isBuilding = false;
+                    this.UnselectAllShopItems();
+                }
+            }
+        }
     }
 
     private void UpdatePlanets()
@@ -357,6 +396,10 @@ public class EarthController : MonoBehaviour
         if (paused)
             return;
         this.count += Time.deltaTime;
+
+        UpdateTutorialsAndScenes();
+        if (this.currentScenePlaying != null && this.currentScenePausing)
+            return;
         
         //6 Levels design
         /* if (this.count >= balancing[changeLv] && changeLv < this.balancing.Length - 1)
@@ -375,7 +418,7 @@ public class EarthController : MonoBehaviour
         }
         
         // spawn new
-        if (asteroidTutorialPlayed && (currentScenePlaying == null || !currentScenePausing)) // default case.
+        if (Util.asteroidTutorialPlayed && (currentScenePlaying == null || !currentScenePausing)) // default case.
         {
             if (rnd.NextDouble() <= 0.08 * this.balancing[0])
             {
@@ -447,8 +490,6 @@ public class EarthController : MonoBehaviour
                 flamesize -= 0.12f;
 
         }
-
-        UpdateTutorialsAndScenes();
     }
 
     public void UpdateTutorialsAndScenes()
@@ -460,44 +501,57 @@ public class EarthController : MonoBehaviour
                 currentScenePlaying.gameObject.SetActive(false);
                 currentScenePlaying = null;
                 currentScenePausing = false;
+                this.paused = false;
+                return;
             }
         }
         if (!introAsteroidSpawned)
         {
-            SpawnAsteroid();
+            // spawn asteroid
+            var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+            var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
+            var ast_pos = 0.9f * left_bottom + 0.2f * right_bottom;
+            var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
+            var ast_contr = asteroid.GetComponent<AsteroidController>();
+            ast_contr.pos = ast_pos;
+            ast_contr.velo = Util.Vector2FromAngle(Mathf.Deg2Rad * 70) * (0.7f * 0.15f + 0.03f);
+            this.asteroidList.Add(ast_contr);
+            
             introAsteroidSpawned = true;
+            introAsteroidWasVisible = false;
             return;
         }
-        if (!asteroidTutorialPlayed && introAsteroidSpawned)
+        if (!Util.asteroidTutorialPlayed && introAsteroidSpawned)
         {
-            if (asteroidList.Count == 0) // wait for asteroid to despawn.
+            introAsteroidWasVisible |= asteroidList.Count > 0 && asteroidList[0].GetComponent<Renderer>().isVisible;
+            if (asteroidList.Count == 0 || (introAsteroidWasVisible && !asteroidList[0].GetComponent<Renderer>().isVisible)) // wait for asteroid to despawn.
             {
-                asteroidTutorialPlayed = true;
+                Util.asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
             }
+        }
+
+        if (!Util.firstUpgradeTutorialPlayed && this.numFood >= 8)
+        {
+            Util.firstUpgradeTutorialPlayed = true;
+            PlayScene(firstUpgradeTutorialScene, true);
         }
     }
     
     private void PlayScene(TutorialSceneComponent scene, bool pausing)
     {
+        this.currentScreenshakeTime = 0.5f;
         currentScenePlaying = scene;
         currentScenePausing = pausing;
         currentScenePlaying.gameObject.SetActive(true);
-        Debug.Log("Play scene");
-        
     }
 
     public void SpawnCooldown()
     {
         if (cdAnimation.activeSelf)
         {
-            if (this.numAsteroidsDodged > this.highscore)
-            {
-                this.highscore = this.numAsteroidsDodged;
-                PlayerPrefs.SetInt("highscore", highscore);
-                PlayerPrefs.Save();
-            }
-            SceneManager.LoadScene("EndScene");
+            deathRemainingWaitingTime = deathTotalWaitingTime;
+            // @DAVID: pack hier rein wie die erde explodiert
         }
         else
         {

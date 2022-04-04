@@ -8,6 +8,8 @@ namespace DefaultNamespace
         {
             return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         }
-        
+
+        public static bool asteroidTutorialPlayed = false;
+        public static bool firstUpgradeTutorialPlayed = false;
     }
 }
