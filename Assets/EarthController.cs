@@ -81,17 +81,19 @@ public class EarthController : MonoBehaviour
     public int numPlanets;
 
     public TutorialSceneComponent asteroidTutorialScene;
+    public TutorialSceneComponent firstUpgradeTutorialScene;
     public TutorialSceneComponent currentScenePlaying = null;
     private bool currentScenePausing = false;
     public bool introAsteroidSpawned = false;
     public bool introAsteroidWasVisible = false;
     public bool asteroidTutorialPlayed = false;
+    public bool firstUpgradeTutorialPlayed = false;
 
     public AudioSource mainMusic;
     public AudioSource panicMusic;
 
     public float currentScreenshakeTime = 0f;
-        
+
     void Start()
     {
         this.highscore = PlayerPrefs.GetInt ("highscore", highscore);
@@ -134,6 +136,7 @@ public class EarthController : MonoBehaviour
         }
         
         asteroidTutorialScene.gameObject.SetActive(false);
+        firstUpgradeTutorialScene.gameObject.SetActive(false);
     }
     Vector2 RandomBorderPos()
     {
@@ -511,6 +514,12 @@ public class EarthController : MonoBehaviour
                 asteroidTutorialPlayed = true;
                 PlayScene(asteroidTutorialScene, true);
             }
+        }
+
+        if (!firstUpgradeTutorialPlayed && this.numFood >= 8)
+        {
+            firstUpgradeTutorialPlayed = true;
+            PlayScene(firstUpgradeTutorialScene, true);
         }
     }
     
