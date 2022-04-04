@@ -252,7 +252,7 @@ public class EarthController : MonoBehaviour
             }
         }
         
-        if (paused)
+        if (paused || (this.currentScenePlaying != null && this.currentScenePausing))
         {
             if (this.timer > 0)
                 CdAnimator.speed = 0;
@@ -463,7 +463,16 @@ public class EarthController : MonoBehaviour
         }
         if (!introAsteroidSpawned)
         {
-            SpawnAsteroid();
+            // spawn asteroid
+            var left_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(0, 0, camera.nearClipPlane));
+            var right_bottom = (Vector2)camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, camera.nearClipPlane));
+            var ast_pos = 0.9f * left_bottom + 0.2f * right_bottom;
+            var asteroid = Instantiate(this.asteroidPrefab, ast_pos, Quaternion.identity);
+            var ast_contr = asteroid.GetComponent<AsteroidController>();
+            ast_contr.pos = ast_pos;
+            ast_contr.velo = Util.Vector2FromAngle(Mathf.Deg2Rad * 70) * (0.7f * 0.15f + 0.03f);
+            this.asteroidList.Add(ast_contr);
+            
             introAsteroidSpawned = true;
             return;
         }
