@@ -10967,7 +10967,7 @@ MonoBehaviour:
   meteorHitSound: {fileID: 730091707}
   collectFoodSound: {fileID: 141684412}
   deathSound: {fileID: 10619624}
-  thrusterSound: {fileID: 0}
+  thrusterSound: {fileID: 267016535}
 --- !u!122 &1201923680
 Halo:
   m_ObjectHideFlags: 0
