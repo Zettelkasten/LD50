@@ -109,6 +109,7 @@ public class EarthController : MonoBehaviour
     public AudioSource meteorHitSound;
     public AudioSource collectFoodSound;
     public AudioSource deathSound;
+    public AudioSource thrusterSound;
 
     void Start()
     {
@@ -375,6 +376,7 @@ public class EarthController : MonoBehaviour
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.thruster.particles.enableEmission = flamesize > 0.001;
+        this.thrusterSound.volume = Math.Max(flamesize * 0.3f, 0);
 
         this.foodCounterText.text = this.numFood + " Potatoes";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
