@@ -1,6 +1,5 @@
 God: Haha, take that!
 Greedy: Oh no, you have been hit.
-Greedy: Do you see the timer on top left corner? 
-Greedy: Thats the time we need to fix the earth!
+Greedy: Do you see the timer on the top left corner? 
+Greedy: That's the time we need to fix the earth!
 Greedy: Make sure not to get hit until then!!
-
