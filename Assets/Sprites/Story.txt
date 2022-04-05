@@ -17,7 +17,7 @@ Guac: What do you mean we are gonna die soon??
 Mc: Do you see the meteor over there? 
 Mc: Soon its gonna crash and everyone on earth is gonna die!
 Greenie: Does that mean no more food? :(
-Guac: Oh no! Watchout! An asteroid is falling down! :O
+Guac: Oh no! Watch out! An asteroid is falling down! :O
 Mc: Ahh!!
 Mc: ...
 Mc: You saved me!
@@ -25,7 +25,7 @@ Gizmo: That was pretty close! This asteroid almost fell right on you!
 Gizmo: Luckily I was just in time to block it! :)
 Mc: Thank you so much!
 Guac: Wait, you are bleeding! 
-Mc: Damn, this must have happend when my timemachine crashed.
+Mc: Damn, this must have happened when my timemachine crashed.
 Gizmo: Lets bring you to Ganfred, he is a great medic.
 Mc: ... ... ...
 Ganfred: There you go! 

@@ -377,6 +377,8 @@ public class EarthController : MonoBehaviour
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.thruster.particles.enableEmission = flamesize > 0.001;
         this.thrusterSound.volume = Math.Max(flamesize * 0.3f, 0);
+        if (deathRemainingWaitingTime > 0 || (this.currentScenePlaying != null && this.currentScenePausing))
+            this.thrusterSound.volume = 0f;
 
         this.foodCounterText.text = this.numFood + " Potatoes";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
