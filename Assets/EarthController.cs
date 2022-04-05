@@ -261,7 +261,7 @@ public class EarthController : MonoBehaviour
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
-        if (!dodged)
+        if (!dodged && deathRemainingWaitingTime <= 0)
             meteorHitSound.Play();
         
         for (int i = 6; i < 9; i++)
