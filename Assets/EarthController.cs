@@ -109,6 +109,7 @@ public class EarthController : MonoBehaviour
     public AudioSource meteorHitSound;
     public AudioSource collectFoodSound;
     public AudioSource deathSound;
+    public AudioSource thrusterSound;
 
     void Start()
     {
@@ -375,6 +376,7 @@ public class EarthController : MonoBehaviour
         this.flame.transform.eulerAngles = new Vector3(0, 0, this.angle - 90);
         this.flame.transform.localScale = new Vector3(0.75f * flamesize * thrusterfactor, -0.75f * flamesize * thrusterfactor, 1f);
         this.thruster.particles.enableEmission = flamesize > 0.001;
+        this.thrusterSound.volume = Math.Max(flamesize * 0.3f, 0);
 
         this.foodCounterText.text = this.numFood + " Potatoes";
         this.asteroidCounterText.text = this.numAsteroidsDodged + " Asteroids dodged";
@@ -515,7 +517,7 @@ public class EarthController : MonoBehaviour
             DestroyFood(food, false);
         }
 
-        if (Input.GetKeyDown("z"))
+        if (Input.GetKeyDown("z") && Input.GetKey(KeyCode.LeftShift))
         {
             apocalpse();
         }
@@ -545,7 +547,7 @@ public class EarthController : MonoBehaviour
 
         if (deathRemainingWaitingTime <= 0)
         {
-            this.velo *= 0.9f;
+            this.velo *= 0.92f;
             if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftShift))
             {
                 velo += this.speed[thrusterSlot.upgradeLevel - 1] * Util.Vector2FromAngle(Mathf.Deg2Rad * this.angle);

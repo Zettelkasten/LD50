@@ -68,6 +68,14 @@ public class TutorialSceneComponent : MonoBehaviour
         currentMessageProgress = 0;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            MouseDown();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (currentMessage == null)
@@ -78,10 +86,6 @@ public class TutorialSceneComponent : MonoBehaviour
         }
         textBox.text = currentMessage.Substring(0, Math.Min((int) currentMessageProgress, currentMessage.Length));
         
-        if (Input.GetKeyDown("space"))
-        {
-            MouseDown();
-        }
 
         if (autoContinueEnabled)
         {
