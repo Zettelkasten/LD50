@@ -106,6 +106,8 @@ public class EarthController : MonoBehaviour
     public string[] godLines;
     public TutorialSceneComponent godLineScene;
 
+    public AudioSource meteorHitSound;
+    public AudioSource collectFoodSound;
     public AudioSource deathSound;
 
     void Start()
@@ -247,7 +249,10 @@ public class EarthController : MonoBehaviour
         this.foodList.Remove(food);
         Destroy(food.gameObject);
         if (collected)
+        {
             this.numFood += 1;
+            this.collectFoodSound.Play();
+        }
     }
     
     public void DestroyAstroid(AsteroidController ast, bool dodged = false)
@@ -255,6 +260,8 @@ public class EarthController : MonoBehaviour
         if (!this.asteroidList.Contains(ast))
             return;
         this.asteroidList.Remove(ast);
+        if (!dodged)
+            meteorHitSound.Play();
         
         for (int i = 6; i < 9; i++)
         {
